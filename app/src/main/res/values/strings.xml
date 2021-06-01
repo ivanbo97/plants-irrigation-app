@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PlantsIrrigationSystem</string>
+    <string name="emailLabelHintStr">Email</string>
+    <string name="havingAccountStr">Already have an account? Sign in here</string>
+    <string name="signUpBtnText">Sign Up</string>
+    <string name="passwordInputHintStr">Password</string>
+    <string name="signUpHereString">Not registered? Sign Up here!</string>
+    <string name="signInBtnText">Sign In</string>
 </resources>
