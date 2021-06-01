@@ -6,4 +6,5 @@
     <string name="passwordInputHintStr">Password</string>
     <string name="signUpHereString">Not registered? Sign Up here!</string>
     <string name="signInBtnText">Sign In</string>
+    <string name="loginSucessText">You have successfully logged in!!!</string>
 </resources>
