@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/emailInputTv"
+        android:id="@+id/emailInputEditTextMainActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="313dp"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/passwordInputTv"
+        android:id="@+id/passwordInputEditTextMainActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailInputTv"
+        app:layout_constraintTop_toBottomOf="@+id/emailInputEditTextMainActivity"
         app:layout_constraintVertical_bias="0.052" />
 
     <TextView
@@ -66,6 +66,6 @@
         app:layout_constraintBottom_toTopOf="@+id/signInTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInputTv" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordInputEditTextMainActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

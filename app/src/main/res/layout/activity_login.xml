@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
     <EditText
-        android:id="@+id/emailInputTv"
+        android:id="@+id/emailInputEditTextLoginActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="313dp"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/passwordInputTv"
+        android:id="@+id/passwordInputEditTextLoginActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -37,11 +37,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailInputTv"
+        app:layout_constraintTop_toBottomOf="@+id/emailInputEditTextLoginActivity"
         app:layout_constraintVertical_bias="0.052" />
 
     <TextView
-        android:id="@+id/signInTv"
+        android:id="@+id/signInTvLoginActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="136dp"
@@ -61,9 +61,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/signInBtnText"
-        app:layout_constraintBottom_toTopOf="@+id/signInTv"
+        app:layout_constraintBottom_toTopOf="@+id/signInTvLoginActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInputTv" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordInputEditTextLoginActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
