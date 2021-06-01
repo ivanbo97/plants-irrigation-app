@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "108297581540",
+    "project_id": "plantsirrigationsystem-2d4ed",
+    "storage_bucket": "plantsirrigationsystem-2d4ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108297581540:android:ef21fd2c2648c0a1b9cdf1",
+        "android_client_info": {
+          "package_name": "com.ivanboyukliev.plantsirrigationsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108297581540-hlgtooriugskdqpc3bvssmk95q1739g9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3jeIOjemar2IrOlzdZ4wPsYOJXscnK3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108297581540-hlgtooriugskdqpc3bvssmk95q1739g9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
