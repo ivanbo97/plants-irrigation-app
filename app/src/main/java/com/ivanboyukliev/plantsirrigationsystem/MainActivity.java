@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,9 +18,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants;
+import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputValidator;
 
+import java.util.regex.Pattern;
+
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.EMPTY_FILED_MESSAGE;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.INCORRECT_EMAIL_MESSAGE;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.INCORRECT_INPUT_MESSAGE;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PASSWORD_PATTERN;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.REGISTRATION_ERROR_MESSAGE;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.WEAK_PASSWORD_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private Button signUpBtn;
 
     private TextView signInTv;
-    FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,35 +44,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         populateWidgetObjects();
 
-        signUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = userEmail.getText().toString();
-                String password = userPassword.getText().toString();
+        signUpBtn.setOnClickListener(v -> {
 
-                if(email.isEmpty() || password.isEmpty()){
-                    Toast.makeText(MainActivity.this,INCORRECT_INPUT_MESSAGE,Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                firebaseAuth.createUserWithEmailAndPassword(email,password)
-                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(!task.isSuccessful()){
-                                    String errorMesssage = task.getException().getMessage();
-                                    Toast.makeText(MainActivity.this,errorMesssage,Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                startActivity(new Intent(MainActivity.this,HomeActivity.class));
-                            }
-                        });
+            String email = userEmail.getText().toString();
+            String password = userPassword.getText().toString();
+
+            if (!UserInputValidator.isEmailValid(email)) {
+                userEmail.setError(INCORRECT_EMAIL_MESSAGE);
+                return;
             }
+            if (!UserInputValidator.isPasswordValid(password)) {
+                userPassword.setError(WEAK_PASSWORD_MESSAGE);
+                return;
+            }
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(MainActivity.this, task -> {
+                        if (!task.isSuccessful()) {
+                            String errorMessage = task.getException().getMessage();
+                            Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                    });
         });
 
     }
 
-
-    private void populateWidgetObjects(){
+    private void populateWidgetObjects() {
         firebaseAuth = FirebaseAuth.getInstance();
         userEmail = findViewById(R.id.emailInputEditTextMainActivity);
         userPassword = findViewById(R.id.passwordInputEditTextMainActivity);
