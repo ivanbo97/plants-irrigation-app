@@ -7,7 +7,7 @@ public final class ApplicationConstants {
     public static final String REGISTRATION_ERROR_MESSAGE = "Unsuccessful attempt for signing up! Please try again";
     public static final String EMPTY_FILED_MESSAGE = "Field can't be empty!";
     public static final String INCORRECT_EMAIL_MESSAGE = "Please enter a valid email address!";
-    public static final String WEAK_PASSWORD_MESSAGE = "Password too weak! You should have at least 6 chars " +
+    public static final String WEAK_PASSWORD_MESSAGE = "Password is too weak! You should have at least 6 chars " +
                                                        "including at least one upper case," +
                                                        "lower case letter, special symbol and no white spaces!";
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("^" +
