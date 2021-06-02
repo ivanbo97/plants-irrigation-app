@@ -7,4 +7,5 @@
     <string name="signUpHereString">Not registered? Sign Up here!</string>
     <string name="signInBtnText">Sign In</string>
     <string name="loginSucessText">You have successfully logged in!!!</string>
+    <string name="addNewBrokerString">Add new MQTT broker</string>
 </resources>
