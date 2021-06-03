@@ -12,9 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttRegDialogListener;
-import com.ivanboyukliev.plantsirrigationsystem.utils.BasicMqttbroker;
+import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
 
 public class MqttBrokerRegDialog extends AppCompatDialogFragment {
 
@@ -29,26 +30,24 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         dialogView = inflater.inflate(R.layout.mqtt_broker_register, null);
-
+        populateDialogWidgets();
         dialogBuilder.setView(dialogView)
                 .setTitle("MQTT Broker Registration")
                 .setNegativeButton("Cancel", (dialog, which) -> {
-                    //no-action need for now
+                    //no-action needed for now
                 })
                 .setPositiveButton("Register", (dialog, which) -> {
-                    BasicMqttbroker mqttbroker = new BasicMqttbroker(
-                            brokerNameWidget.getText().toString(),
-                            brokerIpWidget.getText().toString(),
-                            brokerPortWidget.getText().toString());
 
-                    dialogListener.createBrokerAsWidget(mqttbroker);
+                    BasicMqttBroker currentBroker = HomeActivity.getNewMqttBroker();
+                    currentBroker.setBrokerName(brokerNameWidget.getText().toString());
+                    currentBroker.setBrokerIp(brokerIpWidget.getText().toString());
+                    currentBroker.setBrokerPort(brokerPortWidget.getText().toString());
+
+                    dialogListener.onDialogDataSending();
 
                 });
-
-        populateDialogWidgets();
         return dialogBuilder.create();
     }
 
