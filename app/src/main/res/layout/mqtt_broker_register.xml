@@ -24,6 +24,6 @@
         android:layout_below="@id/mqtt_broker_ip"
         android:layout_alignParentStart="true"
         android:hint="Port Number"
-        android:inputType="textPassword" />
+         />
 
 </RelativeLayout>
