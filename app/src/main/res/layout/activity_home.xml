@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/deleteBrokerButton"
         android:layout_width="58dp"
         android:layout_height="63dp"
         android:layout_marginStart="35dp"
@@ -31,7 +31,7 @@
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/addNewMqttBrokerText"
         android:layout_width="162dp"
         android:layout_height="25dp"
         android:layout_marginStart="16dp"
@@ -43,6 +43,34 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/floatingActionButton" />
+        app:layout_constraintStart_toEndOf="@+id/deleteBrokerButton" />
+
+    <EditText
+        android:id="@+id/mqttBrokersListTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="84dp"
+        android:ems="10"
+        android:fontFamily="sans-serif-smallcaps"
+        android:inputType="textPersonName"
+        android:text="Current MQTT Brokers"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoutBtn" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/brokersListRecyclerView"
+        android:layout_width="319dp"
+        android:layout_height="285dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mqttBrokersListTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
