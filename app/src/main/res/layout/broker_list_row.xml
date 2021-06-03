@@ -1,0 +1,64 @@
+<androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    card_view:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:layout_width="229dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/brokerNameTv"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:gravity="center"
+            android:text="HIVE MQ BROKER"
+            android:textAlignment="textStart"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/brokerIP"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:gravity="center"
+            android:text="tcp://broker.hivemq.com:1883"
+            android:textAlignment="textStart"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/connectBrokerBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginBottom="10dp"
+            android:text="Connect" />
+
+
+        <Button
+            android:id="@+id/disconnectBrokerBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginBottom="20dp"
+            android:text="Disconnect" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deleteBrokerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:clickable="true"
+            card_view:rippleColor="@android:color/holo_red_dark"
+            card_view:srcCompat="@android:drawable/ic_menu_delete" />
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
