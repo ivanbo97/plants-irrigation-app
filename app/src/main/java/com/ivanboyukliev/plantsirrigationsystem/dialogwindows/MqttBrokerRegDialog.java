@@ -26,6 +26,7 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
     private EditText brokerPasswordWidget; //for future security purpose
     private MqttRegDialogListener dialogListener;
 
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -40,13 +41,12 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
                 })
                 .setPositiveButton("Register", (dialog, which) -> {
 
-                    BasicMqttBroker currentBroker = HomeActivity.getNewMqttBroker();
-                    currentBroker.setBrokerName(brokerNameWidget.getText().toString());
-                    currentBroker.setBrokerIp(brokerIpWidget.getText().toString());
-                    currentBroker.setBrokerPort(brokerPortWidget.getText().toString());
-
+                    BasicMqttBroker newBroker = new BasicMqttBroker();
+                    newBroker.setBrokerName(brokerNameWidget.getText().toString());
+                    newBroker.setBrokerIp(brokerIpWidget.getText().toString());
+                    newBroker.setBrokerPort(brokerPortWidget.getText().toString());
+                    HomeActivity.getMqttBrokersList().add(newBroker);
                     dialogListener.onDialogDataSending();
-
                 });
         return dialogBuilder.create();
     }
