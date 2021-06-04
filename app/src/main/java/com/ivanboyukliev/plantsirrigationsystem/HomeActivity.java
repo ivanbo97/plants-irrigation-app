@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -20,19 +19,22 @@ import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerRegDialo
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttRegDialogListener;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
 import com.ivanboyukliev.plantsirrigationsystem.utils.AndroidUIManager;
-import com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.NAV_BAR_INVISIBLE;
 
 public class HomeActivity extends AppCompatActivity implements MqttRegDialogListener {
 
     private Button logoutBtn;
+    private FloatingActionButton deleteBrokerButton;
     private FirebaseAuth firebaseAuth;
     private FloatingActionButton registerBrokerBtn;
     private RecyclerView brokersListRecyclerView;
     private BrokersRecyclerViewListAdapter brokersAdapter;
     private AndroidUIManager uiManager;
-    private static BasicMqttBroker newMqttBroker;
+    private static List<BasicMqttBroker> mqttBrokers;
 
 
     @Override
@@ -43,21 +45,20 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
         uiManager.disableNavigationBar();
         setContentView(R.layout.activity_home);
         firebaseAuth = FirebaseAuth.getInstance();
-        newMqttBroker = new BasicMqttBroker();
+        mqttBrokers = new ArrayList<>();
         populateWidgetObjects();
         brokersListRecyclerView.addItemDecoration(new DividerItemDecoration(HomeActivity.this, LinearLayout.VERTICAL));
         LinearLayoutManager verticalLayoutManager = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.VERTICAL, false);
         brokersListRecyclerView.setLayoutManager(verticalLayoutManager);
-        brokersAdapter = new BrokersRecyclerViewListAdapter(newMqttBroker);
+        brokersAdapter = new BrokersRecyclerViewListAdapter(mqttBrokers);
         brokersListRecyclerView.setAdapter(brokersAdapter);
         logoutBtn.setOnClickListener(v -> {
             firebaseAuth.signOut();
             startActivity(new Intent(HomeActivity.this, MainActivity.class));
         });
 
-        registerBrokerBtn.setOnClickListener(v -> {
-            openBrokerRegisterDialog();
-        });
+        registerBrokerBtn.setOnClickListener(v -> openBrokerRegisterDialog());
+
     }
 
 
@@ -68,8 +69,9 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
 
     private void populateWidgetObjects() {
         logoutBtn = findViewById(R.id.logoutBtn);
-        registerBrokerBtn = findViewById(R.id.deleteBrokerButton);
+        registerBrokerBtn = findViewById(R.id.addNewBrokerButton);
         brokersListRecyclerView = findViewById(R.id.brokersListRecyclerView);
+        deleteBrokerButton = findViewById(R.id.deleteBrokerButton);
     }
 
     @SuppressLint("NewApi")
@@ -90,7 +92,9 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
         return brokersAdapter;
     }
 
-    public static BasicMqttBroker getNewMqttBroker() {
-        return newMqttBroker;
+    public static List<BasicMqttBroker> getMqttBrokersList() {
+        return mqttBrokers;
     }
+
+
 }
