@@ -1,15 +1,19 @@
 package com.ivanboyukliev.plantsirrigationsystem;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputValidator;
+
 import java.util.Objects;
+
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.INCORRECT_EMAIL_MESSAGE;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.WEAK_PASSWORD_MESSAGE;
 
