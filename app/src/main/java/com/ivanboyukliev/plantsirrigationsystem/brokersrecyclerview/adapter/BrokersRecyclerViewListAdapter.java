@@ -1,6 +1,5 @@
 package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.adapter;
 
-
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,39 +12,43 @@ import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.viewholder.MqttBrokerViewHolder;
 
+import java.util.List;
+
 public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBrokerViewHolder> {
 
-    private BasicMqttBroker mqttBroker;
+    private List<BasicMqttBroker> mqttBrokers;
 
-    public BrokersRecyclerViewListAdapter(BasicMqttBroker mqttBroker) {
-        this.mqttBroker = mqttBroker;
+    public BrokersRecyclerViewListAdapter(List<BasicMqttBroker> mqttBrokers) {
+        this.mqttBrokers = mqttBrokers;
     }
 
     @NonNull
     @Override
     public MqttBrokerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View  brokerRowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.broker_list_row,parent,false);
-        MqttBrokerViewHolder brokerViewHolder =  new MqttBrokerViewHolder(brokerRowView);
-        return  brokerViewHolder;
+        View brokerRowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.broker_list_row, parent, false);
+        MqttBrokerViewHolder brokerViewHolder = new MqttBrokerViewHolder(brokerRowView);
+        return brokerViewHolder;
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MqttBrokerViewHolder holder, int position) {
-        holder.getBrokerNameTv().setText(mqttBroker.getBrokerName());
-        holder.getBrokerIpTv().setText(mqttBroker.getBrokerIp() + ":" + mqttBroker.getBrokerPort());
+        BasicMqttBroker brokerForBinding = mqttBrokers.get(position);
+        holder.getBrokerNameTv().setText(brokerForBinding.getBrokerName());
+        holder.getBrokerIpTv().setText(brokerForBinding.getBrokerIp() + ":" + brokerForBinding.getBrokerPort());
+        holder.getDeleteBrokerButton().setOnClickListener(v -> {
+            //For future we should delete record from DB also!!!!
+            mqttBrokers.remove(position);
+            notifyDataSetChanged();
+        });
     }
 
     @Override
     public int getItemCount() {
-        /*!!!Should be refactored when DB functionality for storing user brokers is ready!!!!*/
-        if(mqttBroker.getBrokerName() == null)
-            return 0;
-        else
-            return 1;
+        return mqttBrokers.size();
     }
 
-    public BasicMqttBroker getMqttBroker() {
-        return mqttBroker;
+    public List<BasicMqttBroker> getMqttBrokers() {
+        return mqttBrokers;
     }
 }
