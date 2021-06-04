@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +20,7 @@ import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.adapter.Brok
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerRegDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttRegDialogListener;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
+import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
 import com.ivanboyukliev.plantsirrigationsystem.utils.AndroidUIManager;
 
 import java.util.ArrayList;
@@ -33,8 +36,10 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
     private FloatingActionButton registerBrokerBtn;
     private RecyclerView brokersListRecyclerView;
     private BrokersRecyclerViewListAdapter brokersAdapter;
-    private AndroidUIManager uiManager;
+    private static AndroidUIManager uiManager;
     private static List<BasicMqttBroker> mqttBrokers;
+    private static List<MqttClientActions> mqttClientActionsList;
+    private static Context homeActivityContext;
 
 
     @Override
@@ -42,15 +47,17 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         uiManager = new AndroidUIManager(getWindow());
+        homeActivityContext = getApplicationContext();
         uiManager.disableNavigationBar();
         setContentView(R.layout.activity_home);
         firebaseAuth = FirebaseAuth.getInstance();
         mqttBrokers = new ArrayList<>();
+        mqttClientActionsList = new ArrayList<>();
         populateWidgetObjects();
         brokersListRecyclerView.addItemDecoration(new DividerItemDecoration(HomeActivity.this, LinearLayout.VERTICAL));
         LinearLayoutManager verticalLayoutManager = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.VERTICAL, false);
         brokersListRecyclerView.setLayoutManager(verticalLayoutManager);
-        brokersAdapter = new BrokersRecyclerViewListAdapter(mqttBrokers);
+        brokersAdapter = new BrokersRecyclerViewListAdapter(mqttBrokers, mqttClientActionsList);
         brokersListRecyclerView.setAdapter(brokersAdapter);
         logoutBtn.setOnClickListener(v -> {
             firebaseAuth.signOut();
@@ -58,9 +65,7 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
         });
 
         registerBrokerBtn.setOnClickListener(v -> openBrokerRegisterDialog());
-
     }
-
 
     @Override
     public void onDialogDataSending() {
@@ -96,5 +101,20 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
         return mqttBrokers;
     }
 
+    public static List<MqttClientActions> getMqttClientActionsList() {
+        return mqttClientActionsList;
+    }
 
+    public static AndroidUIManager getUiManager() {
+        return uiManager;
+    }
+
+    public static Context getHomeActivityContext() {
+        return homeActivityContext;
+    }
+
+    public static void showBrokerConnectionError() {
+        Toast toast = Toast.makeText(homeActivityContext, "Connection to broker failed. Please check your network connection.", Toast.LENGTH_SHORT);
+        toast.show();
+    }
 }
