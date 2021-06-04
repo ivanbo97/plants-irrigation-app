@@ -16,6 +16,8 @@ import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttRegDialogListener;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
+import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
+import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
 
 public class MqttBrokerRegDialog extends AppCompatDialogFragment {
 
@@ -46,6 +48,8 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
                     newBroker.setBrokerIp(brokerIpWidget.getText().toString());
                     newBroker.setBrokerPort(brokerPortWidget.getText().toString());
                     HomeActivity.getMqttBrokersList().add(newBroker);
+                    MqttClientActions mqttClientActions = new MqttClientActionsImpl(newBroker);
+                    HomeActivity.getMqttClientActionsList().add(mqttClientActions);
                     dialogListener.onDialogDataSending();
                 });
         return dialogBuilder.create();
