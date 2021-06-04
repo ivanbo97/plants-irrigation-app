@@ -1,6 +1,7 @@
 package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.adapter;
 
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,16 +29,17 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
         return  brokerViewHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MqttBrokerViewHolder holder, int position) {
         holder.getBrokerNameTv().setText(mqttBroker.getBrokerName());
-        holder.getBrokerIpTv().setText(mqttBroker.getBrokerIp());
+        holder.getBrokerIpTv().setText(mqttBroker.getBrokerIp() + ":" + mqttBroker.getBrokerPort());
     }
 
     @Override
     public int getItemCount() {
         /*!!!Should be refactored when DB functionality for storing user brokers is ready!!!!*/
-        if(mqttBroker == null)
+        if(mqttBroker.getBrokerName() == null)
             return 0;
         else
             return 1;
