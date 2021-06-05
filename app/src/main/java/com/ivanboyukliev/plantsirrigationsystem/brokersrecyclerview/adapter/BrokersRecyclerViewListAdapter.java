@@ -13,6 +13,7 @@ import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.viewholder.MqttBrokerViewHolder;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
+import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
 
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
     @Override
     public void onBindViewHolder(@NonNull MqttBrokerViewHolder holder, int position) {
         BasicMqttBroker brokerForBinding = mqttBrokers.get(position);
+        MqttClientActions actionsForBinding = mqttClientActionsList.get(position);
         holder.getBrokerNameTv().setText(brokerForBinding.getBrokerName());
         holder.getBrokerIpTv().setText(brokerForBinding.getBrokerIp() + ":" + brokerForBinding.getBrokerPort());
         holder.getDeleteBrokerButton().setOnClickListener(v -> {
@@ -48,8 +50,21 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
         });
 
         holder.getConnectBtn().setOnClickListener(v -> {
-            mqttClientActionsList.get(position).connectClient();
+            actionsForBinding.connectClient();
         });
+
+        holder.getDisconnectBtn().setOnClickListener(v -> {
+            actionsForBinding.disconnectClient();
+        });
+
+        if (!((MqttClientActionsImpl) actionsForBinding).isConnected()) {
+            holder.getConnectBtn().setEnabled(true);
+            holder.getDisconnectBtn().setEnabled(false);
+        } else {
+            holder.getConnectBtn().setEnabled(false);
+            holder.getDisconnectBtn().setEnabled(true);
+        }
+
     }
 
     @Override
