@@ -21,6 +21,7 @@ import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerRegDialo
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttRegDialogListener;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
+import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
 import com.ivanboyukliev.plantsirrigationsystem.utils.AndroidUIManager;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
     private FirebaseAuth firebaseAuth;
     private FloatingActionButton registerBrokerBtn;
     private RecyclerView brokersListRecyclerView;
-    private BrokersRecyclerViewListAdapter brokersAdapter;
+    private static BrokersRecyclerViewListAdapter brokersAdapter;
     private static AndroidUIManager uiManager;
     private static List<BasicMqttBroker> mqttBrokers;
     private static List<MqttClientActions> mqttClientActionsList;
@@ -59,8 +60,10 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
         brokersListRecyclerView.setLayoutManager(verticalLayoutManager);
         brokersAdapter = new BrokersRecyclerViewListAdapter(mqttBrokers, mqttClientActionsList);
         brokersListRecyclerView.setAdapter(brokersAdapter);
+
         logoutBtn.setOnClickListener(v -> {
             firebaseAuth.signOut();
+            MqttClientActionsImpl.disconnectAllClients(mqttClientActionsList);
             startActivity(new Intent(HomeActivity.this, MainActivity.class));
         });
 
@@ -71,6 +74,18 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
     public void onDialogDataSending() {
         brokersAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MqttClientActionsImpl.disconnectAllClients(mqttClientActionsList);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
 
     private void populateWidgetObjects() {
         logoutBtn = findViewById(R.id.logoutBtn);
@@ -93,7 +108,7 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
         mqttBrokerRegDialog.show(getSupportFragmentManager(), "MQTT Broker Registration");
     }
 
-    public BrokersRecyclerViewListAdapter getBrokersAdapter() {
+    public static BrokersRecyclerViewListAdapter getBrokersAdapter() {
         return brokersAdapter;
     }
 
