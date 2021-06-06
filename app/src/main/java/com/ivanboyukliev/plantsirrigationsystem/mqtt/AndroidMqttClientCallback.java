@@ -21,7 +21,6 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
     @Override
     public void connectComplete(boolean reconnect, String serverURI) {
         Log.i("MQTT CLIENT STATUS:  ", "CONNECTED");
-
     }
 
     @Override
@@ -33,7 +32,7 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-
+        Log.i("DATA FROM BROKER", message.toString());
     }
 
     @Override
