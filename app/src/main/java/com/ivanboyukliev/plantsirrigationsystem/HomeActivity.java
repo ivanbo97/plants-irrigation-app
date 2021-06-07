@@ -1,6 +1,7 @@
 package com.ivanboyukliev.plantsirrigationsystem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,8 +19,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.adapter.BrokersRecyclerViewListAdapter;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerRegDialog;
-import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttRegDialogListener;
+import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.BrokerDataInputListener;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
+import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttCredentialsInputListener;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
 import com.ivanboyukliev.plantsirrigationsystem.utils.AndroidUIManager;
@@ -29,7 +31,7 @@ import java.util.List;
 
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.NAV_BAR_INVISIBLE;
 
-public class HomeActivity extends AppCompatActivity implements MqttRegDialogListener {
+public class HomeActivity extends AppCompatActivity implements BrokerDataInputListener, MqttCredentialsInputListener {
 
     private Button logoutBtn;
     private FloatingActionButton deleteBrokerButton;
@@ -41,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
     private static List<BasicMqttBroker> mqttBrokers;
     private static List<MqttClientActions> mqttClientActionsList;
     private static Context homeActivityContext;
-
+    private static FragmentManager homeActivityFragmentManager;
 
     @Override
     @SuppressLint("NewApi")
@@ -49,6 +51,7 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
         super.onCreate(savedInstanceState);
         uiManager = new AndroidUIManager(getWindow());
         homeActivityContext = getApplicationContext();
+        homeActivityFragmentManager = getSupportFragmentManager();
         uiManager.disableNavigationBar();
         setContentView(R.layout.activity_home);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -71,8 +74,13 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
     }
 
     @Override
-    public void onDialogDataSending() {
+    public void onBrokerDataSending() {
         brokersAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCredentialsEntered(String username, String password, int brokerNum) {
+        mqttClientActionsList.get(brokerNum).connectClient(username, password);
     }
 
     @Override
@@ -85,7 +93,6 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
     protected void onPause() {
         super.onPause();
     }
-
 
     private void populateWidgetObjects() {
         logoutBtn = findViewById(R.id.logoutBtn);
@@ -128,8 +135,12 @@ public class HomeActivity extends AppCompatActivity implements MqttRegDialogList
         return homeActivityContext;
     }
 
-    public static void showBrokerConnectionError() {
-        Toast toast = Toast.makeText(homeActivityContext, "Connection to broker failed. Please check your network connection.", Toast.LENGTH_SHORT);
+    public static void showBrokerError(String errorMessage) {
+        Toast toast = Toast.makeText(homeActivityContext, errorMessage, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    public static FragmentManager getHomeActivityFragmentManager() {
+        return homeActivityFragmentManager;
     }
 }
