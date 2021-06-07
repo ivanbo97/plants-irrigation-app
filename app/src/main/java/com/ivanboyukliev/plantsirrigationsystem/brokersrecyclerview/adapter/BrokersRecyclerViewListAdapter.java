@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.viewholder.MqttBrokerViewHolder;
+import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttAuthenticationDialog;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
 
@@ -50,7 +52,8 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
         });
 
         holder.getConnectBtn().setOnClickListener(v -> {
-            actionsForBinding.connectClient();
+            MqttAuthenticationDialog authenticationDialog = new MqttAuthenticationDialog(position);
+            authenticationDialog.show(HomeActivity.getHomeActivityFragmentManager(), "MQTT Broker Authentication");
         });
 
         holder.getDisconnectBtn().setOnClickListener(v -> {
