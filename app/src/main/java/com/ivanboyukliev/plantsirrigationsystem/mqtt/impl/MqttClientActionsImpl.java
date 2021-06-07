@@ -47,7 +47,7 @@ public class MqttClientActionsImpl implements MqttClientActions {
     }
 
     @Override
-    public void connectClient() {
+    public void connectClient(String username, String password) {
 
         try {
             ConnectionTokenCallback connectionTokenCallback = new ConnectionTokenCallback(this, mqttAndroidClient);
@@ -59,6 +59,8 @@ public class MqttClientActionsImpl implements MqttClientActions {
                 InputStream keyFile = HomeActivity.getHomeActivityContext().getResources().openRawResource(R.raw.key);
                 SSLSocketFactory sslSocketFactory = SSLConfigurator.getSocketFactory(caCrtFile, crtFile, keyFile, "");
                 options.setSocketFactory(sslSocketFactory);
+                options.setUserName(username);
+                options.setPassword(password.toCharArray());
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
