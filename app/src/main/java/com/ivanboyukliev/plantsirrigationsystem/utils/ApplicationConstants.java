@@ -13,8 +13,11 @@ public final class ApplicationConstants {
 
     public static final String INCORRECT_EMAIL_MESSAGE = "Please enter a valid email address!";
     public static final String WEAK_PASSWORD_MESSAGE = "Password is too weak! You should have at least 6 chars " +
-                                                       "including at least one upper case," +
-                                                       "lower case letter, special symbol and no white spaces!";
+            "including at least one upper case," +
+            "lower case letter, special symbol and no white spaces!";
+    public static final String BROKER_CONNECTION_ERROR_MSG = "Connection to broker failed! Please check your network connection";
+    public static final String AUTHORIZATION_ERROR = "Not authorized to connect";
+    public static final String BROKER_CONN_ERR = "Unable to connect to server";
 
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("^" +
             "(?=.*[0-9])" +             //at least 1 digit
