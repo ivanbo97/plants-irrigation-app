@@ -11,22 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
-import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
+import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.viewholder.MqttBrokerViewHolder;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttAuthenticationDialog;
-import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
-import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
 
 import java.util.List;
 
 public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBrokerViewHolder> {
 
-    private List<BasicMqttBroker> mqttBrokers;
-    private List<MqttClientActions> mqttClientActionsList;
+    private List<BasicMqttBrokerClient> mqttBrokers;
 
-    public BrokersRecyclerViewListAdapter(List<BasicMqttBroker> mqttBrokers, List<MqttClientActions> mqttClientActionsList) {
+    public BrokersRecyclerViewListAdapter(List<BasicMqttBrokerClient> mqttBrokers) {
         this.mqttBrokers = mqttBrokers;
-        this.mqttClientActionsList = mqttClientActionsList;
     }
 
     @NonNull
@@ -40,14 +36,12 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MqttBrokerViewHolder holder, int position) {
-        BasicMqttBroker brokerForBinding = mqttBrokers.get(position);
-        MqttClientActions actionsForBinding = mqttClientActionsList.get(position);
+        BasicMqttBrokerClient brokerForBinding = mqttBrokers.get(position);
         holder.getBrokerNameTv().setText(brokerForBinding.getBrokerName());
         holder.getBrokerIpTv().setText(brokerForBinding.getBrokerIp() + ":" + brokerForBinding.getBrokerPort());
         holder.getDeleteBrokerButton().setOnClickListener(v -> {
             //For future we should delete record from DB also!!!!
             mqttBrokers.remove(position);
-            mqttClientActionsList.remove(position);
             notifyDataSetChanged();
         });
 
@@ -57,10 +51,10 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
         });
 
         holder.getDisconnectBtn().setOnClickListener(v -> {
-            actionsForBinding.disconnectClient();
+            mqttBrokers.get(position).disconnectClient();
         });
 
-        if (!((MqttClientActionsImpl) actionsForBinding).isConnected()) {
+        if (!brokerForBinding.isConnected()) {
             holder.getConnectBtn().setEnabled(true);
             holder.getDisconnectBtn().setEnabled(false);
         } else {
@@ -75,7 +69,7 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
         return mqttBrokers.size();
     }
 
-    public List<BasicMqttBroker> getMqttBrokers() {
+    public List<BasicMqttBrokerClient> getMqttBrokers() {
         return mqttBrokers;
     }
 }

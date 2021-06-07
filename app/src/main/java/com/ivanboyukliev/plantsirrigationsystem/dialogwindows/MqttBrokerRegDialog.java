@@ -15,9 +15,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.BrokerDataInputListener;
-import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
-import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
-import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
+import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 
 public class MqttBrokerRegDialog extends AppCompatDialogFragment {
 
@@ -42,13 +40,12 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
                 })
                 .setPositiveButton("Register", (dialog, which) -> {
 
-                    BasicMqttBroker newBroker = new BasicMqttBroker();
+                    BasicMqttBrokerClient newBroker = new BasicMqttBrokerClient();
                     newBroker.setBrokerName(brokerNameWidget.getText().toString());
                     newBroker.setBrokerIp(brokerIpWidget.getText().toString());
                     newBroker.setBrokerPort(brokerPortWidget.getText().toString());
+                    newBroker.initClientData();
                     HomeActivity.getMqttBrokersList().add(newBroker);
-                    MqttClientActions mqttClientActions = new MqttClientActionsImpl(newBroker);
-                    HomeActivity.getMqttClientActionsList().add(mqttClientActions);
                     dialogListener.onBrokerDataSending();
                 });
         return dialogBuilder.create();
