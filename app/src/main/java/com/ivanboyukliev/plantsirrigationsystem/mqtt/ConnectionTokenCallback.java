@@ -4,8 +4,9 @@ package com.ivanboyukliev.plantsirrigationsystem.mqtt;
 import android.util.Log;
 
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
+import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
-import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
+
 import com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -29,7 +30,7 @@ public class ConnectionTokenCallback implements IMqttActionListener {
     @Override
     public void onSuccess(IMqttToken asyncActionToken) {
         Log.i("BROKER INFO", "Connection success!!");
-        ((MqttClientActionsImpl) connectAction).setConnected(true);
+        ((BasicMqttBrokerClient) connectAction).setConnected(true);
         HomeActivity.getBrokersAdapter().notifyDataSetChanged();
         TopicSubscriptionCallBack topicSubscriptionCallBack = new TopicSubscriptionCallBack();
         try {
@@ -51,7 +52,7 @@ public class ConnectionTokenCallback implements IMqttActionListener {
             HomeActivity.showBrokerError(BROKER_CONNECTION_ERROR_MSG);
         }
         exception.printStackTrace();
-        ((MqttClientActionsImpl) connectAction).setConnected(false);
+        ((BasicMqttBrokerClient) connectAction).setConnected(false);
         HomeActivity.getBrokersAdapter().notifyDataSetChanged();
     }
 }
