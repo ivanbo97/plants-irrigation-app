@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
-import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttRegDialogListener;
+import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.BrokerDataInputListener;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
@@ -25,8 +25,7 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
     private EditText brokerNameWidget;
     private EditText brokerIpWidget;
     private EditText brokerPortWidget;
-    private EditText brokerPasswordWidget; //for future security purpose
-    private MqttRegDialogListener dialogListener;
+    private BrokerDataInputListener dialogListener;
 
 
     @NonNull
@@ -50,7 +49,7 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
                     HomeActivity.getMqttBrokersList().add(newBroker);
                     MqttClientActions mqttClientActions = new MqttClientActionsImpl(newBroker);
                     HomeActivity.getMqttClientActionsList().add(mqttClientActions);
-                    dialogListener.onDialogDataSending();
+                    dialogListener.onBrokerDataSending();
                 });
         return dialogBuilder.create();
     }
@@ -59,7 +58,7 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            dialogListener = (MqttRegDialogListener) context;
+            dialogListener = (BrokerDataInputListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + "must implement MqttRegDialogListener");
         }
