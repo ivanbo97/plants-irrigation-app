@@ -9,6 +9,8 @@ import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.BROKER_CONNECTION_ERROR_MSG;
+
 public class DisconnectTokenCallback implements IMqttActionListener {
 
     private MqttClientActions disconnectAction;
@@ -28,7 +30,7 @@ public class DisconnectTokenCallback implements IMqttActionListener {
     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
         Log.i("BROKER INFO", "Disconnection failed!!");
         ((MqttClientActionsImpl) disconnectAction).setConnected(true);
-        HomeActivity.showBrokerConnectionError();
+        HomeActivity.showBrokerError(BROKER_CONNECTION_ERROR_MSG);
         HomeActivity.getBrokersAdapter().notifyDataSetChanged();
     }
 }
