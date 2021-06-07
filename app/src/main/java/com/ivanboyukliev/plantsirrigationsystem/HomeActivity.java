@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -20,10 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.adapter.BrokersRecyclerViewListAdapter;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerRegDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.BrokerDataInputListener;
-import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBroker;
+import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttCredentialsInputListener;
-import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
-import com.ivanboyukliev.plantsirrigationsystem.mqtt.impl.MqttClientActionsImpl;
 import com.ivanboyukliev.plantsirrigationsystem.utils.AndroidUIManager;
 
 import java.util.ArrayList;
@@ -40,8 +39,7 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
     private RecyclerView brokersListRecyclerView;
     private static BrokersRecyclerViewListAdapter brokersAdapter;
     private static AndroidUIManager uiManager;
-    private static List<BasicMqttBroker> mqttBrokers;
-    private static List<MqttClientActions> mqttClientActionsList;
+    private static List<BasicMqttBrokerClient> mqttBrokers;
     private static Context homeActivityContext;
     private static FragmentManager homeActivityFragmentManager;
 
@@ -56,17 +54,16 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         setContentView(R.layout.activity_home);
         firebaseAuth = FirebaseAuth.getInstance();
         mqttBrokers = new ArrayList<>();
-        mqttClientActionsList = new ArrayList<>();
         populateWidgetObjects();
         brokersListRecyclerView.addItemDecoration(new DividerItemDecoration(HomeActivity.this, LinearLayout.VERTICAL));
         LinearLayoutManager verticalLayoutManager = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.VERTICAL, false);
         brokersListRecyclerView.setLayoutManager(verticalLayoutManager);
-        brokersAdapter = new BrokersRecyclerViewListAdapter(mqttBrokers, mqttClientActionsList);
+        brokersAdapter = new BrokersRecyclerViewListAdapter(mqttBrokers);
         brokersListRecyclerView.setAdapter(brokersAdapter);
 
         logoutBtn.setOnClickListener(v -> {
             firebaseAuth.signOut();
-            MqttClientActionsImpl.disconnectAllClients(mqttClientActionsList);
+            disconnectAllClients();
             startActivity(new Intent(HomeActivity.this, MainActivity.class));
         });
 
@@ -80,13 +77,13 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
 
     @Override
     public void onCredentialsEntered(String username, String password, int brokerNum) {
-        mqttClientActionsList.get(brokerNum).connectClient(username, password);
+        mqttBrokers.get(brokerNum).connectClient(username, password);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MqttClientActionsImpl.disconnectAllClients(mqttClientActionsList);
+        disconnectAllClients();
     }
 
     @Override
@@ -99,6 +96,12 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         registerBrokerBtn = findViewById(R.id.addNewBrokerButton);
         brokersListRecyclerView = findViewById(R.id.brokersListRecyclerView);
         deleteBrokerButton = findViewById(R.id.deleteBrokerButton);
+    }
+
+    private void disconnectAllClients() {
+        for (BasicMqttBrokerClient mqttBroker : mqttBrokers) {
+            mqttBroker.disconnectClient();
+        }
     }
 
     @SuppressLint("NewApi")
@@ -119,12 +122,8 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         return brokersAdapter;
     }
 
-    public static List<BasicMqttBroker> getMqttBrokersList() {
+    public static List<BasicMqttBrokerClient> getMqttBrokersList() {
         return mqttBrokers;
-    }
-
-    public static List<MqttClientActions> getMqttClientActionsList() {
-        return mqttClientActionsList;
     }
 
     public static AndroidUIManager getUiManager() {
