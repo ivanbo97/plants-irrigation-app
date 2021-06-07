@@ -4,7 +4,7 @@ public interface MqttClientActions {
 
     void initClientData();
 
-    void connectClient();
+    void connectClient(String username, String password);
 
     void disconnectClient();
 }
