@@ -18,6 +18,7 @@ public final class ApplicationConstants {
     public static final String BROKER_CONNECTION_ERROR_MSG = "Connection to broker failed! Please check your network connection";
     public static final String AUTHORIZATION_ERROR = "Not authorized to connect";
     public static final String BROKER_CONN_ERR = "Unable to connect to server";
+    public static final String DB_URL = "https://plantsirrigationsystem-2d4ed-default-rtdb.europe-west1.firebasedatabase.app";
 
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("^" +
             "(?=.*[0-9])" +             //at least 1 digit
