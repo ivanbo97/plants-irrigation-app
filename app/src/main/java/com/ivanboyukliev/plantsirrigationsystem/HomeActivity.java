@@ -18,16 +18,21 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.adapter.BrokersRecyclerViewListAdapter;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerRegDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.BrokerDataInputListener;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttCredentialsInputListener;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.BrokerDataChangeListener;
 import com.ivanboyukliev.plantsirrigationsystem.utils.AndroidUIManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.DB_URL;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.NAV_BAR_INVISIBLE;
 
 public class HomeActivity extends AppCompatActivity implements BrokerDataInputListener, MqttCredentialsInputListener {
@@ -35,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
     private Button logoutBtn;
     private FloatingActionButton deleteBrokerButton;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference mDatabaseUsers;
     private FloatingActionButton registerBrokerBtn;
     private RecyclerView brokersListRecyclerView;
     private static BrokersRecyclerViewListAdapter brokersAdapter;
@@ -68,6 +74,8 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         });
 
         registerBrokerBtn.setOnClickListener(v -> openBrokerRegisterDialog());
+        mDatabaseUsers = FirebaseDatabase.getInstance(DB_URL).getReference("users" + "/" + firebaseAuth.getUid());
+        mDatabaseUsers.addValueEventListener(new BrokerDataChangeListener());
     }
 
     @Override
@@ -84,11 +92,6 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
     protected void onDestroy() {
         super.onDestroy();
         disconnectAllClients();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
     private void populateWidgetObjects() {
