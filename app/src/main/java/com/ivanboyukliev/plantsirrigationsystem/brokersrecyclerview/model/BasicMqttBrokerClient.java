@@ -18,6 +18,8 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.SSLSocketFactory;
 
@@ -28,17 +30,17 @@ public class BasicMqttBrokerClient implements MqttClientActions {
     private String brokerPort;
     private MqttAndroidClient mqttAndroidClient;
     private MqttCallbackExtended mqttCallback;
+    private List<String> topics;
     private boolean isConnected;
 
     public BasicMqttBrokerClient() {
-
+        topics = new ArrayList<>();
     }
 
     @Override
     public void initClientData() {
         String clientId = MqttClient.generateClientId();
         String brokerURI = brokerIp + ":" + brokerPort;
-        Log.i("BROKER ADDRESS", brokerURI);
         mqttAndroidClient = new MqttAndroidClient(HomeActivity.getHomeActivityContext(), brokerURI, clientId);
         mqttCallback = new AndroidMqttClientCallback(this);
         mqttAndroidClient.setCallback(mqttCallback);
@@ -111,5 +113,13 @@ public class BasicMqttBrokerClient implements MqttClientActions {
 
     public void setConnected(boolean connected) {
         isConnected = connected;
+    }
+
+    public List<String> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<String> topics) {
+        this.topics = topics;
     }
 }
