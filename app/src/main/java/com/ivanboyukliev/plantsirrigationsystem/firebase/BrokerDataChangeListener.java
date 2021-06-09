@@ -17,6 +17,7 @@ public class BrokerDataChangeListener implements ValueEventListener {
         HomeActivity.getMqttBrokersList().clear();
         for (DataSnapshot broker : snapshot.getChildren()) {
             BasicMqttBrokerClient mqttBroker = new BasicMqttBrokerClient();
+            mqttBroker.setBrokerID(broker.getKey());
             String brokerName = broker.child("/brkName").getValue(String.class);
             mqttBroker.setBrokerName(brokerName);
             String brokerUrl = broker.child("/brkURI").getValue(String.class);
