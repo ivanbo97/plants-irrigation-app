@@ -8,4 +8,5 @@
     <string name="signInBtnText">Sign In</string>
     <string name="loginSucessText">You have successfully logged in!!!</string>
     <string name="addNewBrokerString">Add new MQTT broker</string>
+    <string name="showTopicsStr"><u>Show topics</u></string>
 </resources>
