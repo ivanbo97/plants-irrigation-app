@@ -38,7 +38,6 @@ import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstant
 public class HomeActivity extends AppCompatActivity implements BrokerDataInputListener, MqttCredentialsInputListener {
 
     private Button logoutBtn;
-    private FloatingActionButton deleteBrokerButton;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference mDatabaseUsers;
     private FloatingActionButton registerBrokerBtn;
@@ -98,7 +97,6 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         logoutBtn = findViewById(R.id.logoutBtn);
         registerBrokerBtn = findViewById(R.id.addNewBrokerButton);
         brokersListRecyclerView = findViewById(R.id.brokersListRecyclerView);
-        deleteBrokerButton = findViewById(R.id.deleteBrokerButton);
     }
 
     private void disconnectAllClients() {
