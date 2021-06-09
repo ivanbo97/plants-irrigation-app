@@ -1,7 +1,5 @@
 package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model;
 
-import android.util.Log;
-
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.AndroidMqttClientCallback;
@@ -28,6 +26,7 @@ public class BasicMqttBrokerClient implements MqttClientActions {
     private String brokerName;
     private String brokerIp;
     private String brokerPort;
+    private String brokerID;
     private MqttAndroidClient mqttAndroidClient;
     private MqttCallbackExtended mqttCallback;
     private List<String> topics;
@@ -121,5 +120,13 @@ public class BasicMqttBrokerClient implements MqttClientActions {
 
     public void setTopics(List<String> topics) {
         this.topics = topics;
+    }
+
+    public String getBrokerID() {
+        return brokerID;
+    }
+
+    public void setBrokerID(String brokerID) {
+        this.brokerID = brokerID;
     }
 }
