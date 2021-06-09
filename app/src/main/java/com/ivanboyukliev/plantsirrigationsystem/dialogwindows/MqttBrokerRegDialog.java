@@ -12,10 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.BrokerDataInputListener;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
+import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputValidator;
+
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.DB_URL;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.INCORRECT_PORT_MESSAGE;
 
 public class MqttBrokerRegDialog extends AppCompatDialogFragment {
 
@@ -36,19 +44,41 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
         dialogBuilder.setView(dialogView)
                 .setTitle("MQTT Broker Registration")
                 .setNegativeButton("Cancel", (dialog, which) -> {
-                    //no-action needed for now
+                    dialog.dismiss();
                 })
-                .setPositiveButton("Register", (dialog, which) -> {
+                .setPositiveButton("Register", null);
 
-                    BasicMqttBrokerClient newBroker = new BasicMqttBrokerClient();
-                    newBroker.setBrokerName(brokerNameWidget.getText().toString());
-                    newBroker.setBrokerIp(brokerIpWidget.getText().toString());
-                    newBroker.setBrokerPort(brokerPortWidget.getText().toString());
-                    newBroker.initClientData();
-                    HomeActivity.getMqttBrokersList().add(newBroker);
-                    dialogListener.onBrokerDataSending();
-                });
+
         return dialogBuilder.create();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final AlertDialog dialog = (AlertDialog) getDialog();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String brokerPort = brokerPortWidget.getText().toString();
+            BasicMqttBrokerClient newBroker = new BasicMqttBrokerClient();
+            String brokerName = brokerNameWidget.getText().toString();
+            newBroker.setBrokerName(brokerName);
+            String brokerIp = brokerIpWidget.getText().toString();
+            newBroker.setBrokerIp(brokerIp);
+            if (!UserInputValidator.isPortValid(brokerPort)) {
+                brokerPortWidget.setError(INCORRECT_PORT_MESSAGE);
+                return;
+            }
+            newBroker.setBrokerPort(brokerPort);
+            newBroker.initClientData();
+            HomeActivity.getMqttBrokersList().add(newBroker);
+            dialogListener.onBrokerDataSending();
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            DatabaseReference databaseUserBrokers = FirebaseDatabase.getInstance(DB_URL).getReference("users" + "/" + firebaseAuth.getUid());
+            String newBrokerId = databaseUserBrokers.push().getKey();
+            FirebaseBrokerObj firebaseBrokerObj = new FirebaseBrokerObj(brokerName, brokerIp + ":" + brokerPort, newBroker.getTopics());
+            databaseUserBrokers.child("BRKID" + newBrokerId).setValue(firebaseBrokerObj);
+            dialog.dismiss();
+
+        });
     }
 
     @Override
