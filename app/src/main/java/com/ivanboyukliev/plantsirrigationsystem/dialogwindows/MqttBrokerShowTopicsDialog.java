@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -17,12 +18,17 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 
 import com.ivanboyukliev.plantsirrigationsystem.topicsrecyclerview.adapter.TopicsRecyclerViewListAdapter;
 
 import java.util.List;
+
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.DB_URL;
 
 public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
 
@@ -52,8 +58,27 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
         topicsListRecyclerView.setAdapter(topicsAdapter);
         dialogBuilder.setView(dialogView)
                 .setTitle("Topics Subscription List")
-                .setNegativeButton("Cancel", (dialog, which) -> {
-                    //no-action needed for now
+                .setNegativeButton("Add new topic", (dialog, which) -> {
+                    View topicDialogView = dialogView = inflater.inflate(R.layout.mqtt_broker_topic_reg, null);
+                    AlertDialog topicDialog = new AlertDialog.Builder(getActivity())
+                            .setView(topicDialogView)
+                            .setTitle("Enter topic")
+                            .setPositiveButton("Add", (dialog1, which1) -> {
+                                EditText newTopicEditText = topicDialogView.findViewById(R.id.mqtt_broker_new_topic);
+                                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                                String brokerID = HomeActivity.getMqttBrokersList().get(brokerNumber).getBrokerID();
+                                DatabaseReference databaseBrokerTopics = FirebaseDatabase.getInstance(DB_URL).getReference(
+                                        "users" + "/" + firebaseAuth.getUid()
+                                                + "/" + brokerID + "/topics"
+                                );
+                                String pushID = databaseBrokerTopics.push().getKey();
+                                String newTopic = newTopicEditText.getText().toString();
+                                databaseBrokerTopics.child(pushID).setValue(newTopic);
+
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .create();
+                    topicDialog.show();
                 });
         topicsAdapter.notifyDataSetChanged();
         return dialogBuilder.create();
