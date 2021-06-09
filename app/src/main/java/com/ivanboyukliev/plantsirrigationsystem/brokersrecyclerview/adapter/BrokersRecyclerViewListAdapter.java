@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
@@ -17,6 +20,8 @@ import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttAuthentication
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowTopicsDialog;
 
 import java.util.List;
+
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.DB_URL;
 
 public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBrokerViewHolder> {
 
@@ -41,7 +46,10 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
         holder.getBrokerNameTv().setText(brokerForBinding.getBrokerName());
         holder.getBrokerIpTv().setText(brokerForBinding.getBrokerIp() + ":" + brokerForBinding.getBrokerPort());
         holder.getDeleteBrokerButton().setOnClickListener(v -> {
-            //For future we should delete record from DB also!!!!
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            DatabaseReference currentBroker = FirebaseDatabase.getInstance(DB_URL).getReference(
+                    "users" + "/" + firebaseAuth.getUid() + "/" + brokerForBinding.getBrokerID());
+            currentBroker.removeValue();
             mqttBrokers.remove(position);
             notifyDataSetChanged();
         });
@@ -68,7 +76,6 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
             holder.getConnectBtn().setEnabled(false);
             holder.getDisconnectBtn().setEnabled(true);
         }
-
     }
 
     @Override
