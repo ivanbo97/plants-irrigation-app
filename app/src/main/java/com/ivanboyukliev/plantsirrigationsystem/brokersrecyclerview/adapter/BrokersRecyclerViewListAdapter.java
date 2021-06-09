@@ -14,6 +14,7 @@ import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.viewholder.MqttBrokerViewHolder;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttAuthenticationDialog;
+import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowTopicsDialog;
 
 import java.util.List;
 
@@ -52,6 +53,12 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
 
         holder.getDisconnectBtn().setOnClickListener(v -> {
             mqttBrokers.get(position).disconnectClient();
+        });
+
+        holder.getShowTopicsTv().setOnClickListener(v -> {
+            //Show dialog with card view
+            MqttBrokerShowTopicsDialog showTopicsDialog = new MqttBrokerShowTopicsDialog(position);
+            showTopicsDialog.show(HomeActivity.getHomeActivityFragmentManager(), "MQTT Broker Subscription Topics");
         });
 
         if (!brokerForBinding.isConnected()) {
