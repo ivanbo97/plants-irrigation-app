@@ -1,17 +1,22 @@
-<androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
     android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
     android:layout_marginRight="5dp"
-    card_view:cardCornerRadius="5dp">
+    android:visibility="visible"
+    card_view:cardCornerRadius="5dp"
+    tools:visibility="visible">
 
     <LinearLayout
-        android:layout_width="229dp"
+        android:layout_width="159dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="2">
+        android:visibility="visible"
+        android:weightSum="2"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/brokerNameTv"
@@ -28,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:gravity="center"
-            android:text="tcp://broker.hivemq.com:1883"
+            android:text="ssl://192.168.0.103:1883"
             android:textAlignment="textStart"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -59,6 +64,50 @@
 
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="213dp"
+        android:layout_marginLeft="160dp">
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="173dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="#555555" />
+
+        <TextView
+            android:id="@+id/actionsTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:text="Actions"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/showTopicsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="52dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/showTopicsStr"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/bulletTopicsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="50dp"
+            android:text="\u25BA" />
+
+
+    </RelativeLayout>
 
 
 </androidx.cardview.widget.CardView>
