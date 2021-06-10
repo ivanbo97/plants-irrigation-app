@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 
 public class BrokerDataChangeListener implements ValueEventListener {
 
@@ -31,6 +32,7 @@ public class BrokerDataChangeListener implements ValueEventListener {
             HomeActivity.getMqttBrokersList().add(mqttBroker);
             HomeActivity.getBrokersAdapter().notifyDataSetChanged();
         }
+        HomeActivity.getBrokersAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -41,7 +43,8 @@ public class BrokerDataChangeListener implements ValueEventListener {
     private void populateTopics(BasicMqttBrokerClient mqttBroker, Iterable<DataSnapshot> topics) {
         for (DataSnapshot topic : topics) {
             String topicName = topic.getValue(String.class);
-            mqttBroker.getTopics().add(topicName);
+            String topicID = topic.getKey();
+            mqttBroker.getTopics().add(new FirebaseTopicObj(topicName, topicID));
         }
     }
 }
