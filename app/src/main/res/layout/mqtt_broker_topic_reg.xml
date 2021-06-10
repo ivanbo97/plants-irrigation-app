@@ -9,4 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Topic Name" />
+
+    <EditText
+        android:id="@+id/mqtt_broker_topic_qos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mqtt_broker_new_topic"
+        android:hint="QoS (from 0 to 2)" />
 </RelativeLayout>
