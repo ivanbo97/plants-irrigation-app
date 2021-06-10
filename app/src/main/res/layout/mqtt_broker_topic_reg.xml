@@ -8,5 +8,5 @@
         android:id="@+id/mqtt_broker_new_topic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username" />
+        android:hint="Topic Name" />
 </RelativeLayout>
