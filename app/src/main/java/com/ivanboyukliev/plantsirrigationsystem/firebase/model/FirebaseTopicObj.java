@@ -3,15 +3,15 @@ package com.ivanboyukliev.plantsirrigationsystem.firebase.model;
 public class FirebaseTopicObj {
 
     private String topicName;
-    private String topicID;
+    private int QoS;
 
     public FirebaseTopicObj() {
 
     }
 
-    public FirebaseTopicObj(String topicName, String topicID) {
+    public FirebaseTopicObj(String topicName, int QoS) {
         this.topicName = topicName;
-        this.topicID = topicID;
+        this.QoS = QoS;
     }
 
     public String getTopicName() {
@@ -22,11 +22,11 @@ public class FirebaseTopicObj {
         this.topicName = topicName;
     }
 
-    public String getTopicID() {
-        return topicID;
+    public int getQoS() {
+        return QoS;
     }
 
-    public void setTopicID(String topicID) {
-        this.topicID = topicID;
+    public void setQoS(int QoS) {
+        this.QoS = QoS;
     }
 }
