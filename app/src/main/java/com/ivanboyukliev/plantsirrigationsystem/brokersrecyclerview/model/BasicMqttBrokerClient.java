@@ -2,6 +2,7 @@ package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model;
 
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.AndroidMqttClientCallback;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.ConnectionTokenCallback;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.DisconnectTokenCallback;
@@ -29,7 +30,7 @@ public class BasicMqttBrokerClient implements MqttClientActions {
     private String brokerID;
     private MqttAndroidClient mqttAndroidClient;
     private MqttCallbackExtended mqttCallback;
-    private List<String> topics;
+    private List<FirebaseTopicObj> topics;
     private boolean isConnected;
 
     public BasicMqttBrokerClient() {
@@ -114,11 +115,11 @@ public class BasicMqttBrokerClient implements MqttClientActions {
         isConnected = connected;
     }
 
-    public List<String> getTopics() {
+    public List<FirebaseTopicObj> getTopics() {
         return topics;
     }
 
-    public void setTopics(List<String> topics) {
+    public void setTopics(List<FirebaseTopicObj> topics) {
         this.topics = topics;
     }
 
