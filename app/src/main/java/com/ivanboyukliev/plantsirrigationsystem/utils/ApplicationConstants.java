@@ -22,7 +22,7 @@ public final class ApplicationConstants {
     public static final String AUTHORIZATION_ERROR = "Not authorized to connect";
     public static final String BROKER_CONN_ERR = "Unable to connect to server";
     public static final String DB_URL = "https://plantsirrigationsystem-2d4ed-default-rtdb.europe-west1.firebasedatabase.app";
-    public static final Pattern PORT_PATTERN = Pattern.compile("[0-9]{1,3}");
+    public static final Pattern PORT_PATTERN = Pattern.compile("[0-9]{1,5}");
     public static final int MAX_PORT_NUMBER = 65535;
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("^" +
             "(?=.*[0-9])" +             //at least 1 digit
