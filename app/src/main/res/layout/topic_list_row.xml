@@ -30,6 +30,7 @@
             android:id="@+id/deleteTopicBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
             android:clickable="true"
             card_view:backgroundTint="@color/white"
             card_view:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
