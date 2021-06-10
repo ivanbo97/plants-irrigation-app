@@ -7,17 +7,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.topicsrecyclerview.viewholder.TopicViewHolder;
+import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputConverter;
 
 import java.util.List;
-
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.DB_URL;
 
 
 public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicViewHolder> {
@@ -41,17 +39,14 @@ public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicVie
     @Override
     public void onBindViewHolder(@NonNull TopicViewHolder holder, int position) {
         FirebaseTopicObj currentTopic = mqttBrokerTopics.get(position);
-        String currentTopicID = currentTopic.getTopicID();
+        String topicID = currentTopic.getTopicName();
+        String firebaseTopicID = UserInputConverter.convertBrokerTopicToFirebaseRules(topicID);
         holder.getTopicNameTv().setText(currentTopic.getTopicName());
         holder.getDeleteTopicBtn().setOnClickListener(v -> {
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            DatabaseReference currentTopicDB = FirebaseDatabase.getInstance(DB_URL).getReference(
-                    "users/" + firebaseAuth.getUid() + "/" + brokerID
-                            + "/topics/" + currentTopicID);
+            DatabaseReference currentTopicDB = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/topics/" + firebaseTopicID);
             currentTopicDB.removeValue();
             mqttBrokerTopics.remove(position);
             notifyDataSetChanged();
-
         });
     }
 
