@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
+import com.ivanboyukliev.plantsirrigationsystem.utils.FirebaseRetrievedDataConverter;
 
 public class BrokerDataChangeListener implements ValueEventListener {
 
@@ -19,16 +20,24 @@ public class BrokerDataChangeListener implements ValueEventListener {
         for (DataSnapshot broker : snapshot.getChildren()) {
             BasicMqttBrokerClient mqttBroker = new BasicMqttBrokerClient();
             mqttBroker.setBrokerID(broker.getKey());
+
             String brokerName = broker.child("/brkName").getValue(String.class);
             mqttBroker.setBrokerName(brokerName);
-            String brokerUrl = broker.child("/brkURI").getValue(String.class);
-            int ipStartIdx = brokerUrl.indexOf(":", brokerUrl.indexOf(":") + 1);
-            String brokerPort = brokerUrl.substring(ipStartIdx + 1);
-            String brokerIp = brokerUrl.substring(0, ipStartIdx);
+
+            String firebaseBrokerUrl = broker.getKey();
+            String standardBrokerUrl = FirebaseRetrievedDataConverter.convertServerURIToStandard(firebaseBrokerUrl);
+
+            int ipStartIdx = standardBrokerUrl.indexOf(":", standardBrokerUrl.indexOf(":") + 1);
+            String brokerPort = standardBrokerUrl.substring(ipStartIdx + 1);
+            String brokerIp = standardBrokerUrl.substring(0, ipStartIdx);
+
             mqttBroker.setBrokerIp(brokerIp);
             mqttBroker.setBrokerPort(brokerPort);
+
             mqttBroker.initClientData();
+
             populateTopics(mqttBroker, broker.child("/topics").getChildren());
+
             HomeActivity.getMqttBrokersList().add(mqttBroker);
             HomeActivity.getBrokersAdapter().notifyDataSetChanged();
         }
@@ -42,9 +51,10 @@ public class BrokerDataChangeListener implements ValueEventListener {
 
     private void populateTopics(BasicMqttBrokerClient mqttBroker, Iterable<DataSnapshot> topics) {
         for (DataSnapshot topic : topics) {
-            String topicName = topic.getValue(String.class);
-            String topicID = topic.getKey();
-            mqttBroker.getTopics().add(new FirebaseTopicObj(topicName, topicID));
+            Integer QoS = topic.getValue(Integer.class);
+            String firebaseTopicName = topic.getKey();
+            String standardTopicName = FirebaseRetrievedDataConverter.convertBrokerTopicToStandard(firebaseTopicName);
+            mqttBroker.getTopics().add(new FirebaseTopicObj(standardTopicName, QoS));
         }
     }
 }
