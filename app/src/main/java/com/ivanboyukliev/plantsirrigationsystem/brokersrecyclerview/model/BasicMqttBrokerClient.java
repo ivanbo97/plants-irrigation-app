@@ -1,5 +1,6 @@
 package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
@@ -81,6 +82,32 @@ public class BasicMqttBrokerClient implements MqttClientActions {
         } catch (MqttException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void subscribeToTopics() {
+        if(!isConnected){
+            HomeActivity.showBrokerError("You have to be connected to MQTT broker!");
+            return;
+        }
+        if(topics.size() == 0){
+            HomeActivity.showBrokerError("There aren't any specified topics for subscription.");
+            return;
+        }
+
+        String [] topics = getCurrentTopicNames();
+       // mqttAndroidClient.subscribe();
+    }
+
+    private String [] getCurrentTopicNames() {
+
+        String [] topicNames = new String[topics.size()];
+        int i= 0;
+        for(FirebaseTopicObj topic : topics){
+            topicNames[i] = topic.getTopicName();
+            i++;
+        }
+        return topicNames;
     }
 
     public String getBrokerName() {
