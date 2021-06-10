@@ -6,13 +6,13 @@ public class FirebaseBrokerObj {
 
     private String brkName;
     private String brkURI;
-    private List<String> topics;
+    private List<FirebaseTopicObj> topics;
 
     public FirebaseBrokerObj() {
 
     }
 
-    public FirebaseBrokerObj(String brkName, String brkURI, List<String> topics) {
+    public FirebaseBrokerObj(String brkName, String brkURI, List<FirebaseTopicObj> topics) {
         this.brkName = brkName;
         this.brkURI = brkURI;
         this.topics = topics;
@@ -34,11 +34,11 @@ public class FirebaseBrokerObj {
         this.brkURI = brkURI;
     }
 
-    public List<String> getTopics() {
+    public List<FirebaseTopicObj> getTopics() {
         return topics;
     }
 
-    public void setTopics(List<String> topics) {
+    public void setTopics(List<FirebaseTopicObj> topics) {
         this.topics = topics;
     }
 }
