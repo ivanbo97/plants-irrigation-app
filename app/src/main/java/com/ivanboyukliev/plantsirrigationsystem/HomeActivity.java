@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
 
     private Button logoutBtn;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference mDatabaseUsers;
+    private static DatabaseReference mDatabaseAuthUserBrokers;
     private FloatingActionButton registerBrokerBtn;
     private RecyclerView brokersListRecyclerView;
     private static BrokersRecyclerViewListAdapter brokersAdapter;
@@ -73,8 +73,9 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         });
 
         registerBrokerBtn.setOnClickListener(v -> openBrokerRegisterDialog());
-        mDatabaseUsers = FirebaseDatabase.getInstance(DB_URL).getReference("users" + "/" + firebaseAuth.getUid());
-        mDatabaseUsers.addValueEventListener(new BrokerDataChangeListener());
+        mDatabaseAuthUserBrokers = FirebaseDatabase.getInstance(DB_URL)
+                .getReference("users/" + firebaseAuth.getUid() + "/brokers");
+        mDatabaseAuthUserBrokers.addValueEventListener(new BrokerDataChangeListener());
     }
 
     @Override
@@ -142,5 +143,9 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
 
     public static FragmentManager getHomeActivityFragmentManager() {
         return homeActivityFragmentManager;
+    }
+
+    public static DatabaseReference getmDatabaseAuthUserBrokers() {
+        return mDatabaseAuthUserBrokers;
     }
 }
