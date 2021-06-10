@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.topicsrecyclerview.adapter.TopicsRecyclerViewListAdapter;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
     private int brokerNumber;
     private RecyclerView topicsListRecyclerView;
     private static TopicsRecyclerViewListAdapter topicsAdapter;
-    private List<String> currentBrokerTopics;
+    private List<FirebaseTopicObj> currentBrokerTopics;
 
     public MqttBrokerShowTopicsDialog(int brokerNumber) {
         this.brokerNumber = brokerNumber;
@@ -48,13 +49,13 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         dialogView = inflater.inflate(R.layout.mqtt_broker_topics_dialog, null);
-
         topicsListRecyclerView = dialogView.findViewById(R.id.topicsListRecyclerView);
         topicsListRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayout.VERTICAL));
         LinearLayoutManager verticalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         topicsListRecyclerView.setLayoutManager(verticalLayoutManager);
         currentBrokerTopics = HomeActivity.getMqttBrokersList().get(brokerNumber).getTopics();
-        topicsAdapter = new TopicsRecyclerViewListAdapter(currentBrokerTopics);
+        String brokerID = HomeActivity.getMqttBrokersList().get(brokerNumber).getBrokerID();
+        topicsAdapter = new TopicsRecyclerViewListAdapter(currentBrokerTopics,brokerID);
         topicsListRecyclerView.setAdapter(topicsAdapter);
         dialogBuilder.setView(dialogView)
                 .setTitle("Topics Subscription List")
@@ -66,7 +67,6 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
                             .setPositiveButton("Add", (dialog1, which1) -> {
                                 EditText newTopicEditText = topicDialogView.findViewById(R.id.mqtt_broker_new_topic);
                                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                                String brokerID = HomeActivity.getMqttBrokersList().get(brokerNumber).getBrokerID();
                                 DatabaseReference databaseBrokerTopics = FirebaseDatabase.getInstance(DB_URL).getReference(
                                         "users" + "/" + firebaseAuth.getUid()
                                                 + "/" + brokerID + "/topics"
