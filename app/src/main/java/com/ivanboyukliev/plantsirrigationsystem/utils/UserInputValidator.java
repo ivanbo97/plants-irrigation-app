@@ -5,6 +5,7 @@ import android.util.Patterns;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.MAX_PORT_NUMBER;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PASSWORD_PATTERN;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PORT_PATTERN;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.QOS_PATTERN;
 
 
 public class UserInputValidator {
@@ -29,4 +30,12 @@ public class UserInputValidator {
         }
         return true;
     }
+
+    public static boolean isQoSValid(String topicQoS) {
+        if (!QOS_PATTERN.matcher(topicQoS).matches()) {
+            return false;
+        }
+        return true;
+    }
+
 }
