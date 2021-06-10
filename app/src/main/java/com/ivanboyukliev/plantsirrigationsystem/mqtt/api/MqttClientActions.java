@@ -7,4 +7,6 @@ public interface MqttClientActions {
     void connectClient(String username, String password);
 
     void disconnectClient();
+
+    void subscribeToTopics();
 }
