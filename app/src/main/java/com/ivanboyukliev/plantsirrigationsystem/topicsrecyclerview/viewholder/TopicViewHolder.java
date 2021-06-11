@@ -12,6 +12,7 @@ import com.ivanboyukliev.plantsirrigationsystem.R;
 public class TopicViewHolder extends RecyclerView.ViewHolder {
 
     private TextView topicNameTv;
+    private TextView topicQoSTv;
     private FloatingActionButton deleteTopicBtn;
 
 
@@ -19,6 +20,8 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         topicNameTv = itemView.findViewById(R.id.topicNameCardView);
         deleteTopicBtn = itemView.findViewById(R.id.deleteTopicBtn);
+        topicQoSTv = itemView.findViewById(R.id.topicQoSCardView);
+
     }
 
     public TextView getTopicNameTv() {
@@ -31,6 +34,14 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
 
     public FloatingActionButton getDeleteTopicBtn() {
         return deleteTopicBtn;
+    }
+
+    public TextView getTopicQoSTv() {
+        return topicQoSTv;
+    }
+
+    public void setTopicQoSTv(TextView topicQoSTv) {
+        this.topicQoSTv = topicQoSTv;
     }
 
     public void setDeleteTopicBtn(FloatingActionButton deleteTopicBtn) {
