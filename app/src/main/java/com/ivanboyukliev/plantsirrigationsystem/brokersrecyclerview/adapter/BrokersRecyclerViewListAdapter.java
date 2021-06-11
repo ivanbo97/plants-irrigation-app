@@ -57,8 +57,10 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
             mqttBrokers.get(position).disconnectClient();
         });
 
-        holder.getShowTopicsTv().setOnClickListener(v -> {
-            //Show dialog with card view
+        holder.getShowTopicsTv().setOnClickListener(v -> { if(!brokerForBinding.isConnected()){
+                HomeActivity.showBrokerError("Please, connect to broker first!");
+                return;
+            }
             MqttBrokerShowTopicsDialog showTopicsDialog = new MqttBrokerShowTopicsDialog(position);
             showTopicsDialog.show(HomeActivity.getHomeActivityFragmentManager(), "MQTT Broker Subscription Topics");
         });
