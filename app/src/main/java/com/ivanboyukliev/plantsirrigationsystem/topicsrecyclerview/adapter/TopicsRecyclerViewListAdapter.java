@@ -42,6 +42,8 @@ public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicVie
         String topicID = currentTopic.getTopicName();
         String firebaseTopicID = UserInputConverter.convertBrokerTopicToFirebaseRules(topicID);
         holder.getTopicNameTv().setText(currentTopic.getTopicName());
+        String qosTopicContent = "QoS level : " + String.valueOf(currentTopic.getQoS());
+        holder.getTopicQoSTv().setText(qosTopicContent);
         holder.getDeleteTopicBtn().setOnClickListener(v -> {
             DatabaseReference currentTopicDB = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/topics/" + firebaseTopicID);
             currentTopicDB.removeValue();
