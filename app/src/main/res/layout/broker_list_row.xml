@@ -10,7 +10,7 @@
     card_view:cardCornerRadius="5dp"
     tools:visibility="visible">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="159dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -32,6 +32,7 @@
             android:id="@+id/brokerIP"
             android:layout_width="match_parent"
             android:layout_height="41dp"
+            android:layout_below="@id/brokerNameTv"
             android:gravity="center"
             android:text="ssl://192.168.0.103:1883"
             android:textAlignment="textStart"
@@ -42,6 +43,7 @@
             android:id="@+id/connectBrokerBtn"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
+            android:layout_below="@id/brokerIP"
             android:layout_marginBottom="10dp"
             android:text="Connect" />
 
@@ -50,6 +52,7 @@
             android:id="@+id/disconnectBrokerBtn"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
+            android:layout_below="@id/connectBrokerBtn"
             android:layout_marginBottom="20dp"
             android:text="Disconnect" />
 
@@ -58,12 +61,13 @@
             android:id="@+id/deleteBrokerButton"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
+            android:layout_below="@id/disconnectBrokerBtn"
             android:clickable="true"
             card_view:rippleColor="@android:color/holo_red_dark"
             card_view:srcCompat="@android:drawable/ic_menu_delete" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
