@@ -1,8 +1,8 @@
 package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model;
 
-import com.google.firebase.database.FirebaseDatabase;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
+import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.util.TopicsDataExtractor;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.AndroidMqttClientCallback;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.ConnectionTokenCallback;
@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.SSLSocketFactory;
+
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.NO_TOPICS_ERROR;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPICS_SUBS_ERROR;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPICS_SUBS_SUCCESS;
 
 public class BasicMqttBrokerClient implements MqttClientActions {
 
@@ -86,29 +90,25 @@ public class BasicMqttBrokerClient implements MqttClientActions {
 
     @Override
     public void subscribeToTopics() {
-        if(!isConnected){
-            HomeActivity.showBrokerError("You have to be connected to MQTT broker!");
+        if (!isConnected) {
+            HomeActivity.showBrokerMessage(TOPICS_SUBS_ERROR);
             return;
         }
-        if(topics.size() == 0){
-            HomeActivity.showBrokerError("There aren't any specified topics for subscription.");
+        if (topics.size() == 0) {
+            HomeActivity.showBrokerMessage(NO_TOPICS_ERROR);
             return;
         }
-
-        String [] topics = getCurrentTopicNames();
-       // mqttAndroidClient.subscribe();
-    }
-
-    private String [] getCurrentTopicNames() {
-
-        String [] topicNames = new String[topics.size()];
-        int i= 0;
-        for(FirebaseTopicObj topic : topics){
-            topicNames[i] = topic.getTopicName();
-            i++;
+        String[] topicsNames = TopicsDataExtractor.extractCurrentTopicNames(topics);
+        int[] topicsQoS = TopicsDataExtractor.extractCurrentTopicQoS(topics);
+        try {
+            mqttAndroidClient.subscribe(topicsNames, topicsQoS);
+            HomeActivity.showBrokerMessage(TOPICS_SUBS_SUCCESS);
+        } catch (MqttException e) {
+            HomeActivity.showBrokerMessage(e.getMessage());
+            e.printStackTrace();
         }
-        return topicNames;
     }
+
 
     public String getBrokerName() {
         return brokerName;
