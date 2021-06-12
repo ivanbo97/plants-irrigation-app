@@ -75,7 +75,7 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         registerBrokerBtn.setOnClickListener(v -> openBrokerRegisterDialog());
         mDatabaseAuthUserBrokers = FirebaseDatabase.getInstance(DB_URL)
                 .getReference("users/" + firebaseAuth.getUid() + "/brokers");
-        mDatabaseAuthUserBrokers.addValueEventListener(new BrokerDataChangeListener());
+        mDatabaseAuthUserBrokers.addListenerForSingleValueEvent(new BrokerDataChangeListener());
     }
 
     @Override
@@ -136,10 +136,11 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         return homeActivityContext;
     }
 
-    public static void showBrokerError(String errorMessage) {
-        Toast toast = Toast.makeText(homeActivityContext, errorMessage, Toast.LENGTH_SHORT);
+    public static void showBrokerMessage(String message) {
+        Toast toast = Toast.makeText(homeActivityContext, message, Toast.LENGTH_SHORT);
         toast.show();
     }
+
 
     public static FragmentManager getHomeActivityFragmentManager() {
         return homeActivityFragmentManager;
