@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttCredentialsInputListener;
 
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.CREDENTIALS_DIALOG_TITLE;
+
 public class MqttAuthenticationDialog extends AppCompatDialogFragment {
 
     private View dialogView;
@@ -36,7 +38,7 @@ public class MqttAuthenticationDialog extends AppCompatDialogFragment {
         dialogView = inflater.inflate(R.layout.mqtt_broker_auth, null);
         populateDialogWidgets();
         dialogBuilder.setView(dialogView)
-                .setTitle("Enter Credentials")
+                .setTitle(CREDENTIALS_DIALOG_TITLE)
                 .setNegativeButton("Cancel", (dialog, which) -> {
                     //no-action needed for now
                 })

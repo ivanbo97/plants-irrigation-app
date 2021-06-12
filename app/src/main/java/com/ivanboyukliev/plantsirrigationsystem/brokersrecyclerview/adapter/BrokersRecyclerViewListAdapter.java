@@ -19,6 +19,8 @@ import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowTopi
 
 import java.util.List;
 
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.BROKER_CONNECTION_REMINDER;
+
 public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBrokerViewHolder> {
 
     private List<BasicMqttBrokerClient> mqttBrokers;
@@ -58,7 +60,7 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
         });
 
         holder.getShowTopicsTv().setOnClickListener(v -> { if(!brokerForBinding.isConnected()){
-                HomeActivity.showBrokerError("Please, connect to broker first!");
+                HomeActivity.showBrokerMessage(BROKER_CONNECTION_REMINDER);
                 return;
             }
             MqttBrokerShowTopicsDialog showTopicsDialog = new MqttBrokerShowTopicsDialog(position);

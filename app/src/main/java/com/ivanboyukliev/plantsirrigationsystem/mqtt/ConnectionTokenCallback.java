@@ -46,10 +46,10 @@ public class ConnectionTokenCallback implements IMqttActionListener {
         Log.i("BROKER INFO", "Connection failed!!");
         Log.i("REASON", exception.getMessage());
         if (exception.getMessage().equals(AUTHORIZATION_ERROR)) {
-            HomeActivity.showBrokerError(AUTHORIZATION_ERROR);
+            HomeActivity.showBrokerMessage(AUTHORIZATION_ERROR);
         }
         if (exception.getMessage().equals(ApplicationConstants.BROKER_CONN_ERR)) {
-            HomeActivity.showBrokerError(BROKER_CONNECTION_ERROR_MSG);
+            HomeActivity.showBrokerMessage(BROKER_CONNECTION_ERROR_MSG);
         }
         exception.printStackTrace();
         ((BasicMqttBrokerClient) connectAction).setConnected(false);

@@ -20,6 +20,7 @@ import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicM
 import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputConverter;
 import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputValidator;
 
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.BROKER_REG_DIALOG_TITLE;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.INCORRECT_PORT_MESSAGE;
 
 public class MqttBrokerRegDialog extends AppCompatDialogFragment {
@@ -39,7 +40,7 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
         dialogView = inflater.inflate(R.layout.mqtt_broker_register, null);
         populateDialogWidgets();
         dialogBuilder.setView(dialogView)
-                .setTitle("MQTT Broker Registration")
+                .setTitle(BROKER_REG_DIALOG_TITLE)
                 .setNegativeButton("Cancel", (dialog, which) -> {
                     dialog.dismiss();
                 })
