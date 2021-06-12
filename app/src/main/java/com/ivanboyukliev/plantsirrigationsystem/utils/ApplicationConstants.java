@@ -68,5 +68,7 @@ public final class ApplicationConstants {
     public static final String BROKER_REG_DIALOG_TITLE = "MQTT Broker Registration";
     public static final String BROKER_DEL_ERROR = "Broker is disconnected cannot delete topic!";
 
+    public static final String BROKER_CONNECTION_REMINDER = "Please, connect to broker first!";
+
 
 }
