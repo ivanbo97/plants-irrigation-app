@@ -17,15 +17,19 @@ import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputConverter;
 
 import java.util.List;
 
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.BROKER_DEL_ERROR;
+
 
 public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicViewHolder> {
 
     private List<FirebaseTopicObj> mqttBrokerTopics;
     private String brokerID;
+    private int brokerNumInList;
 
-    public TopicsRecyclerViewListAdapter(List<FirebaseTopicObj> mqttBrokerTopics, String brokerID) {
+    public TopicsRecyclerViewListAdapter(List<FirebaseTopicObj> mqttBrokerTopics, String brokerID, int brokerNumInList) {
         this.mqttBrokerTopics = mqttBrokerTopics;
         this.brokerID = brokerID;
+        this.brokerNumInList = brokerNumInList;
     }
 
     @NonNull
@@ -46,9 +50,16 @@ public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicVie
         holder.getTopicQoSTv().setText(qosTopicContent);
         holder.getDeleteTopicBtn().setOnClickListener(v -> {
             DatabaseReference currentTopicDB = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/topics/" + firebaseTopicID);
-            currentTopicDB.removeValue();
-            mqttBrokerTopics.remove(position);
-            notifyDataSetChanged();
+            if (!HomeActivity.getMqttBrokersList().get(brokerNumInList).isConnected()) {
+                HomeActivity.showBrokerMessage(BROKER_DEL_ERROR);
+                return;
+            }
+            currentTopicDB.removeValue((error, ref) -> {
+                if (error == null) {
+                    mqttBrokerTopics.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
         });
     }
 
