@@ -4,12 +4,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
-
-
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,14 +17,18 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DatabaseReference;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
-
+import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.topicsrecyclerview.adapter.TopicsRecyclerViewListAdapter;
 
 import java.util.List;
+
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPICS_LIST_TITLE;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPIC_ADD_BTN_TXT;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPIC_REG_ERROR;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPIC_SUBS_BTN_TXT;
 
 public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
 
@@ -50,16 +52,27 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
         topicsListRecyclerView = dialogView.findViewById(R.id.topicsListRecyclerView);
 
         topicsListRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayout.VERTICAL));
-        LinearLayoutManager verticalLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager verticalLayoutManager = new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.VERTICAL, false);
         topicsListRecyclerView.setLayoutManager(verticalLayoutManager);
-        currentBrokerTopics = HomeActivity.getMqttBrokersList().get(brokerNumber).getTopics();
-        String brokerID = HomeActivity.getMqttBrokersList().get(brokerNumber).getBrokerID();
-        topicsAdapter = new TopicsRecyclerViewListAdapter(currentBrokerTopics, brokerID);
+
+        BasicMqttBrokerClient currentMqttBroker = HomeActivity.getMqttBrokersList().get(brokerNumber);
+        currentBrokerTopics = currentMqttBroker.getTopics();
+        String brokerID = currentMqttBroker.getBrokerID();
+        topicsAdapter = new TopicsRecyclerViewListAdapter(currentBrokerTopics, brokerID, brokerNumber);
         topicsListRecyclerView.setAdapter(topicsAdapter);
+
         dialogBuilder.setView(dialogView)
-                .setTitle("Topics Subscription List")
-                .setNegativeButton("Add new topic", (dialog, which) -> {
+                .setTitle(TOPICS_LIST_TITLE)
+                .setNegativeButton(TOPIC_ADD_BTN_TXT, (dialog, which) -> {
+                    if (!HomeActivity.getMqttBrokersList().get(brokerNumber).isConnected()) {
+                        displayMessage(TOPIC_REG_ERROR);
+                        return;
+                    }
                     openTopicRegisterDialog(getParentFragmentManager());
+                })
+                .setPositiveButton(TOPIC_SUBS_BTN_TXT, (dialog, which) -> {
+                    currentMqttBroker.subscribeToTopics();
                 });
         topicsAdapter.notifyDataSetChanged();
         return dialogBuilder.create();
@@ -72,9 +85,12 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
 
     private void openTopicRegisterDialog(FragmentManager fragmentManager) {
         String brokerID = HomeActivity.getMqttBrokersList().get(brokerNumber).getBrokerID();
-        MqttBrokerTopicRegDialog mqttBrokerTopicRegDialog = new MqttBrokerTopicRegDialog(brokerID);
+        MqttBrokerTopicRegDialog mqttBrokerTopicRegDialog = new MqttBrokerTopicRegDialog(brokerID, brokerNumber);
         mqttBrokerTopicRegDialog.show(fragmentManager, "MQTT Broker Registration");
     }
 
-
+    private void displayMessage(String message) {
+        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+        toast.show();
+    }
 }
