@@ -53,4 +53,20 @@ public final class ApplicationConstants {
             | View.SYSTEM_UI_FLAG_FULLSCREEN
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
+
+    public static final String TOPIC_REG_DIALOG_TITLE = "Enter topic and its related QoS";
+    public static final String TOPIC_REG_ERROR = "Connection to Broker is lost! Cannot add new topic!";
+    public static final String TOPIC_ADD_BTN_TXT = "Add new topic";
+    public static final String TOPIC_SUBS_BTN_TXT = "Subscribe to above topics";
+    public static final String TOPICS_LIST_TITLE = "Topics Subscription List";
+    public static final String TOPICS_SUBS_ERROR = "You have to be connected to MQTT broker in ordered to subscribe!";
+    public static final String NO_TOPICS_ERROR = "There aren't any specified topics for subscription.";
+    public static final String TOPICS_SUBS_SUCCESS = "Successful subscription to given topics!";
+
+    public static final String CREDENTIALS_DIALOG_TITLE = "Enter Credentials";
+
+    public static final String BROKER_REG_DIALOG_TITLE = "MQTT Broker Registration";
+    public static final String BROKER_DEL_ERROR = "Broker is disconnected cannot delete topic!";
+
+
 }
