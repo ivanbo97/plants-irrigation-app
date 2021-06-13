@@ -88,12 +88,6 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         mqttBrokers.get(brokerNum).connectClient(username, password);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        disconnectAllClients();
-    }
-
     private void populateWidgetObjects() {
         logoutBtn = findViewById(R.id.logoutBtn);
         registerBrokerBtn = findViewById(R.id.addNewBrokerButton);
