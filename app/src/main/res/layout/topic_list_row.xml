@@ -58,8 +58,24 @@
             android:layout_toRightOf="@+id/topicQoSCardView"
             android:clickable="true"
             card_view:backgroundTint="@color/white"
+            card_view:rippleColor="@color/design_default_color_error"
             card_view:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+        <Button
+            android:id="@+id/subscribeTopicBtn"
+            android:layout_width="64dp"
+            android:layout_height="36dp"
+            android:layout_below="@id/topicNameCardView"
+            android:layout_marginTop="12dp"
+            android:text="@string/subsBtnString" />
+
+        <Button
+            android:id="@+id/unsubscribeTopicBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="69dp"
+            android:layout_toRightOf="@id/subscribeTopicBtn"
+            android:text="@string/unsubscribeBtnString" />
     </RelativeLayout>
-
-
 </androidx.cardview.widget.CardView>
