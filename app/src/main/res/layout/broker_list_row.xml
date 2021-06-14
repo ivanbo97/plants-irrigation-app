@@ -110,8 +110,26 @@
             android:layout_marginTop="50dp"
             android:text="\u25BA" />
 
+        <TextView
+            android:id="@+id/showPlantsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/showTopicsTv"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="@string/showPlantsTvStr"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/bulletPlantsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bulletTopicsTv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="22dp"
+            android:text="\u25BA" />
 
     </RelativeLayout>
-
 
 </androidx.cardview.widget.CardView>
