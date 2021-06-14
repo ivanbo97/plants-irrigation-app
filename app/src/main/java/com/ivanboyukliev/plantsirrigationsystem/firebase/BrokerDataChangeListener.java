@@ -1,7 +1,5 @@
 package com.ivanboyukliev.plantsirrigationsystem.firebase;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +35,7 @@ public class BrokerDataChangeListener implements ValueEventListener {
             mqttBroker.initClientData();
 
             FirebaseDataExtractor.retrieveTopicsAndPopulateBroker(mqttBroker, broker.child("/topics").getChildren());
+            FirebaseDataExtractor.retrievePlantsAndPopulateBroker(mqttBroker, broker.child("/plants").getChildren());
 
             HomeActivity.getMqttBrokersList().add(mqttBroker);
             HomeActivity.getBrokersAdapter().notifyDataSetChanged();
