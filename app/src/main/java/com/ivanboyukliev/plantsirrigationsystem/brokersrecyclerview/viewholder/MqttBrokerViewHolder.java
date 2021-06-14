@@ -18,6 +18,7 @@ public class MqttBrokerViewHolder extends RecyclerView.ViewHolder {
     private Button disconnectBtn;
     private FloatingActionButton deleteBrokerButton;
     private TextView showTopicsTv;
+    private TextView showPlantsTv;
 
 
     public MqttBrokerViewHolder(@NonNull View itemView) {
@@ -28,7 +29,7 @@ public class MqttBrokerViewHolder extends RecyclerView.ViewHolder {
         disconnectBtn = itemView.findViewById(R.id.disconnectBrokerBtn);
         deleteBrokerButton = itemView.findViewById(R.id.deleteBrokerButton);
         showTopicsTv = itemView.findViewById(R.id.showTopicsTv);
-
+        showPlantsTv = itemView.findViewById(R.id.showPlantsTv);
     }
 
     public TextView getBrokerNameTv() {
@@ -77,5 +78,13 @@ public class MqttBrokerViewHolder extends RecyclerView.ViewHolder {
 
     public void setShowTopicsTv(TextView showTopicsTv) {
         this.showTopicsTv = showTopicsTv;
+    }
+
+    public TextView getShowPlantsTv() {
+        return showPlantsTv;
+    }
+
+    public void setShowPlantsTv(TextView showPlantsTv) {
+        this.showPlantsTv = showPlantsTv;
     }
 }
