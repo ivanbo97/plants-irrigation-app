@@ -3,6 +3,7 @@ package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.util.TopicsDataExtractor;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebasePlantObj;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.AndroidMqttClientCallback;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.ConnectionTokenCallback;
@@ -36,10 +37,12 @@ public class BasicMqttBrokerClient implements MqttClientActions {
     private MqttAndroidClient mqttAndroidClient;
     private MqttCallbackExtended mqttCallback;
     private List<FirebaseTopicObj> topics;
+    private List<FirebasePlantObj> plants;
     private boolean isConnected;
 
     public BasicMqttBrokerClient() {
         topics = new ArrayList<>();
+        plants = new ArrayList<>();
     }
 
     @Override
@@ -156,5 +159,13 @@ public class BasicMqttBrokerClient implements MqttClientActions {
 
     public void setBrokerID(String brokerID) {
         this.brokerID = brokerID;
+    }
+
+    public List<FirebasePlantObj> getPlants() {
+        return plants;
+    }
+
+    public void setPlants(List<FirebasePlantObj> plants) {
+        this.plants = plants;
     }
 }
