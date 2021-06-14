@@ -9,4 +9,7 @@
     <string name="loginSucessText">You have successfully logged in!!!</string>
     <string name="addNewBrokerString">Add new MQTT broker</string>
     <string name="showTopicsStr"><u>Show topics</u></string>
+    <string name="subsBtnString">Subscribe</string>
+    <string name="unsubscribeBtnString">Unsub</string>
+    <string name="showPlantsTvStr"><u>Show Plants</u></string>
 </resources>
