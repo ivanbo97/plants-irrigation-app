@@ -49,11 +49,11 @@ public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicVie
         String qosTopicContent = "QoS level : " + String.valueOf(currentTopic.getQoS());
         holder.getTopicQoSTv().setText(qosTopicContent);
         holder.getDeleteTopicBtn().setOnClickListener(v -> {
-            DatabaseReference currentTopicDB = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/topics/" + firebaseTopicID);
             if (!HomeActivity.getMqttBrokersList().get(brokerNumInList).isConnected()) {
                 HomeActivity.showBrokerMessage(BROKER_DEL_ERROR);
                 return;
             }
+            DatabaseReference currentTopicDB = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/topics/" + firebaseTopicID);
             currentTopicDB.removeValue((error, ref) -> {
                 if (error == null) {
                     mqttBrokerTopics.remove(position);
