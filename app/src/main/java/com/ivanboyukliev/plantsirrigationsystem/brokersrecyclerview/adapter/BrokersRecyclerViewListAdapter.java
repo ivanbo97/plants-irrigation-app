@@ -15,6 +15,7 @@ import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.viewholder.MqttBrokerViewHolder;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttAuthenticationDialog;
+import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowPlantsDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowTopicsDialog;
 
 import java.util.List;
@@ -59,12 +60,22 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
             mqttBrokers.get(position).disconnectClient();
         });
 
-        holder.getShowTopicsTv().setOnClickListener(v -> { if(!brokerForBinding.isConnected()){
+        holder.getShowTopicsTv().setOnClickListener(v -> {
+            if (!brokerForBinding.isConnected()) {
                 HomeActivity.showBrokerMessage(BROKER_CONNECTION_REMINDER);
                 return;
             }
             MqttBrokerShowTopicsDialog showTopicsDialog = new MqttBrokerShowTopicsDialog(position);
             showTopicsDialog.show(HomeActivity.getHomeActivityFragmentManager(), "MQTT Broker Subscription Topics");
+        });
+
+        holder.getShowPlantsTv().setOnClickListener(v -> {
+            if (!brokerForBinding.isConnected()) {
+                HomeActivity.showBrokerMessage(BROKER_CONNECTION_REMINDER);
+                return;
+            }
+            MqttBrokerShowPlantsDialog showPlantsDialog = new MqttBrokerShowPlantsDialog(position);
+            showPlantsDialog.show(HomeActivity.getHomeActivityFragmentManager(), "MQTT Broker Current Plants");
         });
 
         if (!brokerForBinding.isConnected()) {
