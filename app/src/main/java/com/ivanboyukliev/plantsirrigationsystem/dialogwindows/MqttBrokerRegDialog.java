@@ -72,6 +72,7 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
             String newStandartBrokerId = brokerIp + ":" + brokerPort;
             String firebaseBrokerId = UserInputConverter.convertServerURIToFirebaseRules(newStandartBrokerId);
             databaseUserBrokers.child(firebaseBrokerId).child("brkName").setValue(brokerName);
+            newBroker.setBrokerID(firebaseBrokerId);
             dialog.dismiss();
         });
     }
