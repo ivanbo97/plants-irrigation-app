@@ -2,6 +2,8 @@ package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.viewholder;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,9 +15,9 @@ import com.ivanboyukliev.plantsirrigationsystem.R;
 public class MqttBrokerViewHolder extends RecyclerView.ViewHolder {
 
     private TextView brokerNameTv;
-    private TextView brokerIpTv;
-    private Button connectBtn;
-    private Button disconnectBtn;
+    private EditText brokerIpTv;
+    private ImageButton editBrokerDataBtn;
+    private Button saveChangesBtn;
     private FloatingActionButton deleteBrokerButton;
     private TextView showTopicsTv;
     private TextView showPlantsTv;
@@ -25,11 +27,13 @@ public class MqttBrokerViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         brokerNameTv = itemView.findViewById(R.id.brokerNameTv);
         brokerIpTv = itemView.findViewById(R.id.brokerIP);
-        connectBtn = itemView.findViewById(R.id.connectBrokerBtn);
-        disconnectBtn = itemView.findViewById(R.id.disconnectBrokerBtn);
+        brokerIpTv.setTag(brokerIpTv.getKeyListener());
+        brokerIpTv.setKeyListener(null);
         deleteBrokerButton = itemView.findViewById(R.id.deleteBrokerButton);
         showTopicsTv = itemView.findViewById(R.id.showTopicsTv);
         showPlantsTv = itemView.findViewById(R.id.showPlantsTv);
+        editBrokerDataBtn = itemView.findViewById(R.id.editBrokerDataBtn);
+        saveChangesBtn = itemView.findViewById(R.id.saveBrokerChangesBtn);
     }
 
     public TextView getBrokerNameTv() {
@@ -40,28 +44,12 @@ public class MqttBrokerViewHolder extends RecyclerView.ViewHolder {
         this.brokerNameTv = brokerNameTv;
     }
 
-    public TextView getBrokerIpTv() {
+    public EditText getBrokerIpTv() {
         return brokerIpTv;
     }
 
-    public void setBrokerIpTv(TextView brokerIpTv) {
+    public void setBrokerIpTv(EditText brokerIpTv) {
         this.brokerIpTv = brokerIpTv;
-    }
-
-    public Button getConnectBtn() {
-        return connectBtn;
-    }
-
-    public void setConnectBtn(Button connectBtn) {
-        this.connectBtn = connectBtn;
-    }
-
-    public Button getDisconnectBtn() {
-        return disconnectBtn;
-    }
-
-    public void setDisconnectBtn(Button disconnectBtn) {
-        this.disconnectBtn = disconnectBtn;
     }
 
     public FloatingActionButton getDeleteBrokerButton() {
@@ -86,5 +74,21 @@ public class MqttBrokerViewHolder extends RecyclerView.ViewHolder {
 
     public void setShowPlantsTv(TextView showPlantsTv) {
         this.showPlantsTv = showPlantsTv;
+    }
+
+    public ImageButton getEditBrokerDataBtn() {
+        return editBrokerDataBtn;
+    }
+
+    public void setEditBrokerDataBtn(ImageButton editBrokerDataBtn) {
+        this.editBrokerDataBtn = editBrokerDataBtn;
+    }
+
+    public Button getSaveChangesBtn() {
+        return saveChangesBtn;
+    }
+
+    public void setSaveChangesBtn(Button saveChangesBtn) {
+        this.saveChangesBtn = saveChangesBtn;
     }
 }
