@@ -2,5 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/amatica_sc_bold</item>
+        <item>@font/asset</item>
+        <item>@font/delius</item>
     </array>
 </resources>
