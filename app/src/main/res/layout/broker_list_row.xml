@@ -11,8 +11,8 @@
     tools:visibility="visible">
 
     <RelativeLayout
-        android:layout_width="159dp"
-        android:layout_height="match_parent"
+        android:layout_width="173dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="visible"
         android:weightSum="2"
@@ -21,63 +21,72 @@
         <TextView
             android:id="@+id/brokerNameTv"
             android:layout_width="match_parent"
-            android:layout_height="41dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/delius"
             android:gravity="center"
             android:text="HIVE MQ BROKER"
             android:textAlignment="textStart"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
-        <TextView
+        <EditText
             android:id="@+id/brokerIP"
-            android:layout_width="match_parent"
-            android:layout_height="41dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/brokerNameTv"
+            android:layout_marginTop="20dp"
+            android:background="@null"
             android:gravity="center"
             android:text="ssl://192.168.0.103:1883"
             android:textAlignment="textStart"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/connectBrokerBtn"
+            android:id="@+id/saveBrokerChangesBtn"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
             android:layout_below="@id/brokerIP"
-            android:layout_marginBottom="10dp"
-            android:text="Connect" />
-
-
-        <Button
-            android:id="@+id/disconnectBrokerBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:layout_below="@id/connectBrokerBtn"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:text="Disconnect" />
+            android:enabled="false"
+            android:text="Save Changes"
+            android:textAllCaps="false" />
+
+        <ImageButton
+            android:id="@+id/editBrokerDataBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="2dp"
+            android:layout_toRightOf="@id/brokerIP"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:text="Save" />
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/deleteBrokerButton"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
-            android:layout_below="@id/disconnectBrokerBtn"
+            android:layout_below="@id/saveBrokerChangesBtn"
             android:clickable="true"
             card_view:rippleColor="@android:color/holo_red_dark"
             card_view:srcCompat="@android:drawable/ic_menu_delete" />
-
-
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="213dp"
-        android:layout_marginLeft="160dp">
+        android:layout_marginLeft="175dp">
 
         <View
             android:layout_width="3dp"
             android:layout_height="173dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="18dp"
             android:layout_marginTop="20dp"
             android:background="#555555" />
 
@@ -96,7 +105,7 @@
             android:id="@+id/showTopicsTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="45dp"
             android:layout_marginTop="52dp"
             android:fontFamily="sans-serif-smallcaps"
             android:text="@string/showTopicsStr"
@@ -106,7 +115,7 @@
             android:id="@+id/bulletTopicsTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="50dp"
             android:text="\u25BA" />
 
@@ -115,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/showTopicsTv"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="45dp"
             android:layout_marginTop="25dp"
             android:fontFamily="sans-serif-smallcaps"
             android:text="@string/showPlantsTvStr"
@@ -126,10 +135,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/bulletTopicsTv"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="22dp"
             android:text="\u25BA" />
-
     </RelativeLayout>
-
 </androidx.cardview.widget.CardView>
