@@ -12,4 +12,5 @@
     <string name="subsBtnString">Subscribe</string>
     <string name="unsubscribeBtnString">Unsub</string>
     <string name="showPlantsTvStr"><u>Show Plants</u></string>
+    <string name="listOfBrokersTitleStr">Current MQTT Brokers</string>
 </resources>
