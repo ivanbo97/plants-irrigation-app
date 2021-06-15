@@ -30,7 +30,6 @@ public class ConnectionTokenCallback implements IMqttActionListener {
     @Override
     public void onSuccess(IMqttToken asyncActionToken) {
         Log.i("BROKER INFO", "Connection success!!");
-        ((BasicMqttBrokerClient) connectAction).setConnected(true);
         HomeActivity.getBrokersAdapter().notifyDataSetChanged();
         TopicSubscriptionCallBack topicSubscriptionCallBack = new TopicSubscriptionCallBack();
         try {
@@ -52,7 +51,6 @@ public class ConnectionTokenCallback implements IMqttActionListener {
             HomeActivity.showBrokerMessage(BROKER_CONNECTION_ERROR_MSG);
         }
         exception.printStackTrace();
-        ((BasicMqttBrokerClient) connectAction).setConnected(false);
         HomeActivity.getBrokersAdapter().notifyDataSetChanged();
     }
 }

@@ -17,9 +17,6 @@ import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputConverter;
 
 import java.util.List;
 
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.BROKER_DEL_ERROR;
-
-
 public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicViewHolder> {
 
     private List<FirebaseTopicObj> mqttBrokerTopics;
@@ -49,10 +46,6 @@ public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicVie
         String qosTopicContent = "QoS level : " + String.valueOf(currentTopic.getQoS());
         holder.getTopicQoSTv().setText(qosTopicContent);
         holder.getDeleteTopicBtn().setOnClickListener(v -> {
-            if (!HomeActivity.getMqttBrokersList().get(brokerNumInList).isConnected()) {
-                HomeActivity.showBrokerMessage(BROKER_DEL_ERROR);
-                return;
-            }
             DatabaseReference currentTopicDB = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/topics/" + firebaseTopicID);
             currentTopicDB.removeValue((error, ref) -> {
                 if (error == null) {

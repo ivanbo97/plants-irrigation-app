@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +26,6 @@ import java.util.List;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PLANTS_LIST_TITLE;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PLANT_ADD_BTN_TXT;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PLANT_INFO;
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PLANT_REG_ERROR;
 
 public class MqttBrokerShowPlantsDialog extends AppCompatDialogFragment {
 
@@ -64,14 +62,9 @@ public class MqttBrokerShowPlantsDialog extends AppCompatDialogFragment {
         dialogBuilder.setView(dialogView)
                 .setTitle(PLANTS_LIST_TITLE)
                 .setNegativeButton(PLANT_ADD_BTN_TXT, (dialog, which) -> {
-                    if (!HomeActivity.getMqttBrokersList().get(brokerNumInList).isConnected()) {
-                        Toast.makeText(getContext(), PLANT_REG_ERROR, Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                   // openTopicRegisterDialog(getParentFragmentManager());
                 })
                 .setPositiveButton(PLANT_INFO, (dialog, which) -> {
-                   // currentMqttBroker.subscribeToTopics();
+                    // currentMqttBroker.subscribeToTopics();
                     return;
                 });
         topicsAdapter.notifyDataSetChanged();

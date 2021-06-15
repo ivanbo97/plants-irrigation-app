@@ -27,7 +27,6 @@ import java.util.List;
 
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPICS_LIST_TITLE;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPIC_ADD_BTN_TXT;
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPIC_REG_ERROR;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPIC_SUBS_BTN_TXT;
 
 public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
@@ -65,10 +64,6 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
         dialogBuilder.setView(dialogView)
                 .setTitle(TOPICS_LIST_TITLE)
                 .setNegativeButton(TOPIC_ADD_BTN_TXT, (dialog, which) -> {
-                    if (!HomeActivity.getMqttBrokersList().get(brokerNumber).isConnected()) {
-                        displayMessage(TOPIC_REG_ERROR);
-                        return;
-                    }
                     openTopicRegisterDialog(getParentFragmentManager());
                 })
                 .setPositiveButton(TOPIC_SUBS_BTN_TXT, (dialog, which) -> {

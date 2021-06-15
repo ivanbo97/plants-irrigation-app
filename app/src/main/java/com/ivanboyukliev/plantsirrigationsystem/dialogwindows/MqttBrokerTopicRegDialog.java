@@ -60,11 +60,6 @@ public class MqttBrokerTopicRegDialog extends AppCompatDialogFragment {
         super.onResume();
         final AlertDialog dialog = (AlertDialog) getDialog();
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-            if (!HomeActivity.getMqttBrokersList().get(brokerNumInList).isConnected()) {
-                Toast toast = Toast.makeText(getContext(), TOPIC_REG_ERROR, Toast.LENGTH_SHORT);
-                toast.show();
-                return;
-            }
             String topicName = topicNameTv.getText().toString();
             String topicQoSStr = topicQoSTv.getText().toString();
             try {

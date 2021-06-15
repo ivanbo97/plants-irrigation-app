@@ -38,7 +38,6 @@ public class BasicMqttBrokerClient implements MqttClientActions {
     private MqttCallbackExtended mqttCallback;
     private List<FirebaseTopicObj> topics;
     private List<FirebasePlantObj> plants;
-    private boolean isConnected;
 
     public BasicMqttBrokerClient() {
         topics = new ArrayList<>();
@@ -93,10 +92,6 @@ public class BasicMqttBrokerClient implements MqttClientActions {
 
     @Override
     public void subscribeToTopics() {
-        if (!isConnected) {
-            HomeActivity.showBrokerMessage(TOPICS_SUBS_ERROR);
-            return;
-        }
         if (topics.size() == 0) {
             HomeActivity.showBrokerMessage(NO_TOPICS_ERROR);
             return;
@@ -111,7 +106,6 @@ public class BasicMqttBrokerClient implements MqttClientActions {
             e.printStackTrace();
         }
     }
-
 
     public String getBrokerName() {
         return brokerName;
@@ -135,14 +129,6 @@ public class BasicMqttBrokerClient implements MqttClientActions {
 
     public void setBrokerPort(String brokerPort) {
         this.brokerPort = brokerPort;
-    }
-
-    public boolean isConnected() {
-        return isConnected;
-    }
-
-    public void setConnected(boolean connected) {
-        isConnected = connected;
     }
 
     public List<FirebaseTopicObj> getTopics() {

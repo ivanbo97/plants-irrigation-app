@@ -1,6 +1,5 @@
 package com.ivanboyukliev.plantsirrigationsystem.currentplantsrecyclerview.adapter;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,6 @@ import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebasePlantObj;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.BROKER_DEL_ERROR;
 
 public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<BrokerPlantsViewHolder> {
 
@@ -50,10 +47,6 @@ public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<Br
                 .into(holder.getPlantImage());
 
         holder.getDeleteButton().setOnClickListener(v -> {
-            if (!HomeActivity.getMqttBrokersList().get(brokerNumInList).isConnected()) {
-                HomeActivity.showBrokerMessage(BROKER_DEL_ERROR);
-                return;
-            }
             DatabaseReference currentBrokerPlant = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/plants/" + plantName);
             currentBrokerPlant.removeValue((error, ref) -> {
                 if (error == null) {

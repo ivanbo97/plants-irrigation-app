@@ -23,14 +23,12 @@ public class DisconnectTokenCallback implements IMqttActionListener {
     @Override
     public void onSuccess(IMqttToken asyncActionToken) {
         Log.i("BROKER INFO", "Disconnection successful!!");
-        ((BasicMqttBrokerClient) disconnectAction).setConnected(false);
         HomeActivity.getBrokersAdapter().notifyDataSetChanged();
     }
 
     @Override
     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
         Log.i("BROKER INFO", "Disconnection failed!!");
-        ((BasicMqttBrokerClient) disconnectAction).setConnected(true);
         HomeActivity.showBrokerMessage(BROKER_CONNECTION_ERROR_MSG);
         HomeActivity.getBrokersAdapter().notifyDataSetChanged();
     }
