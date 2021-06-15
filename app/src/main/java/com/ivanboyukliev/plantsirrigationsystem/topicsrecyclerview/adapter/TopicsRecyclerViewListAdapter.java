@@ -1,5 +1,7 @@
 package com.ivanboyukliev.plantsirrigationsystem.topicsrecyclerview.adapter;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +13,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 
+import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.DeleteConfirmationListener;
+import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.util.BasicDialogGenerator;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.topicsrecyclerview.viewholder.TopicViewHolder;
 import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputConverter;
 
 import java.util.List;
 
-public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicViewHolder> {
+public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicViewHolder> implements DeleteConfirmationListener {
 
     private List<FirebaseTopicObj> mqttBrokerTopics;
     private String brokerID;
     private int brokerNumInList;
+    private int itemForDeletionIdx;
+    private Context showTopicsDialogContext;
 
     public TopicsRecyclerViewListAdapter(List<FirebaseTopicObj> mqttBrokerTopics, String brokerID, int brokerNumInList) {
         this.mqttBrokerTopics = mqttBrokerTopics;
@@ -32,7 +38,8 @@ public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicVie
     @NonNull
     @Override
     public TopicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View topicRowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.topic_list_row, parent, false);
+        showTopicsDialogContext = parent.getContext();
+        View topicRowView = LayoutInflater.from(showTopicsDialogContext).inflate(R.layout.topic_list_row, parent, false);
         TopicViewHolder topicViewHolder = new TopicViewHolder(topicRowView);
         return topicViewHolder;
     }
@@ -47,18 +54,22 @@ public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicVie
         holder.getTopicQoSTv().setText(qosTopicContent);
         holder.getDeleteTopicBtn().setOnClickListener(v -> {
             DatabaseReference currentTopicDB = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/topics/" + firebaseTopicID);
-            currentTopicDB.removeValue((error, ref) -> {
-                if (error == null) {
-                    mqttBrokerTopics.remove(position);
-                    notifyDataSetChanged();
-                }
-            });
+            itemForDeletionIdx = position;
+            BasicDialogGenerator dialogGenerator = new BasicDialogGenerator(this);
+            AlertDialog deleteDialog = dialogGenerator.generateDeleteConfirmation(currentTopicDB, showTopicsDialogContext);
+            deleteDialog.show();
         });
     }
 
     @Override
     public int getItemCount() {
         return mqttBrokerTopics.size();
+    }
+
+    @Override
+    public void onDeleteConfirmationSent() {
+        mqttBrokerTopics.remove(itemForDeletionIdx);
+        notifyDataSetChanged();
     }
 
     public String getBrokerID() {
