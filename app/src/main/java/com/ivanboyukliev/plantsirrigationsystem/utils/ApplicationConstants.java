@@ -75,6 +75,7 @@ public final class ApplicationConstants {
     public static final String PLANT_REG_ERROR = "Connection to Broker is lost! Cannot add new plant!";
     public static final String PLANT_INFO = "Tap on plant's name for more..";
 
-
-
+    public static final String DELETE_TOPIC_DIALOG_TITLE = "Do you want to delete this item from DB?";
+    public static final String DEL_TOPIC_BTN_TXT = "Delete";
+    public static final String DEL_ITEM_DIALOG_TITLE = "Item Deletion";
 }
