@@ -41,16 +41,16 @@
             android:text="QoS level : "
             android:textStyle="bold" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageButton
             android:id="@+id/deletePlantBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="44dp"
             android:layout_toRightOf="@+id/plantImageView"
             android:clickable="true"
+            android:src="@drawable/ic_baseline_delete_forever_24"
             card_view:backgroundTint="@color/white"
-            card_view:rippleColor="@color/design_default_color_error"
-            card_view:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+            card_view:rippleColor="@color/design_default_color_error" />
 
     </RelativeLayout>
 
