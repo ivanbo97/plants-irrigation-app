@@ -2,9 +2,13 @@ package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.adapter;
 
 import android.annotation.SuppressLint;
 
+import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,13 +18,11 @@ import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.viewholder.MqttBrokerViewHolder;
-import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttAuthenticationDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowPlantsDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowTopicsDialog;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.util.FirebaseDataImporter;
 
 import java.util.List;
-
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.BROKER_CONNECTION_REMINDER;
 
 public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBrokerViewHolder> {
 
@@ -42,8 +44,10 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
     @Override
     public void onBindViewHolder(@NonNull MqttBrokerViewHolder holder, int position) {
         BasicMqttBrokerClient brokerForBinding = mqttBrokers.get(position);
+        EditText brokerUrlTv = holder.getBrokerIpTv();
+        Button saveChangesBtn = holder.getSaveChangesBtn();
         holder.getBrokerNameTv().setText(brokerForBinding.getBrokerName());
-        holder.getBrokerIpTv().setText(brokerForBinding.getBrokerIp() + ":" + brokerForBinding.getBrokerPort());
+        brokerUrlTv.setText(brokerForBinding.getBrokerIp() + ":" + brokerForBinding.getBrokerPort());
         holder.getDeleteBrokerButton().setOnClickListener(v -> {
             DatabaseReference currentBroker = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerForBinding.getBrokerID());
             currentBroker.removeValue();
@@ -51,40 +55,25 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
             notifyDataSetChanged();
         });
 
-        holder.getConnectBtn().setOnClickListener(v -> {
-            MqttAuthenticationDialog authenticationDialog = new MqttAuthenticationDialog(position);
-            authenticationDialog.show(HomeActivity.getHomeActivityFragmentManager(), "MQTT Broker Authentication");
+        holder.getEditBrokerDataBtn().setOnClickListener(v -> {
+            brokerUrlTv.setKeyListener((KeyListener) brokerUrlTv.getTag());
+            saveChangesBtn.setEnabled(true);
         });
 
-        holder.getDisconnectBtn().setOnClickListener(v -> {
-            mqttBrokers.get(position).disconnectClient();
+        saveChangesBtn.setOnClickListener(v -> {
+            FirebaseDataImporter.updateBrokerData(brokerForBinding, brokerUrlTv);
+            notifyDataSetChanged();
+            saveChangesBtn.setEnabled(false);
         });
-
         holder.getShowTopicsTv().setOnClickListener(v -> {
-            if (!brokerForBinding.isConnected()) {
-                HomeActivity.showBrokerMessage(BROKER_CONNECTION_REMINDER);
-                return;
-            }
             MqttBrokerShowTopicsDialog showTopicsDialog = new MqttBrokerShowTopicsDialog(position);
             showTopicsDialog.show(HomeActivity.getHomeActivityFragmentManager(), "MQTT Broker Subscription Topics");
         });
 
         holder.getShowPlantsTv().setOnClickListener(v -> {
-            if (!brokerForBinding.isConnected()) {
-                HomeActivity.showBrokerMessage(BROKER_CONNECTION_REMINDER);
-                return;
-            }
             MqttBrokerShowPlantsDialog showPlantsDialog = new MqttBrokerShowPlantsDialog(position);
             showPlantsDialog.show(HomeActivity.getHomeActivityFragmentManager(), "MQTT Broker Current Plants");
         });
-
-        if (!brokerForBinding.isConnected()) {
-            holder.getConnectBtn().setEnabled(true);
-            holder.getDisconnectBtn().setEnabled(false);
-        } else {
-            holder.getConnectBtn().setEnabled(false);
-            holder.getDisconnectBtn().setEnabled(true);
-        }
     }
 
     @Override
