@@ -1,6 +1,7 @@
 package com.ivanboyukliev.plantsirrigationsystem.topicsrecyclerview.viewholder;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,7 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
 
     private TextView topicNameTv;
     private TextView topicQoSTv;
-    private FloatingActionButton deleteTopicBtn;
+    private ImageButton deleteTopicBtn;
 
 
     public TopicViewHolder(@NonNull View itemView) {
@@ -32,7 +33,7 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
         this.topicNameTv = topicNameTv;
     }
 
-    public FloatingActionButton getDeleteTopicBtn() {
+    public ImageButton getDeleteTopicBtn() {
         return deleteTopicBtn;
     }
 

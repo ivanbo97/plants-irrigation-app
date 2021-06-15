@@ -2,6 +2,7 @@ package com.ivanboyukliev.plantsirrigationsystem.currentplantsrecyclerview.viewh
 
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ public class BrokerPlantsViewHolder extends RecyclerView.ViewHolder {
 
     private TextView plantNameTv;
     private ImageView plantImage;
-    private FloatingActionButton deleteButton;
+    private ImageButton deleteButton;
 
     public BrokerPlantsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -40,7 +41,7 @@ public class BrokerPlantsViewHolder extends RecyclerView.ViewHolder {
         this.plantImage = plantImage;
     }
 
-    public FloatingActionButton getDeleteButton() {
+    public ImageButton getDeleteButton() {
         return deleteButton;
     }
 
