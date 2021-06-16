@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,6 +63,7 @@ public class MqttBrokerShowPlantsDialog extends AppCompatDialogFragment {
         dialogBuilder.setView(dialogView)
                 .setTitle(PLANTS_LIST_TITLE)
                 .setNegativeButton(PLANT_ADD_BTN_TXT, (dialog, which) -> {
+                    openPlantRegisterDialog(getParentFragmentManager());
                 })
                 .setPositiveButton(PLANT_INFO, (dialog, which) -> {
                     // currentMqttBroker.subscribeToTopics();
@@ -70,5 +72,11 @@ public class MqttBrokerShowPlantsDialog extends AppCompatDialogFragment {
         topicsAdapter.notifyDataSetChanged();
         return dialogBuilder.create();
 
+    }
+
+    private void openPlantRegisterDialog(FragmentManager parentFragmentManager) {
+        String brokerID = HomeActivity.getMqttBrokersList().get(brokerNumInList).getBrokerID();
+        MqttBrokerPlantRegDialog mqttBrokerPlantRegDialog = new MqttBrokerPlantRegDialog(brokerNumInList, brokerID);
+        mqttBrokerPlantRegDialog.show(parentFragmentManager, "Plant Broker Registration");
     }
 }
