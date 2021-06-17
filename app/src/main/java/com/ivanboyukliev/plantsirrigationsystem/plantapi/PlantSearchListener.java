@@ -10,11 +10,11 @@ import java.util.List;
 
 public class PlantSearchListener implements SearchView.OnQueryTextListener {
 
-    private List<FirebasePlantObj> retirvedPlants;
+    private List<FirebasePlantObj> retrievedPlants;
     private Context uiFragmentContext;
 
     public PlantSearchListener(List<FirebasePlantObj> plantsList, Context context) {
-        this.retirvedPlants = plantsList;
+        this.retrievedPlants = plantsList;
         this.uiFragmentContext = context;
     }
 
@@ -30,8 +30,8 @@ public class PlantSearchListener implements SearchView.OnQueryTextListener {
     }
 
     private void retrievePlantsFromApi(String plantForSearch, Context context) {
-        PlantApiRequest apiRequest = new PlantApiRequest(plantForSearch, context, retirvedPlants);
-        retirvedPlants.clear();
-        apiRequest.getPlants();
+        PlantApiRequest apiRequest = new PlantApiRequest(plantForSearch, context);
+        retrievedPlants.clear();
+        apiRequest.getPlants(retrievedPlants);
     }
 }
