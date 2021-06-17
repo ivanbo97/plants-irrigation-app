@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/plant_irrigation"
+        android:icon="@drawable/ic_baseline_bathroom_24"
+        android:title="@string/title_plant_irrigation" />
+
+    <item
+        android:id="@+id/realtime_data"
+        android:icon="@drawable/ic_baseline_live_tv_24"
+        android:title="@string/title_realtime_data" />
+
+    <item
+        android:id="@+id/irrigation_history"
+        android:icon="@drawable/ic_baseline_storage_24"
+        android:title="@string/title_irrigation_history" />
+
+</menu>
