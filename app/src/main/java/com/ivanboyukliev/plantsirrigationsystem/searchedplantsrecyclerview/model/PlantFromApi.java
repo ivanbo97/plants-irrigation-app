@@ -3,13 +3,21 @@ package com.ivanboyukliev.plantsirrigationsystem.searchedplantsrecyclerview.mode
 public class PlantFromApi {
 
     private String plantName;
-    private String image_url;
+    private String imageUrl;
+    private String scientificName;
+    private String family;
 
-    public PlantFromApi(String plantName, String image_url) {
-        this.plantName = plantName;
-        this.image_url = image_url;
+
+    public PlantFromApi (){
+
     }
 
+    public PlantFromApi(String plantName, String imageUrl, String scientificName, String family) {
+        this.plantName = plantName;
+        this.imageUrl = imageUrl;
+        this.scientificName = scientificName;
+        this.family = family;
+    }
 
     public String getPlantName() {
         return plantName;
@@ -19,11 +27,27 @@ public class PlantFromApi {
         this.plantName = plantName;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getScientificName() {
+        return scientificName;
+    }
+
+    public void setScientificName(String scientificName) {
+        this.scientificName = scientificName;
+    }
+
+    public String getFamily() {
+        return family;
+    }
+
+    public void setFamily(String family) {
+        this.family = family;
     }
 }
