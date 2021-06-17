@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.ivanboyukliev.plantsirrigationsystem.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/plant_irrigation"
+        android:name="com.ivanboyukliev.plantsirrigationsystem.ui.plantirrigation.PlantIrrigationFragment"
+        android:label="@string/title_plant_irrigation"
+        tools:layout="@layout/fragment_irrigation" />
+
+    <fragment
+        android:id="@+id/realtime_data"
+        android:name="com.ivanboyukliev.plantsirrigationsystem.ui.realtimedata.RealtimeDataFragment"
+        android:label="@string/title_realtime_data"
+        tools:layout="@layout/fragment_realtime" />
+
+    <fragment
+        android:id="@+id/irrigation_history"
+        android:name="com.ivanboyukliev.plantsirrigationsystem.ui.irrigationhistory.IrrigationHistoryFragment"
+        android:label="@string/title_irrigation_history"
+        tools:layout="@layout/fragment_irrigation_history" />
+
+
+</navigation>
