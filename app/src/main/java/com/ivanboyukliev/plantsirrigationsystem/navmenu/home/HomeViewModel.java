@@ -1,4 +1,4 @@
-package com.ivanboyukliev.plantsirrigationsystem.ui.home;
+package com.ivanboyukliev.plantsirrigationsystem.navmenu.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

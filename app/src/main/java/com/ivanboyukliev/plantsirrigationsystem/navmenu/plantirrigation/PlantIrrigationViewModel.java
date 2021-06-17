@@ -1,16 +1,16 @@
-package com.ivanboyukliev.plantsirrigationsystem.ui.realtimedata;
+package com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class RealtimeDataViewModel extends ViewModel {
+public class PlantIrrigationViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public RealtimeDataViewModel() {
+    public PlantIrrigationViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is realtime data fragment");
+        mText.setValue("This is irrigation fragment");
     }
 
     public LiveData<String> getText() {

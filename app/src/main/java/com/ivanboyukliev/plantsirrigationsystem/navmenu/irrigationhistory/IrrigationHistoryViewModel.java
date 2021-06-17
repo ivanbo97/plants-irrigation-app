@@ -1,16 +1,16 @@
-package com.ivanboyukliev.plantsirrigationsystem.ui.plantirrigation;
+package com.ivanboyukliev.plantsirrigationsystem.navmenu.irrigationhistory;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class PlantIrrigationViewModel extends ViewModel {
+public class IrrigationHistoryViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public PlantIrrigationViewModel() {
+    public IrrigationHistoryViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is irrigation fragment");
+        mText.setValue("This is irrigation history fragment");
     }
 
     public LiveData<String> getText() {

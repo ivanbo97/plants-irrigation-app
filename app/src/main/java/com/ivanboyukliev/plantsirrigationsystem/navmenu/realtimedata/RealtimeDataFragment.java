@@ -1,4 +1,4 @@
-package com.ivanboyukliev.plantsirrigationsystem.ui.realtimedata;
+package com.ivanboyukliev.plantsirrigationsystem.navmenu.realtimedata;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.ivanboyukliev.plantsirrigationsystem.ui.irrigationhistory;
+package com.ivanboyukliev.plantsirrigationsystem.navmenu.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,19 +14,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.ivanboyukliev.plantsirrigationsystem.R;
 
+public class HomeFragment extends Fragment {
 
-public class IrrigationHistoryFragment extends Fragment {
-
-    private  IrrigationHistoryViewModel irrigationHistoryViewModel;
+    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        irrigationHistoryViewModel =
-                new ViewModelProvider(this).get(IrrigationHistoryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_irrigation_history, container, false);
-        final TextView textView = root.findViewById(R.id.text_history);
-        irrigationHistoryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = root.findViewById(R.id.text_home);
+        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
