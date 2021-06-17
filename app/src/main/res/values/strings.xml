@@ -18,4 +18,6 @@
     <string name="title_plant_irrigation">Plant Irrigation</string>
     <string name="title_realtime_data">Realtime-data</string>
     <string name="title_irrigation_history">Irrigation History</string>
+    <string name="plant_info_title">Plant Info</string>
+    <string name="scientific_name_tv_title">Scientific name:</string>
 </resources>
