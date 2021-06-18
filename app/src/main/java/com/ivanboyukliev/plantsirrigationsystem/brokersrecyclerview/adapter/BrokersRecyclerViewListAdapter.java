@@ -9,26 +9,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
-import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.viewholder.MqttBrokerViewHolder;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowPlantsDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowTopicsDialog;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.util.FirebaseDataImporter;
 
 import java.util.List;
 
 public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBrokerViewHolder> {
 
-    private List<BasicMqttBrokerClient> mqttBrokers;
+    private List<FirebaseBrokerObj> mqttBrokers;
 
-    public BrokersRecyclerViewListAdapter(List<BasicMqttBrokerClient> mqttBrokers) {
+    public BrokersRecyclerViewListAdapter(List<FirebaseBrokerObj> mqttBrokers) {
         this.mqttBrokers = mqttBrokers;
     }
 
@@ -43,7 +42,7 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MqttBrokerViewHolder holder, int position) {
-        BasicMqttBrokerClient brokerForBinding = mqttBrokers.get(position);
+        FirebaseBrokerObj brokerForBinding = mqttBrokers.get(position);
         EditText brokerUrlTv = holder.getBrokerIpTv();
         Button saveChangesBtn = holder.getSaveChangesBtn();
         holder.getBrokerNameTv().setText(brokerForBinding.getBrokerName());
@@ -81,7 +80,7 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
         return mqttBrokers.size();
     }
 
-    public List<BasicMqttBrokerClient> getMqttBrokers() {
+    public List<FirebaseBrokerObj> getMqttBrokers() {
         return mqttBrokers;
     }
 }
