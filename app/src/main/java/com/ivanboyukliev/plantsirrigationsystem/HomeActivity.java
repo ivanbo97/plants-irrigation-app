@@ -24,9 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.adapter.BrokersRecyclerViewListAdapter;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerRegDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.BrokerDataInputListener;
-import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
-import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttCredentialsInputListener;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.BrokerDataChangeListener;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
 import com.ivanboyukliev.plantsirrigationsystem.utils.AndroidUIManager;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ import java.util.List;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.DB_URL;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.NAV_BAR_INVISIBLE;
 
-public class HomeActivity extends AppCompatActivity implements BrokerDataInputListener, MqttCredentialsInputListener {
+public class HomeActivity extends AppCompatActivity implements BrokerDataInputListener {
 
     private Button logoutBtn;
     private FirebaseAuth firebaseAuth;
@@ -44,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
     private RecyclerView brokersListRecyclerView;
     private static BrokersRecyclerViewListAdapter brokersAdapter;
     private static AndroidUIManager uiManager;
-    private static List<BasicMqttBrokerClient> mqttBrokers;
+    private static List<FirebaseBrokerObj> mqttBrokers;
     private static Context homeActivityContext;
     private static FragmentManager homeActivityFragmentManager;
 
@@ -68,7 +67,6 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
 
         logoutBtn.setOnClickListener(v -> {
             firebaseAuth.signOut();
-            disconnectAllClients();
             startActivity(new Intent(HomeActivity.this, MainActivity.class));
         });
 
@@ -83,22 +81,12 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         brokersAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onCredentialsEntered(String username, String password, int brokerNum) {
-        mqttBrokers.get(brokerNum).connectClient(username, password);
-    }
-
     private void populateWidgetObjects() {
         logoutBtn = findViewById(R.id.logoutBtn);
         registerBrokerBtn = findViewById(R.id.addNewBrokerButton);
         brokersListRecyclerView = findViewById(R.id.brokersListRecyclerView);
     }
 
-    private void disconnectAllClients() {
-        for (BasicMqttBrokerClient mqttBroker : mqttBrokers) {
-            mqttBroker.disconnectClient();
-        }
-    }
 
     @SuppressLint("NewApi")
     @Override
@@ -118,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         return brokersAdapter;
     }
 
-    public static List<BasicMqttBrokerClient> getMqttBrokersList() {
+    public static List<FirebaseBrokerObj> getMqttBrokersList() {
         return mqttBrokers;
     }
 
