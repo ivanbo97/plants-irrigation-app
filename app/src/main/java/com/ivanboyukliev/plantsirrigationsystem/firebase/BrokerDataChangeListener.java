@@ -5,8 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
-import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.util.FirebaseDataExtractor;
 import com.ivanboyukliev.plantsirrigationsystem.utils.FirebaseRetrievedDataConverter;
 
@@ -16,7 +17,7 @@ public class BrokerDataChangeListener implements ValueEventListener {
     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
         for (DataSnapshot broker : snapshot.getChildren()) {
-            BasicMqttBrokerClient mqttBroker = new BasicMqttBrokerClient();
+            FirebaseBrokerObj mqttBroker = new FirebaseBrokerObj();
             mqttBroker.setBrokerID(broker.getKey());
 
             String brokerName = broker.child("/brkName").getValue(String.class);
@@ -31,8 +32,6 @@ public class BrokerDataChangeListener implements ValueEventListener {
 
             mqttBroker.setBrokerIp(brokerIp);
             mqttBroker.setBrokerPort(brokerPort);
-
-            mqttBroker.initClientData();
 
             FirebaseDataExtractor.retrieveTopicsAndPopulateBroker(mqttBroker, broker.child("/topics").getChildren());
             FirebaseDataExtractor.retrievePlantsAndPopulateBroker(mqttBroker, broker.child("/plants").getChildren());
