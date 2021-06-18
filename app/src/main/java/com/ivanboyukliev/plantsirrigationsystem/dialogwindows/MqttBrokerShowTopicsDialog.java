@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
-import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.topicsrecyclerview.adapter.TopicsRecyclerViewListAdapter;
 
@@ -27,7 +26,6 @@ import java.util.List;
 
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPICS_LIST_TITLE;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPIC_ADD_BTN_TXT;
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPIC_SUBS_BTN_TXT;
 
 public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
 
@@ -55,7 +53,7 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
                 LinearLayoutManager.VERTICAL, false);
         topicsListRecyclerView.setLayoutManager(verticalLayoutManager);
 
-        BasicMqttBrokerClient currentMqttBroker = HomeActivity.getMqttBrokersList().get(brokerNumber);
+        FirebaseBrokerObj currentMqttBroker = HomeActivity.getMqttBrokersList().get(brokerNumber);
         currentBrokerTopics = currentMqttBroker.getTopics();
         String brokerID = currentMqttBroker.getBrokerID();
         topicsAdapter = new TopicsRecyclerViewListAdapter(currentBrokerTopics, brokerID, brokerNumber);
@@ -65,9 +63,6 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
                 .setTitle(TOPICS_LIST_TITLE)
                 .setNegativeButton(TOPIC_ADD_BTN_TXT, (dialog, which) -> {
                     openTopicRegisterDialog(getParentFragmentManager());
-                })
-                .setPositiveButton(TOPIC_SUBS_BTN_TXT, (dialog, which) -> {
-                    currentMqttBroker.subscribeToTopics();
                 });
         topicsAdapter.notifyDataSetChanged();
         return dialogBuilder.create();
@@ -82,10 +77,5 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
         String brokerID = HomeActivity.getMqttBrokersList().get(brokerNumber).getBrokerID();
         MqttBrokerTopicRegDialog mqttBrokerTopicRegDialog = new MqttBrokerTopicRegDialog(brokerID, brokerNumber);
         mqttBrokerTopicRegDialog.show(fragmentManager, "MQTT Broker Registration");
-    }
-
-    private void displayMessage(String message) {
-        Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
-        toast.show();
     }
 }
