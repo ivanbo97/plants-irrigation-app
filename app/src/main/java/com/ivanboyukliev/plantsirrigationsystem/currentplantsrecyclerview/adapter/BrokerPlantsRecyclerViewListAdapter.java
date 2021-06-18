@@ -17,9 +17,11 @@ import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.currentplantsrecyclerview.viewholder.BrokerPlantsViewHolder;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.DeleteConfirmationListener;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.util.BasicDialogGenerator;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebasePlantObj;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<BrokerPlantsViewHolder> implements DeleteConfirmationListener {
@@ -59,12 +61,19 @@ public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<Br
             plantForDeleteionIdx = position;
             BasicDialogGenerator dialogGenerator = new BasicDialogGenerator(this);
             DatabaseReference currentBrokerPlant = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/plants/" + plantName);
-            AlertDialog plantDeletionDialog = dialogGenerator.generateDeleteConfirmation(currentBrokerPlant,plantsListContext);
+            AlertDialog plantDeletionDialog = dialogGenerator.generateDeleteConfirmation(currentBrokerPlant, plantsListContext);
             plantDeletionDialog.show();
         });
 
         holder.getPlantNameTv().setOnClickListener(v -> {
             Intent intent = new Intent(plantsListContext, PlantManagerActivity.class);
+            FirebaseBrokerObj currentBroker = HomeActivity.getMqttBrokersList().get(brokerNumInList);
+            String brokerName = currentBroker.getBrokerName();
+            String brokerUrl = currentBroker.getBrokerIp() + ":" + currentBroker.getBrokerPort();
+            intent.putExtra("PlantName", plantName);
+            intent.putExtra("BrokerName", brokerName);
+            intent.putExtra("BrokerUrl", brokerUrl);
+            intent.putExtra("TopicsList", (Serializable) currentBroker.getTopics());
             plantsListContext.startActivity(intent);
         });
     }
