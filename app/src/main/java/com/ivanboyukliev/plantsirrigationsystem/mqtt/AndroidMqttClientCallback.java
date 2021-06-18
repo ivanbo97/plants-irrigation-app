@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
+import com.ivanboyukliev.plantsirrigationsystem.navmenu.home.HomeFragment;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
@@ -26,6 +27,9 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
     public void connectionLost(Throwable cause) {
         Log.i("MQTT CLIENT STATUS:  ", "DISCONNECTED");
         HomeActivity.getBrokersAdapter().notifyDataSetChanged();
+        HomeFragment.getConnectAndSubsBtn().setEnabled(true);
+        HomeFragment.getBrokerDisconnectBtn().setEnabled(false);
+        HomeFragment.setConnectedToBroker(false);
     }
 
     @Override
