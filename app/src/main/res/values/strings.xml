@@ -20,4 +20,6 @@
     <string name="title_irrigation_history">Irrigation History</string>
     <string name="plant_info_title">Plant Info</string>
     <string name="scientific_name_tv_title">Scientific name:</string>
+    <string name="plant_family_title_str">Plant Family:</string>
+    <string name="current_mqtt_broker_title_str"><u>Current MQTT Broker</u></string>
 </resources>
