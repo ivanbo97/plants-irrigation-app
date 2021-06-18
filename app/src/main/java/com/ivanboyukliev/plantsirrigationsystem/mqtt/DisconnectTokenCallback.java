@@ -3,8 +3,8 @@ package com.ivanboyukliev.plantsirrigationsystem.mqtt;
 import android.util.Log;
 
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
-import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
+import com.ivanboyukliev.plantsirrigationsystem.navmenu.home.HomeFragment;
 
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -23,13 +23,12 @@ public class DisconnectTokenCallback implements IMqttActionListener {
     @Override
     public void onSuccess(IMqttToken asyncActionToken) {
         Log.i("BROKER INFO", "Disconnection successful!!");
-        HomeActivity.getBrokersAdapter().notifyDataSetChanged();
+        HomeFragment.setConnectedToBroker(false);
     }
 
     @Override
     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
         Log.i("BROKER INFO", "Disconnection failed!!");
         HomeActivity.showBrokerMessage(BROKER_CONNECTION_ERROR_MSG);
-        HomeActivity.getBrokersAdapter().notifyDataSetChanged();
     }
 }
