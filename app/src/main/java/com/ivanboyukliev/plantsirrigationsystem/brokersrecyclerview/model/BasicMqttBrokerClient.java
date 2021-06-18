@@ -3,11 +3,11 @@ package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.util.TopicsDataExtractor;
-import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebasePlantObj;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.AndroidMqttClientCallback;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.ConnectionTokenCallback;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.DisconnectTokenCallback;
+import com.ivanboyukliev.plantsirrigationsystem.mqtt.TopicSubscriptionCallBack;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
 import com.ivanboyukliev.plantsirrigationsystem.ssl.SSLConfigurator;
 
@@ -19,36 +19,29 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.SSLSocketFactory;
 
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.NO_TOPICS_ERROR;
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPICS_SUBS_ERROR;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPICS_SUBS_SUCCESS;
 
 public class BasicMqttBrokerClient implements MqttClientActions {
 
-    private String brokerName;
-    private String brokerIp;
-    private String brokerPort;
-    private String brokerID;
+    private String brokerUri;
     private MqttAndroidClient mqttAndroidClient;
     private MqttCallbackExtended mqttCallback;
     private List<FirebaseTopicObj> topics;
-    private List<FirebasePlantObj> plants;
 
-    public BasicMqttBrokerClient() {
-        topics = new ArrayList<>();
-        plants = new ArrayList<>();
+    public BasicMqttBrokerClient(String brokerUri, List<FirebaseTopicObj> brokerTopics) {
+        this.brokerUri = brokerUri;
+        this.topics = brokerTopics;
     }
 
     @Override
     public void initClientData() {
         String clientId = MqttClient.generateClientId();
-        String brokerURI = brokerIp + ":" + brokerPort;
-        mqttAndroidClient = new MqttAndroidClient(HomeActivity.getHomeActivityContext(), brokerURI, clientId);
+        mqttAndroidClient = new MqttAndroidClient(HomeActivity.getHomeActivityContext(), brokerUri, clientId);
         mqttCallback = new AndroidMqttClientCallback(this);
         mqttAndroidClient.setCallback(mqttCallback);
     }
@@ -99,7 +92,9 @@ public class BasicMqttBrokerClient implements MqttClientActions {
         String[] topicsNames = TopicsDataExtractor.extractCurrentTopicNames(topics);
         int[] topicsQoS = TopicsDataExtractor.extractCurrentTopicQoS(topics);
         try {
-            mqttAndroidClient.subscribe(topicsNames, topicsQoS);
+            IMqttToken subscriptionToken = mqttAndroidClient.subscribe(topicsNames, topicsQoS);
+            TopicSubscriptionCallBack topicSubscriptionCallBack = new TopicSubscriptionCallBack();
+            subscriptionToken.setActionCallback(topicSubscriptionCallBack);
             HomeActivity.showBrokerMessage(TOPICS_SUBS_SUCCESS);
         } catch (MqttException e) {
             HomeActivity.showBrokerMessage(e.getMessage());
@@ -107,28 +102,13 @@ public class BasicMqttBrokerClient implements MqttClientActions {
         }
     }
 
-    public String getBrokerName() {
-        return brokerName;
+
+    public String getBrokerUri() {
+        return brokerUri;
     }
 
-    public String getBrokerIp() {
-        return brokerIp;
-    }
-
-    public String getBrokerPort() {
-        return brokerPort;
-    }
-
-    public void setBrokerName(String brokerName) {
-        this.brokerName = brokerName;
-    }
-
-    public void setBrokerIp(String brokerIp) {
-        this.brokerIp = brokerIp;
-    }
-
-    public void setBrokerPort(String brokerPort) {
-        this.brokerPort = brokerPort;
+    public void setBrokerUri(String brokerUri) {
+        this.brokerUri = brokerUri;
     }
 
     public List<FirebaseTopicObj> getTopics() {
@@ -137,21 +117,5 @@ public class BasicMqttBrokerClient implements MqttClientActions {
 
     public void setTopics(List<FirebaseTopicObj> topics) {
         this.topics = topics;
-    }
-
-    public String getBrokerID() {
-        return brokerID;
-    }
-
-    public void setBrokerID(String brokerID) {
-        this.brokerID = brokerID;
-    }
-
-    public List<FirebasePlantObj> getPlants() {
-        return plants;
-    }
-
-    public void setPlants(List<FirebasePlantObj> plants) {
-        this.plants = plants;
     }
 }
