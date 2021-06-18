@@ -2,7 +2,6 @@ package com.ivanboyukliev.plantsirrigationsystem.dialogwindows;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +22,9 @@ public class MqttAuthenticationDialog extends AppCompatDialogFragment {
     private EditText username;
     private EditText password;
     private MqttCredentialsInputListener credentialsInputListener;
-    private int brokerNum;
 
-    public MqttAuthenticationDialog(int brokerNum) {
-        this.brokerNum = brokerNum;
+    public MqttAuthenticationDialog(MqttCredentialsInputListener credentialsInputListener) {
+        this.credentialsInputListener = credentialsInputListener;
     }
 
     @NonNull
@@ -43,20 +41,11 @@ public class MqttAuthenticationDialog extends AppCompatDialogFragment {
                     //no-action needed for now
                 })
                 .setPositiveButton("Confirm", (dialog, which) -> {
-                    credentialsInputListener.onCredentialsEntered(username.getText().toString(), password.getText().toString(), brokerNum);
+                    credentialsInputListener.onCredentialsEntered(username.getText().toString(), password.getText().toString());
                 });
         return dialogBuilder.create();
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            credentialsInputListener = (MqttCredentialsInputListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + "must implement MqttCredentailsInputListener");
-        }
-    }
 
     private void populateDialogWidgets() {
         username = dialogView.findViewById(R.id.mqtt_username);
