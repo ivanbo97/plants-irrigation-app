@@ -1,6 +1,8 @@
 package com.ivanboyukliev.plantsirrigationsystem.firebase.model;
 
-public class FirebaseTopicObj {
+import java.io.Serializable;
+
+public class FirebaseTopicObj implements Serializable {
 
     private String topicName;
     private int QoS;

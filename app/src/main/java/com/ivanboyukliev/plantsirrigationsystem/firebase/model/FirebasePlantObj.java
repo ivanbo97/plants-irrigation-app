@@ -1,11 +1,13 @@
 package com.ivanboyukliev.plantsirrigationsystem.firebase.model;
 
-public class FirebasePlantObj {
+import java.io.Serializable;
+
+public class FirebasePlantObj implements Serializable {
 
     private String plantName;
     private String imageURL;
 
-    public FirebasePlantObj(){
+    public FirebasePlantObj() {
 
     }
 
