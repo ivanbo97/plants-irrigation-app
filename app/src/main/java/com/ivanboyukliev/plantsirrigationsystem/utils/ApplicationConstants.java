@@ -23,9 +23,10 @@ public final class ApplicationConstants {
 
     public static final String BROKER_CONNECTION_ERROR_MSG = "Connection to broker failed! Please check your network connection";
 
-    public static final String BROKER_TOPICS_SUBS_ERROR = "Connection to broker and topic subscription successful!";
+    public static final String BROKER_TOPICS_SUBS_ERROR = "Successful broker connection! Failure during topic subscription!";
 
-    public static final String BROKER_TOPICS_SUBS_SUCCESS = "Successful broker connection! Failure during topic subscription!";
+    public static final String BROKER_TOPICS_SUBS_SUCCESS = "Connection to broker and topic subscription successful!";
+
 
     public static final String AUTHORIZATION_ERROR = "Not authorized to connect";
 
