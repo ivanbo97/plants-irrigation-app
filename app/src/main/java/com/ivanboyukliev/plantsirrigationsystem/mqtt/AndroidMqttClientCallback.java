@@ -2,6 +2,9 @@ package com.ivanboyukliev.plantsirrigationsystem.mqtt;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.home.HomeFragment;
@@ -14,8 +17,11 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
 
     private MqttClientActions disconnectAction;
 
+    private MutableLiveData<String> receivedData;
+
     public AndroidMqttClientCallback(MqttClientActions disconnectAction) {
         this.disconnectAction = disconnectAction;
+        receivedData = new MutableLiveData<>();
     }
 
     @Override
@@ -35,10 +41,15 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         Log.i("DATA FROM BROKER", message.toString());
+        receivedData.setValue(message.toString());
     }
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
 
+    }
+
+    public LiveData<String> getReceivedData() {
+        return receivedData;
     }
 }
