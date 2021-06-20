@@ -118,4 +118,8 @@ public class BasicMqttBrokerClient implements MqttClientActions {
     public void setTopics(List<FirebaseTopicObj> topics) {
         this.topics = topics;
     }
+
+    public MqttCallbackExtended getMqttCallback() {
+        return mqttCallback;
+    }
 }
