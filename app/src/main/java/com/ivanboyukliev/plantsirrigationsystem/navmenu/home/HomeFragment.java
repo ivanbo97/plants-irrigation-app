@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.ivanboyukliev.plantsirrigationsystem.PlantManagerActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
-import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttAuthenticationDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.MqttCredentialsInputListener;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
@@ -42,8 +42,6 @@ public class HomeFragment extends Fragment implements MqttCredentialsInputListen
     private static Context currentContext;
 
     private static PlantApiRequest plantApiRequest;
-
-    private static BasicMqttBrokerClient mqttClient;
 
     private static boolean connectedToBroker;
 
@@ -83,15 +81,14 @@ public class HomeFragment extends Fragment implements MqttCredentialsInputListen
 
 
         connectAndSubsBtn.setOnClickListener(v -> {
-            mqttClient = new BasicMqttBrokerClient(brokerUrl, brokerTopics);
-            mqttClient.initClientData();
+            PlantManagerActivity.getMqttClient().initClientData();
             MqttAuthenticationDialog mqttAuthDialog = new MqttAuthenticationDialog(this);
             mqttAuthDialog.show(getActivity().getSupportFragmentManager(), "MQTT Broker Authentication");
 
         });
 
         brokerDisconnectBtn.setOnClickListener(v -> {
-            mqttClient.disconnectClient();
+            PlantManagerActivity.getMqttClient().disconnectClient();
         });
         homeViewModel.getCurrentPlant().observe(getViewLifecycleOwner(), plantFromApi -> {
             plantScientificName.setText(plantFromApi.getScientificName());
@@ -107,7 +104,7 @@ public class HomeFragment extends Fragment implements MqttCredentialsInputListen
 
     @Override
     public void onCredentialsEntered(String username, String password) {
-        mqttClient.connectClient(username, password);
+        PlantManagerActivity.getMqttClient().connectClient(username, password);
     }
 
     @Override
@@ -141,10 +138,6 @@ public class HomeFragment extends Fragment implements MqttCredentialsInputListen
 
     public static Button getBrokerDisconnectBtn() {
         return brokerDisconnectBtn;
-    }
-
-    public static BasicMqttBrokerClient getMqttClient() {
-        return mqttClient;
     }
 
     public static boolean isConnectedToBroker() {
