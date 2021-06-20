@@ -2,6 +2,7 @@ package com.ivanboyukliev.plantsirrigationsystem.mqtt;
 
 import android.util.Log;
 
+import com.ivanboyukliev.plantsirrigationsystem.PlantManagerActivity;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.home.HomeFragment;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -25,7 +26,7 @@ public class TopicSubscriptionCallBack implements IMqttActionListener {
     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
         Log.w("Mqttt", "Subscription failed!");
         HomeFragment.showBrokerMessage(BROKER_TOPICS_SUBS_ERROR);
-        HomeFragment.getMqttClient().disconnectClient();
+        PlantManagerActivity.getMqttClient().disconnectClient();
         HomeFragment.getConnectAndSubsBtn().setEnabled(true);
         HomeFragment.getBrokerDisconnectBtn().setEnabled(false);
         HomeFragment.setConnectedToBroker(false);
