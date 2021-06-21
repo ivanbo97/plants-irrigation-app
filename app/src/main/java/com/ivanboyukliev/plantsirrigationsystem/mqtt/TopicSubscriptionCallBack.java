@@ -19,7 +19,9 @@ public class TopicSubscriptionCallBack implements IMqttActionListener {
         HomeFragment.showBrokerMessage(BROKER_TOPICS_SUBS_SUCCESS);
         HomeFragment.getConnectAndSubsBtn().setEnabled(false);
         HomeFragment.getBrokerDisconnectBtn().setEnabled(true);
-        HomeFragment.setConnectedToBroker(true);
+        PlantManagerActivity.getMqttClient()
+                .getBrokerConnState()
+                .setValue(true);
     }
 
     @Override
@@ -29,6 +31,8 @@ public class TopicSubscriptionCallBack implements IMqttActionListener {
         PlantManagerActivity.getMqttClient().disconnectClient();
         HomeFragment.getConnectAndSubsBtn().setEnabled(true);
         HomeFragment.getBrokerDisconnectBtn().setEnabled(false);
-        HomeFragment.setConnectedToBroker(false);
+        PlantManagerActivity.getMqttClient()
+                .getBrokerConnState()
+                .setValue(false);
     }
 }
