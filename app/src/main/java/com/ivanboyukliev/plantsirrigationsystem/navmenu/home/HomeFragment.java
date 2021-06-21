@@ -43,8 +43,6 @@ public class HomeFragment extends Fragment implements MqttCredentialsInputListen
 
     private static PlantApiRequest plantApiRequest;
 
-    private static boolean connectedToBroker;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -110,7 +108,8 @@ public class HomeFragment extends Fragment implements MqttCredentialsInputListen
     @Override
     public void onResume() {
         super.onResume();
-        if (isConnectedToBroker()) {
+
+        if (PlantManagerActivity.getMqttClient().getBrokerConnState().getValue()) {
             connectAndSubsBtn.setEnabled(false);
             brokerDisconnectBtn.setEnabled(true);
             return;
@@ -138,13 +137,5 @@ public class HomeFragment extends Fragment implements MqttCredentialsInputListen
 
     public static Button getBrokerDisconnectBtn() {
         return brokerDisconnectBtn;
-    }
-
-    public static boolean isConnectedToBroker() {
-        return connectedToBroker;
-    }
-
-    public static void setConnectedToBroker(boolean connectedToBroker) {
-        HomeFragment.connectedToBroker = connectedToBroker;
     }
 }
