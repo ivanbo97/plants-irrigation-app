@@ -1,5 +1,7 @@
 package com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.util.TopicsDataExtractor;
@@ -32,10 +34,13 @@ public class BasicMqttBrokerClient implements MqttClientActions {
     private MqttAndroidClient mqttAndroidClient;
     private MqttCallbackExtended mqttCallback;
     private List<FirebaseTopicObj> topics;
+    private MutableLiveData<Boolean> brokerConnState;
 
     public BasicMqttBrokerClient(String brokerUri, List<FirebaseTopicObj> brokerTopics) {
         this.brokerUri = brokerUri;
         this.topics = brokerTopics;
+        brokerConnState = new MutableLiveData<>();
+        brokerConnState.setValue(false);
     }
 
     @Override
@@ -78,6 +83,7 @@ public class BasicMqttBrokerClient implements MqttClientActions {
             DisconnectTokenCallback disconnectTokenCallback = new DisconnectTokenCallback(this);
             IMqttToken disconnectionToken = mqttAndroidClient.disconnect();
             disconnectionToken.setActionCallback(disconnectTokenCallback);
+            brokerConnState.setValue(false);
         } catch (MqttException e) {
             e.printStackTrace();
         }
@@ -121,5 +127,9 @@ public class BasicMqttBrokerClient implements MqttClientActions {
 
     public MqttCallbackExtended getMqttCallback() {
         return mqttCallback;
+    }
+
+    public MutableLiveData<Boolean> getBrokerConnState() {
+        return brokerConnState;
     }
 }
