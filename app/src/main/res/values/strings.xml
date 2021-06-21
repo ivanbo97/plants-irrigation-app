@@ -22,4 +22,12 @@
     <string name="scientific_name_tv_title">Scientific name:</string>
     <string name="plant_family_title_str">Plant Family:</string>
     <string name="current_mqtt_broker_title_str"><u>Current MQTT Broker</u></string>
+    <string name="connection_status_title_str">Connection Status:</string>
+    <string name="pump_management_tiltle_str"><b><i><u>Pump Management</u></i></b></string>
+    <string name="moisture_management_title_str"><b><u><i>Moisture Management</i></u></b></string>
+    <string name="desired_moisture_hint">Please enter desired moisture (in %)</string>
+    <string name="delayed_start_management_title"><b><i><u>Delayed Pump Start Management</u></i></b></string>
+    <string name="submit_moister_btn">Submit</string>
+    <string name="set_date_btn">Set date</string>
+    <string name="set_time_str">Set time</string>
 </resources>
