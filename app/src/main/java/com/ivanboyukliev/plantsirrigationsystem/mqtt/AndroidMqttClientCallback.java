@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
+import com.ivanboyukliev.plantsirrigationsystem.PlantManagerActivity;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.home.HomeFragment;
 
@@ -35,7 +36,9 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
         HomeActivity.getBrokersAdapter().notifyDataSetChanged();
         HomeFragment.getConnectAndSubsBtn().setEnabled(true);
         HomeFragment.getBrokerDisconnectBtn().setEnabled(false);
-        HomeFragment.setConnectedToBroker(false);
+        PlantManagerActivity.getMqttClient()
+                .getBrokerConnState()
+                .setValue(false);
     }
 
     @Override
