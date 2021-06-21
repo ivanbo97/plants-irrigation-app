@@ -14,21 +14,158 @@
             android:id="@+id/connStatusTitleTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/delius"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:text="Connection Status:" />
+            android:fontFamily="@font/delius"
+            android:text="@string/connection_status_title_str" />
 
         <TextView
             android:id="@+id/connStatusTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/delius"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:textSize="14sp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/connStatusTitleTv"
-            />
+            android:fontFamily="@font/delius"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/pumpManagementTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/connStatusTv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/delius"
+            android:text="@string/pump_management_tiltle_str"
+            android:textSize="18sp" />
+
+        <Switch
+            android:id="@+id/pumpSwitch"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pumpManagementTitleTv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/delius"
+            android:text="Start / Stop   " />
+
+        <TextView
+            android:id="@+id/moistureManagementTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pumpSwitch"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/delius"
+            android:text="@string/moisture_management_title_str"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/bulletMoistureHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/moistureManagementTitleTv"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="\u25BA" />
+
+        <TextView
+            android:id="@+id/moistreHintTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/moistureManagementTitleTv"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/bulletMoistureHint"
+            android:fontFamily="@font/delius"
+            android:text="@string/desired_moisture_hint" />
+
+        <EditText
+            android:id="@+id/editTextNumberSigned"
+            android:layout_width="49dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="140dp"
+            android:layout_toRightOf="@id/moistreHintTxt"
+            android:ems="10"
+            android:fontFamily="@font/delius"
+            android:inputType="numberSigned" />
+
+        <Button
+            android:id="@+id/submitMoistureBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/moistureManagementTitleTv"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/submit_moister_btn"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/delayedStartTitleTv"
+            android:layout_width="288dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/submitMoistureBtn"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/delius"
+            android:text="@string/delayed_start_management_title"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/pickUpDateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/delayedStartTitleTv"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:drawableRight="@drawable/ic_baseline_edit_calendar_24"
+            android:text="@string/set_date_btn"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/chosenDateTv"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pickUpDateBtn"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/delius"
+            android:textSize="16sp" />
+
+
+        <Button
+            android:id="@+id/pickUpTimeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/delayedStartTitleTv"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_toRightOf="@id/chosenDateTv"
+            android:drawableRight="@drawable/ic_baseline_access_time_24"
+            android:text="@string/set_time_str"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/chosenTimeTv"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pickUpTimeBtn"
+            android:layout_marginLeft="180dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/delius"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/submitDelayStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chosenDateTv"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Initiate delayed irrigation"
+            android:textSize="10sp" />
 
     </RelativeLayout>
 
