@@ -71,7 +71,7 @@
             android:text="\u25BA" />
 
         <TextView
-            android:id="@+id/moistreHintTxt"
+            android:id="@+id/moistureHintTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/moistureManagementTitleTv"
@@ -86,8 +86,8 @@
             android:layout_width="49dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="140dp"
-            android:layout_toRightOf="@id/moistreHintTxt"
+            android:layout_marginTop="153dp"
+            android:layout_toRightOf="@id/moistureHintTxt"
             android:ems="10"
             android:fontFamily="@font/delius"
             android:inputType="numberSigned" />
