@@ -132,4 +132,8 @@ public class BasicMqttBrokerClient implements MqttClientActions {
     public MutableLiveData<Boolean> getBrokerConnState() {
         return brokerConnState;
     }
+
+    public MqttAndroidClient getMqttAndroidClient() {
+        return mqttAndroidClient;
+    }
 }
