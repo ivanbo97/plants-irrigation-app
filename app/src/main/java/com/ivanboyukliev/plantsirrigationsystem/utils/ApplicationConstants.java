@@ -90,4 +90,25 @@ public final class ApplicationConstants {
     public static final String PLANT_API_PLANT_SEARCH_URL = "https://api.floracodex.com/v1/plants/search";
     public static final String PLANT_API_TOKEN = "BflPxC8X3nAx9bnRAT4F";
     public static final String PLANT_NO_IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png";
+
+    public static final String MOISTURE_LEVEL_TOPIC = "moisture";
+    public static final String PUMP_STATE_TOPIC = "pumpstate";
+    public static final String MANAGE_PUMP_TOPIC = "pump";
+    public static final String DELAYED_START_STATE_TOPIC = "auto1";
+    public static final String MAINTAIN_MOISTURE_TASK_STATE_TOPIC = "auto2";
+
+    public static final String ACTIVATE_MAINTAIN_MOISTURE_TOPIC = "automode2";
+    public static final String MAINTAIN_MOISTURE_VALUE_TOPIC = "automode2/moisture";
+
+    public static final String PUMP_ACTIVE_FLAG = "on";
+    public static final String DELAYED_START_FLAG = "on";
+    public static final String MOISTURE_MAINTAIN_FLAG = "on";
+
+    public static final String PUMP_IS_ACTIVE_MSG = "Pump is in use from another operation. Please terminate the operation and try again.";
+
+    public static final String ERROR_PUBLISH_MESSAGE = "Error occurred while publishing a message on topic: ";
+    public static final String SUCCESSFUL_MESSAGE_PUBLISH = "Successfully published a message on topics: ";
+
+    public static final String EMPTY_MOISTURE_FIELD = "Moisture field is empty! Please enter a value.";
+    public static final String PUMP_BUSY_MSG = "Pump is in use by another process!";
 }
