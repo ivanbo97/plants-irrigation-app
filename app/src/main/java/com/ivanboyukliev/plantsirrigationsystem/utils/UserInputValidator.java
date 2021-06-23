@@ -38,4 +38,10 @@ public class UserInputValidator {
         return true;
     }
 
+    public static boolean isDelayedStartDataEntered(String date, String time, String duration) {
+        if (date.equals("") || time.equals("") || duration.equals("")) {
+            return false;
+        }
+        return true;
+    }
 }
