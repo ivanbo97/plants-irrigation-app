@@ -100,15 +100,24 @@ public final class ApplicationConstants {
     public static final String ACTIVATE_MAINTAIN_MOISTURE_TOPIC = "automode2";
     public static final String MAINTAIN_MOISTURE_VALUE_TOPIC = "automode2/moisture";
 
-    public static final String PUMP_ACTIVE_FLAG = "on";
-    public static final String DELAYED_START_FLAG = "on";
-    public static final String MOISTURE_MAINTAIN_FLAG = "on";
+    public static final String DELAYED_START_OPERATION_TOPIC = "automode1";
+    public static final String DELAYED_START_DATE_TOPIC = "automode1/date";
+    public static final String DELAYED_START_TIME_TOPIC = "automode1/time";
+    public static final String DELAYED_START_DURATION_TOPIC = "automode1/duration";
 
-    public static final String PUMP_IS_ACTIVE_MSG = "Pump is in use from another operation. Please terminate the operation and try again.";
+    public static final String DELAYED_START_TOPICS = "automode1 , automode1/date , automode1/time, automode1/time, automode1/duration";
+
+    public static final String PUMP_ACTIVE_FLAG = "on";
+    public static final String PUMP_INACTIVE_FLAG = "off";
+    public static final String DELAYED_START_INIT_FLAG = "on";
+    public static final String DELAYED_START_INTERRUPT = "off";
+    public static final String MOISTURE_MAINTAIN_FLAG = "on";
+    public static final String MOISTURE_MAINTAIN_INTERRUPT = "off";
 
     public static final String ERROR_PUBLISH_MESSAGE = "Error occurred while publishing a message on topic: ";
     public static final String SUCCESSFUL_MESSAGE_PUBLISH = "Successfully published a message on topics: ";
 
     public static final String EMPTY_MOISTURE_FIELD = "Moisture field is empty! Please enter a value.";
-    public static final String PUMP_BUSY_MSG = "Pump is in use by another process!";
+
+    public static final String INCOMPLETE_DATA_DELAYED_START = "Incomplete data for delay pump start!!!";
 }
