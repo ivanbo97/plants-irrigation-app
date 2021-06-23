@@ -8,7 +8,7 @@ import android.widget.TimePicker;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.PlantIrrigationFragment;
+import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.DelayedPumpStartWidgets;
 
 import java.util.Calendar;
 
@@ -29,6 +29,6 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
-        PlantIrrigationFragment.getInputTimeTv().setText(hourOfDay + ":" + minute);
+        DelayedPumpStartWidgets.getInputTimeTv().setText(hourOfDay + ":" + minute);
     }
 }
