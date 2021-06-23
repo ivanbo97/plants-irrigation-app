@@ -8,7 +8,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="88dp">
 
         <TextView
             android:id="@+id/connStatusTitleTv"
@@ -102,6 +104,19 @@
             android:text="@string/submit_moister_btn"
             android:textSize="10sp" />
 
+        <Button
+            android:id="@+id/terminateMoistureTaskBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/moistureManagementTitleTv"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_toRightOf="@id/submitMoistureBtn"
+            android:drawableEnd="@drawable/ic_baseline_stop_circle_24"
+            android:enabled="false"
+            android:text="Terminate"
+            android:textSize="10sp" />
+
         <TextView
             android:id="@+id/delayedStartTitleTv"
             android:layout_width="288dp"
@@ -157,14 +172,60 @@
             android:fontFamily="@font/delius"
             android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/timeDurationHintText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chosenDateTv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/bulletMoistureHint"
+            android:fontFamily="@font/delius"
+            android:text="Please enter duration of irrigation (min)" />
+
+        <TextView
+            android:id="@+id/bulletDurationTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/moistureManagementTitleTv"
+            android:layout_marginTop="270dp"
+            android:layout_toLeftOf="@id/timeDurationHintText"
+            android:text="\u25BA" />
+
+        <EditText
+            android:id="@+id/inputIrrigationDuration"
+            android:layout_width="49dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="420dp"
+            android:layout_toRightOf="@id/timeDurationHintText"
+            android:ems="10"
+            android:fontFamily="@font/delius"
+            android:inputType="numberSigned" />
+
+
         <Button
             android:id="@+id/submitDelayStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/chosenDateTv"
+            android:layout_below="@id/timeDurationHintText"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:text="Initiate delayed irrigation"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/terminateDelayedStartBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_below="@id/inputIrrigationDuration"
+            android:layout_marginLeft="21dp"
+
+            android:layout_marginTop="27dp"
+            android:layout_toRightOf="@id/submitDelayStart"
+            android:drawableEnd="@drawable/ic_baseline_stop_circle_24"
+            android:enabled="false"
+            android:text="Stop"
             android:textSize="10sp" />
 
     </RelativeLayout>
