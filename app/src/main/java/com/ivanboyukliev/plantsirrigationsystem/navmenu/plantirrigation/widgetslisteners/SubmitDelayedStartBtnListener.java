@@ -69,14 +69,11 @@ public class SubmitDelayedStartBtnListener implements View.OnClickListener {
             currentMqttClient.publish(DELAYED_START_DATE_TOPIC, dateOfDelayedStart);
             currentMqttClient.publish(DELAYED_START_TIME_TOPIC, timeOfDelayedStart);
             currentMqttClient.publish(DELAYED_START_DURATION_TOPIC, durationOfIrrigation);
-            PlantManagerActivity.getIrrigationSystemState().setDelayedStartTaskRunning(true);
             Toast.makeText(parentFragment, SUCCESSFUL_MESSAGE_PUBLISH + DELAYED_START_TOPICS, Toast.LENGTH_LONG)
                     .show();
-            v.setEnabled(false);
-            delayedStartWidgets.getTerminateDelayedStartBtn().setEnabled(true);
+
         } catch (MqttException e) {
             Toast.makeText(parentFragment, ERROR_PUBLISH_MESSAGE + DELAYED_START_TOPICS, Toast.LENGTH_LONG).show();
-            PlantManagerActivity.getIrrigationSystemState().setDelayedStartTaskRunning(false);
             e.printStackTrace();
         }
     }
