@@ -16,6 +16,7 @@ import com.ivanboyukliev.plantsirrigationsystem.PlantManagerActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.AndroidMqttClientCallback;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.DelayedPumpStartWidgets;
+import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.IrrigationSystemState;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.MoistureManagementWidgets;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.widgetslisteners.PumpSwitchStateListener;
 
@@ -35,7 +36,7 @@ public class PlantIrrigationFragment extends Fragment {
     private Switch pumpManager;
     private DelayedPumpStartWidgets delayedStartWidgetsManager;
     private MoistureManagementWidgets moistureManagementWidgets;
-
+    private PumpSwitchStateListener pumpSwitchStateListener;
 
     private List<TextView> currentWidgets;
 
@@ -59,6 +60,7 @@ public class PlantIrrigationFragment extends Fragment {
                     pumpManager.setEnabled(true);
                     delayedStartWidgetsManager.setWidgetsActive(true);
                     moistureManagementWidgets.setWidgetsActive(true);
+
                     //Terminate operation buttons should be active only when operation is active
                     delayedStartWidgetsManager.getTerminateDelayedStartBtn().setEnabled(false);
                     moistureManagementWidgets.getTerminateMoistureTaskBtn().setEnabled(false);
@@ -75,7 +77,7 @@ public class PlantIrrigationFragment extends Fragment {
 
         pumpManager = root.findViewById(R.id.pumpSwitch);
 
-        PumpSwitchStateListener pumpSwitchStateListener = new PumpSwitchStateListener(this);
+        pumpSwitchStateListener = new PumpSwitchStateListener(this);
 
         pumpManager.setOnCheckedChangeListener(pumpSwitchStateListener);
 
@@ -116,5 +118,31 @@ public class PlantIrrigationFragment extends Fragment {
             delayedStartWidgetsManager.setWidgetsActive(true);
         });
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Restore consistent state of widgets according to current running tasks
+        IrrigationSystemState currentSystemState = PlantManagerActivity.getIrrigationSystemState();
+
+        if (currentSystemState.isPumpTaskRunning()) {
+            //Bypassing the the execution of switch event handler
+            pumpManager.setOnCheckedChangeListener(null);
+            pumpManager.setChecked(true);
+            pumpManager.setOnCheckedChangeListener(pumpSwitchStateListener);
+        }
+
+        if (currentSystemState.isMoistureMaintainTaskRunning()) {
+            moistureManagementWidgets.getSubmitMoistureBtn().setEnabled(false);
+            moistureManagementWidgets.getTerminateMoistureTaskBtn().setEnabled(true);
+        }
+
+        if (currentSystemState.isDelayedStartTaskRunning()) {
+            delayedStartWidgetsManager.getSubmitDelayedStartBtn().setEnabled(false);
+            delayedStartWidgetsManager.getTerminateDelayedStartBtn().setEnabled(true);
+        }
+
     }
 }
