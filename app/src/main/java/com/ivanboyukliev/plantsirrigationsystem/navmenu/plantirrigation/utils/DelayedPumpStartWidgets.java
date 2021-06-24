@@ -18,12 +18,12 @@ public class DelayedPumpStartWidgets {
 
     private Button setDateBtn;
     private Button setTimeBtn;
-    private static Button terminateDelayedStartBtn;
-    private static Button submitDelayedStartBtn;
+    private  Button terminateDelayedStartBtn;
+    private  Button submitDelayedStartBtn;
 
-    private static EditText enteredIrrigationDuration;
-    private static TextView inputDateTv;
-    private static TextView inputTimeTv;
+    private  EditText enteredIrrigationDuration;
+    private  TextView inputDateTv;
+    private  TextView inputTimeTv;
 
     private FragmentActivity parentFragment;
 
@@ -42,20 +42,20 @@ public class DelayedPumpStartWidgets {
     private void setWidgetsListeners() {
 
         setDateBtn.setOnClickListener(v -> {
-            DialogFragment dateDialog = new DatePickerFragment(R.layout.date_picker_spinner);
+            DialogFragment dateDialog = new DatePickerFragment(R.layout.date_picker_spinner,this);
             dateDialog.show(parentFragment.getSupportFragmentManager(), "DatePicker");
         });
 
         setTimeBtn.setOnClickListener(v -> {
-            DialogFragment timeDialog = new TimePickerFragment();
+            DialogFragment timeDialog = new TimePickerFragment(this);
             timeDialog.show(parentFragment.getSupportFragmentManager(), "TimePicker");
         });
 
-        SubmitDelayedStartBtnListener delayStartBtnListener = new SubmitDelayedStartBtnListener(parentFragment);
+        SubmitDelayedStartBtnListener delayStartBtnListener = new SubmitDelayedStartBtnListener(parentFragment,this);
 
         submitDelayedStartBtn.setOnClickListener(delayStartBtnListener);
 
-        TerminateDelayedStartBtnListener terminateDelStartListener = new TerminateDelayedStartBtnListener(parentFragment);
+        TerminateDelayedStartBtnListener terminateDelStartListener = new TerminateDelayedStartBtnListener(parentFragment,this);
         terminateDelayedStartBtn.setOnClickListener(terminateDelStartListener);
     }
 
@@ -66,23 +66,23 @@ public class DelayedPumpStartWidgets {
         enteredIrrigationDuration.setEnabled(activeState);
     }
 
-    public static Button getTerminateDelayedStartBtn() {
+    public  Button getTerminateDelayedStartBtn() {
         return terminateDelayedStartBtn;
     }
 
-    public static Button getSubmitDelayedStartBtn() {
+    public  Button getSubmitDelayedStartBtn() {
         return submitDelayedStartBtn;
     }
 
-    public static TextView getInputDateTv() {
+    public  TextView getInputDateTv() {
         return inputDateTv;
     }
 
-    public static TextView getInputTimeTv() {
+    public  TextView getInputTimeTv() {
         return inputTimeTv;
     }
 
-    public static EditText getEnteredIrrigationDuration() {
+    public  EditText getEnteredIrrigationDuration() {
         return enteredIrrigationDuration;
     }
 }
