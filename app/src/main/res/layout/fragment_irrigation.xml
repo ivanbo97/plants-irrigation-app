@@ -7,6 +7,7 @@
     tools:context=".navmenu.plantirrigation.PlantIrrigationFragment">
 
     <RelativeLayout
+        android:id="@+id/plantIrrigationLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
@@ -49,6 +50,7 @@
             android:layout_below="@id/pumpManagementTitleTv"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:enabled="false"
             android:fontFamily="@font/delius"
             android:text="Start / Stop   " />
 
@@ -91,6 +93,7 @@
             android:layout_marginTop="153dp"
             android:layout_toRightOf="@id/moistureHintTxt"
             android:ems="10"
+            android:enabled="false"
             android:fontFamily="@font/delius"
             android:inputType="numberSigned" />
 
@@ -101,6 +104,7 @@
             android:layout_below="@id/moistureManagementTitleTv"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="40dp"
+            android:enabled="false"
             android:text="@string/submit_moister_btn"
             android:textSize="10sp" />
 
@@ -136,6 +140,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="40dp"
             android:drawableRight="@drawable/ic_baseline_edit_calendar_24"
+            android:enabled="false"
             android:text="@string/set_date_btn"
             android:textSize="10sp" />
 
@@ -159,6 +164,7 @@
             android:layout_marginTop="40dp"
             android:layout_toRightOf="@id/chosenDateTv"
             android:drawableRight="@drawable/ic_baseline_access_time_24"
+            android:enabled="false"
             android:text="@string/set_time_str"
             android:textSize="10sp" />
 
@@ -200,6 +206,7 @@
             android:layout_marginTop="420dp"
             android:layout_toRightOf="@id/timeDurationHintText"
             android:ems="10"
+            android:enabled="false"
             android:fontFamily="@font/delius"
             android:inputType="numberSigned" />
 
@@ -211,6 +218,7 @@
             android:layout_below="@id/timeDurationHintText"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
+            android:enabled="false"
             android:text="Initiate delayed irrigation"
             android:textSize="10sp" />
 
