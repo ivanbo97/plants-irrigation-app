@@ -8,6 +8,8 @@ import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.PlantManagerActivity;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.home.HomeFragment;
+import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.IrrigationSystemMutableLiveData;
+import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.IrrigationSystemState;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
@@ -21,18 +23,14 @@ import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstant
 public class AndroidMqttClientCallback implements MqttCallbackExtended {
 
     private MqttClientActions disconnectAction;
-
-    private MutableLiveData<String> receivedMoisture;
-    private MutableLiveData<String> receivedPumpState;
-    private MutableLiveData<String> delayedIrrigationState;
-    private MutableLiveData<String> moistureMaintainingOperationState;
+    private IrrigationSystemMutableLiveData<IrrigationSystemState> currentIrrigationSystemState;
+    private IrrigationSystemState irrigationSystemState;
 
     public AndroidMqttClientCallback(MqttClientActions disconnectAction) {
         this.disconnectAction = disconnectAction;
-        receivedMoisture = new MutableLiveData<>();
-        receivedPumpState = new MutableLiveData<>();
-        delayedIrrigationState = new MutableLiveData<>();
-        moistureMaintainingOperationState = new MutableLiveData<>();
+        irrigationSystemState = new IrrigationSystemState();
+        currentIrrigationSystemState = new IrrigationSystemMutableLiveData<>();
+        currentIrrigationSystemState.setValue(irrigationSystemState);
     }
 
     @Override
@@ -55,48 +53,50 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         Log.i("DATA FROM BROKER", message.toString());
 
-        if (topic.equals(PUMP_STATE_TOPIC)) {
-            Log.i("PUMP STATE", message.toString());
-            receivedPumpState.setValue(message.toString());
+        String receivedMessage = message.toString();
+        boolean operationState;
+        if (receivedMessage.equals("on")) {
+            operationState = true;
+        } else if (receivedMessage.equals("off")) {
+            operationState = false;
+        } else {
+
+            if (topic.equals(MOISTURE_LEVEL_TOPIC)) {
+
+                return;
+            }
+            //For future message like moisture, temperature
             return;
         }
 
-        if (topic.equals(MOISTURE_LEVEL_TOPIC)) {
-            receivedMoisture.setValue(message.toString());
+        if (topic.equals(PUMP_STATE_TOPIC)) {
+            Log.i("PUMP STATE", message.toString());
+            irrigationSystemState.setPumpTaskRunning(operationState);
             return;
         }
 
         if (topic.equals(DELAYED_START_STATE_TOPIC)) {
-            delayedIrrigationState.setValue(message.toString());
+            irrigationSystemState.setDelayedStartTaskRunning(operationState);
+            // delayedIrrigationState.setValue(message.toString());
             return;
         }
 
         if (topic.equals(MAINTAIN_MOISTURE_TASK_STATE_TOPIC)) {
-            moistureMaintainingOperationState.setValue(message.toString());
+            irrigationSystemState.setMoistureMaintainTaskRunning(operationState);
             return;
         }
     }
 
-    public MutableLiveData<String> getReceivedMoisture() {
-        return receivedMoisture;
+    public IrrigationSystemMutableLiveData<IrrigationSystemState> getCurrentIrrigationSystemState() {
+        return currentIrrigationSystemState;
     }
 
-    public MutableLiveData<String> getReceivedPumpState() {
-        return receivedPumpState;
-    }
-
-    public MutableLiveData<String> getDelayedIrrigationState() {
-        return delayedIrrigationState;
-    }
-
-    public MutableLiveData<String> getMoistureMaintainingOperationState() {
-        return moistureMaintainingOperationState;
+    public IrrigationSystemState getIrrigationSystemState() {
+        return irrigationSystemState;
     }
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
 
     }
-
-
 }
