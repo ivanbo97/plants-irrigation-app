@@ -13,9 +13,9 @@ import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.widgetsl
 
 public class MoistureManagementWidgets {
 
-    private static Button submitMoistureBtn;
-    private static Button terminateMoistureTaskBtn;
-    private static EditText enteredMoisture;
+    private Button submitMoistureBtn;
+    private Button terminateMoistureTaskBtn;
+    private EditText enteredMoisture;
     private Fragment parentFragment;
 
     public MoistureManagementWidgets(View rootView, Fragment parentFragment) {
@@ -28,27 +28,27 @@ public class MoistureManagementWidgets {
 
     private void setWidgetsClickListeners() {
 
-        MaintainMoistureBtnListener maintainMoistureBtnListener = new MaintainMoistureBtnListener( (PlantIrrigationFragment) parentFragment);
+        MaintainMoistureBtnListener maintainMoistureBtnListener = new MaintainMoistureBtnListener((PlantIrrigationFragment) parentFragment, this);
         submitMoistureBtn.setOnClickListener(maintainMoistureBtnListener);
 
-        MaintainMoistureTaskInterruptListener interruptMoistureTaskListener = new MaintainMoistureTaskInterruptListener((PlantIrrigationFragment) parentFragment);
+        MaintainMoistureTaskInterruptListener interruptMoistureTaskListener = new MaintainMoistureTaskInterruptListener((PlantIrrigationFragment) parentFragment, this);
         terminateMoistureTaskBtn.setOnClickListener(interruptMoistureTaskListener);
     }
 
-    public void setWidgetsActive(boolean activeState){
+    public void setWidgetsActive(boolean activeState) {
         submitMoistureBtn.setEnabled(activeState);
         enteredMoisture.setEnabled(activeState);
     }
 
-    public static EditText getEnteredMoisture() {
+    public EditText getEnteredMoisture() {
         return enteredMoisture;
     }
 
-    public static Button getTerminateMoistureTaskBtn() {
+    public Button getTerminateMoistureTaskBtn() {
         return terminateMoistureTaskBtn;
     }
 
-    public static Button getSubmitMoistureBtn() {
+    public Button getSubmitMoistureBtn() {
         return submitMoistureBtn;
     }
 }
