@@ -55,7 +55,7 @@ public class DelayedPumpStartWidgets {
 
         submitDelayedStartBtn.setOnClickListener(delayStartBtnListener);
 
-        TerminateDelayedStartBtnListener terminateDelStartListener = new TerminateDelayedStartBtnListener(parentFragment,this);
+        TerminateDelayedStartBtnListener terminateDelStartListener = new TerminateDelayedStartBtnListener(parentFragment);
         terminateDelayedStartBtn.setOnClickListener(terminateDelStartListener);
     }
 
