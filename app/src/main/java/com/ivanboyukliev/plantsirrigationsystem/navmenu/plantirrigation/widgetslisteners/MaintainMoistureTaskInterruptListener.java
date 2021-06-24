@@ -20,9 +20,11 @@ import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstant
 public class MaintainMoistureTaskInterruptListener implements View.OnClickListener {
 
     private Fragment parentFragment;
+    private MoistureManagementWidgets moistureTaskWidgets;
 
-    public MaintainMoistureTaskInterruptListener(PlantIrrigationFragment parentFragment) {
+    public MaintainMoistureTaskInterruptListener(PlantIrrigationFragment parentFragment, MoistureManagementWidgets moistureTaskWidgets) {
         this.parentFragment = parentFragment;
+        this.moistureTaskWidgets = moistureTaskWidgets;
     }
 
     @Override
@@ -33,12 +35,14 @@ public class MaintainMoistureTaskInterruptListener implements View.OnClickListen
 
         try {
             PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(ACTIVATE_MAINTAIN_MOISTURE_TOPIC, interruptMoisterTaskMsg);
+            PlantManagerActivity.getIrrigationSystemState().setMoistureMaintainTaskRunning(false);
             Toast.makeText(parentFragment.getContext(), SUCCESSFUL_MESSAGE_PUBLISH + ACTIVATE_MAINTAIN_MOISTURE_TOPIC, Toast.LENGTH_LONG)
                     .show();
             v.setEnabled(false);
-            MoistureManagementWidgets.getSubmitMoistureBtn().setEnabled(true);
+            moistureTaskWidgets.getSubmitMoistureBtn().setEnabled(true);
         } catch (MqttException e) {
             Toast.makeText(parentFragment.getContext(), ERROR_PUBLISH_MESSAGE + ACTIVATE_MAINTAIN_MOISTURE_TOPIC, Toast.LENGTH_LONG).show();
+            PlantManagerActivity.getIrrigationSystemState().setMoistureMaintainTaskRunning(true);
             e.printStackTrace();
         }
     }
