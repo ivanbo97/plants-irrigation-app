@@ -34,9 +34,11 @@ public class PumpSwitchStateListener implements CompoundButton.OnCheckedChangeLi
             turnPumpOnMsg.setQos(2);
             try {
                 PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(MANAGE_PUMP_TOPIC, turnPumpOnMsg);
+                PlantManagerActivity.getIrrigationSystemState().setPumpTaskRunning(true);
                 Toast.makeText(fragmentContext.getContext(), SUCCESSFUL_MESSAGE_PUBLISH + MANAGE_PUMP_TOPIC, Toast.LENGTH_LONG).show();
             } catch (MqttException e) {
                 Toast.makeText(fragmentContext.getContext(), ERROR_PUBLISH_MESSAGE + MANAGE_PUMP_TOPIC, Toast.LENGTH_LONG);
+                PlantManagerActivity.getIrrigationSystemState().setPumpTaskRunning(true);
                 e.printStackTrace();
             }
             return;
@@ -48,9 +50,11 @@ public class PumpSwitchStateListener implements CompoundButton.OnCheckedChangeLi
 
         try {
             PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(MANAGE_PUMP_TOPIC, turnPumpOffMsg);
+            PlantManagerActivity.getIrrigationSystemState().setPumpTaskRunning(false);
             Toast.makeText(fragmentContext.getContext(), SUCCESSFUL_MESSAGE_PUBLISH + MANAGE_PUMP_TOPIC, Toast.LENGTH_LONG).show();
         } catch (MqttException e) {
             Toast.makeText(fragmentContext.getContext(), ERROR_PUBLISH_MESSAGE + MANAGE_PUMP_TOPIC, Toast.LENGTH_LONG);
+            PlantManagerActivity.getIrrigationSystemState().setPumpTaskRunning(true);
             e.printStackTrace();
         }
     }
