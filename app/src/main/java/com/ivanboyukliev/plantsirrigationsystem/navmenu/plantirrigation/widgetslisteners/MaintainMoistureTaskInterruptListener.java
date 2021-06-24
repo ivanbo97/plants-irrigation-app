@@ -35,14 +35,11 @@ public class MaintainMoistureTaskInterruptListener implements View.OnClickListen
 
         try {
             PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(ACTIVATE_MAINTAIN_MOISTURE_TOPIC, interruptMoisterTaskMsg);
-            PlantManagerActivity.getIrrigationSystemState().setMoistureMaintainTaskRunning(false);
+            v.setEnabled(false);
             Toast.makeText(parentFragment.getContext(), SUCCESSFUL_MESSAGE_PUBLISH + ACTIVATE_MAINTAIN_MOISTURE_TOPIC, Toast.LENGTH_LONG)
                     .show();
-            v.setEnabled(false);
-            moistureTaskWidgets.getSubmitMoistureBtn().setEnabled(true);
         } catch (MqttException e) {
             Toast.makeText(parentFragment.getContext(), ERROR_PUBLISH_MESSAGE + ACTIVATE_MAINTAIN_MOISTURE_TOPIC, Toast.LENGTH_LONG).show();
-            PlantManagerActivity.getIrrigationSystemState().setMoistureMaintainTaskRunning(true);
             e.printStackTrace();
         }
     }
