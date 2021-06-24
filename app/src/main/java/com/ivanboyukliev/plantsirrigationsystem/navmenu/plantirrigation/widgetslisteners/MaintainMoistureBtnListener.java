@@ -24,15 +24,17 @@ public class MaintainMoistureBtnListener implements View.OnClickListener {
 
 
     private Fragment parentFragment;
+    private MoistureManagementWidgets moistureTaskWidgets;
 
-    public MaintainMoistureBtnListener(PlantIrrigationFragment parentFragment) {
+    public MaintainMoistureBtnListener(PlantIrrigationFragment parentFragment,MoistureManagementWidgets moistureTaskWidgets) {
         this.parentFragment = parentFragment;
+        this.moistureTaskWidgets = moistureTaskWidgets;
     }
 
     @Override
     public void onClick(View v) {
 
-        String desiredMoisture = MoistureManagementWidgets.getEnteredMoisture().getText().toString();
+        String desiredMoisture = moistureTaskWidgets.getEnteredMoisture().getText().toString();
         Log.i("DESIRED MOISTURE", desiredMoisture);
         if (desiredMoisture.equals("")) {
             Toast.makeText(parentFragment.getContext(), EMPTY_MOISTURE_FIELD, Toast.LENGTH_SHORT)
@@ -51,14 +53,15 @@ public class MaintainMoistureBtnListener implements View.OnClickListener {
         try {
             PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(ACTIVATE_MAINTAIN_MOISTURE_TOPIC, initMoistureTask);
             PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(MAINTAIN_MOISTURE_VALUE_TOPIC, moistureValue);
-            MoistureManagementWidgets.getTerminateMoistureTaskBtn().setEnabled(true);
+            moistureTaskWidgets.getTerminateMoistureTaskBtn().setEnabled(true);
+            PlantManagerActivity.getIrrigationSystemState().setMoistureMaintainTaskRunning(true);
             Toast.makeText(parentFragment.getContext(), SUCCESSFUL_MESSAGE_PUBLISH + ACTIVATE_MAINTAIN_MOISTURE_TOPIC +
                     "," + MAINTAIN_MOISTURE_VALUE_TOPIC, Toast.LENGTH_LONG).show();
             v.setEnabled(false);
         } catch (MqttException e) {
             Toast.makeText(parentFragment.getContext(), ERROR_PUBLISH_MESSAGE + ACTIVATE_MAINTAIN_MOISTURE_TOPIC + "/"
                     + MAINTAIN_MOISTURE_VALUE_TOPIC, Toast.LENGTH_LONG).show();
-
+            PlantManagerActivity.getIrrigationSystemState().setMoistureMaintainTaskRunning(false);
             e.printStackTrace();
         }
     }
