@@ -1,9 +1,11 @@
 package com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -22,13 +24,6 @@ import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.widgetsl
 
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.DELAYED_START_INIT_FLAG;
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.MOISTURE_MAINTAIN_FLAG;
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PUMP_ACTIVE_FLAG;
-
 
 public class PlantIrrigationFragment extends Fragment {
 
@@ -38,15 +33,15 @@ public class PlantIrrigationFragment extends Fragment {
     private MoistureManagementWidgets moistureManagementWidgets;
     private PumpSwitchStateListener pumpSwitchStateListener;
 
-    private List<TextView> currentWidgets;
+    private IrrigationSystemState currentIrrigationSystemState;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        currentWidgets = new ArrayList<>();
         plantIrrigationViewModel =
                 new ViewModelProvider(this).get(PlantIrrigationViewModel.class);
         View root = inflater.inflate(R.layout.fragment_irrigation, container, false);
+
         final TextView connectionStateTv = root.findViewById(R.id.connStatusTv);
 
         delayedStartWidgetsManager = new DelayedPumpStartWidgets(root, getActivity());
@@ -57,21 +52,13 @@ public class PlantIrrigationFragment extends Fragment {
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
                     connectionStateTv.setText("Connected");
-                    pumpManager.setEnabled(true);
-                    delayedStartWidgetsManager.setWidgetsActive(true);
-                    moistureManagementWidgets.setWidgetsActive(true);
-
-                    //Terminate operation buttons should be active only when operation is active
-                    delayedStartWidgetsManager.getTerminateDelayedStartBtn().setEnabled(false);
-                    moistureManagementWidgets.getTerminateMoistureTaskBtn().setEnabled(false);
+                    currentIrrigationSystemState.setConnectedToBroker(true);
                     return;
                 }
                 connectionStateTv.setText("Disconnected");
-                pumpManager.setEnabled(false);
-                delayedStartWidgetsManager.setWidgetsActive(false);
-                delayedStartWidgetsManager.getTerminateDelayedStartBtn().setEnabled(false);
-                moistureManagementWidgets.setWidgetsActive(false);
-                moistureManagementWidgets.getTerminateMoistureTaskBtn().setEnabled(false);
+                if (currentIrrigationSystemState == null)
+                    return;
+                currentIrrigationSystemState.setConnectedToBroker(false);
             }
         });
 
@@ -86,36 +73,51 @@ public class PlantIrrigationFragment extends Fragment {
         if (mqttCallback == null)
             return root;
 
-        ((AndroidMqttClientCallback) mqttCallback).getReceivedPumpState().observe(getViewLifecycleOwner(), s -> {
-            if (s.equals(PUMP_ACTIVE_FLAG)) {
-                moistureManagementWidgets.setWidgetsActive(false);
-                delayedStartWidgetsManager.setWidgetsActive(false);
+        currentIrrigationSystemState = ((AndroidMqttClientCallback) PlantManagerActivity.getMqttClient()
+                .getMqttCallback())
+                .getIrrigationSystemState();
+
+        ((AndroidMqttClientCallback) mqttCallback).getCurrentIrrigationSystemState().observe(getViewLifecycleOwner(), irrigationSystemState -> {
+            Log.i("IrrigationSysChange", "CHANGE IN FIELD");
+
+            if (!currentIrrigationSystemState.isConnectedToBroker()) {
+                Log.i("WE ARE CONN", "TO BROKER");
+                setWidgetsActiveness(false);
                 return;
             }
-            //If pump is off, activate other widgets
-            moistureManagementWidgets.setWidgetsActive(true);
-            delayedStartWidgetsManager.setWidgetsActive(true);
-        });
 
-        ((AndroidMqttClientCallback) mqttCallback).getDelayedIrrigationState().observe(getViewLifecycleOwner(), s -> {
-            if (s.equals(DELAYED_START_INIT_FLAG)) {
+            // Possible system state 1 - delayed start task is currently running
+            if (irrigationSystemState.isDelayedStartTaskRunning()) {
                 pumpManager.setEnabled(false);
                 moistureManagementWidgets.setWidgetsActive(false);
+                delayedStartWidgetsManager.getTerminateDelayedStartBtn().setEnabled(true);
+                delayedStartWidgetsManager.getSubmitDelayedStartBtn().setEnabled(false);
                 return;
             }
-            pumpManager.setEnabled(true);
-            moistureManagementWidgets.setWidgetsActive(true);
-        });
 
-
-        ((AndroidMqttClientCallback) mqttCallback).getMoistureMaintainingOperationState().observe(getViewLifecycleOwner(), s -> {
-            if (s.equals(MOISTURE_MAINTAIN_FLAG)) {
+            // Possible system state 2 - moisture maintaining task is currently running
+            if (irrigationSystemState.isMoistureMaintainTaskRunning()) {
                 pumpManager.setEnabled(false);
                 delayedStartWidgetsManager.setWidgetsActive(false);
+                moistureManagementWidgets.getTerminateMoistureTaskBtn().setEnabled(true);
+                moistureManagementWidgets.getSubmitMoistureBtn().setEnabled(false);
                 return;
             }
-            pumpManager.setEnabled(true);
-            delayedStartWidgetsManager.setWidgetsActive(true);
+
+            // Possible system state 3 - pump is currently running because the user has turned it on manually
+            boolean isPumpOn = irrigationSystemState.isPumpTaskRunning();
+            boolean isDelayedStTaskOn = irrigationSystemState.isMoistureMaintainTaskRunning();
+            boolean isMoistureMaintainTaskOn = irrigationSystemState.isDelayedStartTaskRunning();
+            if (isPumpOn && !isDelayedStTaskOn && !isMoistureMaintainTaskOn) {
+                delayedStartWidgetsManager.setWidgetsActive(false);
+                moistureManagementWidgets.setWidgetsActive(false);
+                pumpManager.setEnabled(true);
+                return;
+            }
+
+            // Possible system state 3 - no task is currently running
+            Log.i("Everything is off", "State");
+            setWidgetsActiveness(true);
         });
         return root;
     }
@@ -124,25 +126,40 @@ public class PlantIrrigationFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // Restore consistent state of widgets according to current running tasks
-        IrrigationSystemState currentSystemState = PlantManagerActivity.getIrrigationSystemState();
+        // If connection to broker is lost, it will be wrong to check for system state
+        if (!PlantManagerActivity.getMqttClient().getBrokerConnState().getValue()) {
+            return;
+        }
 
-        if (currentSystemState.isPumpTaskRunning()) {
+        // Restore consistent state of widgets according to current running tasks
+        if (currentIrrigationSystemState.isPumpTaskRunning()) {
             //Bypassing the the execution of switch event handler
             pumpManager.setOnCheckedChangeListener(null);
             pumpManager.setChecked(true);
             pumpManager.setOnCheckedChangeListener(pumpSwitchStateListener);
         }
 
-        if (currentSystemState.isMoistureMaintainTaskRunning()) {
+        if (currentIrrigationSystemState.isMoistureMaintainTaskRunning()) {
             moistureManagementWidgets.getSubmitMoistureBtn().setEnabled(false);
             moistureManagementWidgets.getTerminateMoistureTaskBtn().setEnabled(true);
         }
 
-        if (currentSystemState.isDelayedStartTaskRunning()) {
+        if (currentIrrigationSystemState.isDelayedStartTaskRunning()) {
             delayedStartWidgetsManager.getSubmitDelayedStartBtn().setEnabled(false);
             delayedStartWidgetsManager.getTerminateDelayedStartBtn().setEnabled(true);
         }
 
+    }
+
+    private void setWidgetsActiveness(boolean active) {
+        RelativeLayout plantIrrigRelativeLayout = getActivity().findViewById(R.id.plantIrrigationLayout);
+        for (int i = 0; i < plantIrrigRelativeLayout.getChildCount(); i++) {
+            View view = plantIrrigRelativeLayout.getChildAt(i);
+            int viewId = view.getId();
+            if (viewId == R.id.terminateMoistureTaskBtn || viewId == R.id.terminateDelayedStartBtn) {
+                continue;
+            }
+            view.setEnabled(active);
+        }
     }
 }
