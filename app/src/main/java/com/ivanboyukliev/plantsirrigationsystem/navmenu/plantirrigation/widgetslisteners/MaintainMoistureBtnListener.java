@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.ivanboyukliev.plantsirrigationsystem.PlantManagerActivity;
+import com.ivanboyukliev.plantsirrigationsystem.mqtt.AndroidMqttClientCallback;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.PlantIrrigationFragment;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.MoistureManagementWidgets;
 
@@ -26,7 +27,7 @@ public class MaintainMoistureBtnListener implements View.OnClickListener {
     private Fragment parentFragment;
     private MoistureManagementWidgets moistureTaskWidgets;
 
-    public MaintainMoistureBtnListener(PlantIrrigationFragment parentFragment,MoistureManagementWidgets moistureTaskWidgets) {
+    public MaintainMoistureBtnListener(PlantIrrigationFragment parentFragment, MoistureManagementWidgets moistureTaskWidgets) {
         this.parentFragment = parentFragment;
         this.moistureTaskWidgets = moistureTaskWidgets;
     }
@@ -53,15 +54,16 @@ public class MaintainMoistureBtnListener implements View.OnClickListener {
         try {
             PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(ACTIVATE_MAINTAIN_MOISTURE_TOPIC, initMoistureTask);
             PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(MAINTAIN_MOISTURE_VALUE_TOPIC, moistureValue);
-            moistureTaskWidgets.getTerminateMoistureTaskBtn().setEnabled(true);
-            PlantManagerActivity.getIrrigationSystemState().setMoistureMaintainTaskRunning(true);
+
             Toast.makeText(parentFragment.getContext(), SUCCESSFUL_MESSAGE_PUBLISH + ACTIVATE_MAINTAIN_MOISTURE_TOPIC +
                     "," + MAINTAIN_MOISTURE_VALUE_TOPIC, Toast.LENGTH_LONG).show();
-            v.setEnabled(false);
         } catch (MqttException e) {
             Toast.makeText(parentFragment.getContext(), ERROR_PUBLISH_MESSAGE + ACTIVATE_MAINTAIN_MOISTURE_TOPIC + "/"
                     + MAINTAIN_MOISTURE_VALUE_TOPIC, Toast.LENGTH_LONG).show();
-            PlantManagerActivity.getIrrigationSystemState().setMoistureMaintainTaskRunning(false);
+
+            ((AndroidMqttClientCallback) PlantManagerActivity.getMqttClient().getMqttCallback())
+                    .getIrrigationSystemState()
+                    .setMoistureMaintainTaskRunning(false);
             e.printStackTrace();
         }
     }
