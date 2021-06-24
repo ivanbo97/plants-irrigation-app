@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.ivanboyukliev.plantsirrigationsystem.R;
-import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.PlantIrrigationFragment;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.DelayedPumpStartWidgets;
 
 import java.util.Calendar;
@@ -21,9 +20,11 @@ public class DatePickerFragment extends DialogFragment
 
     private int style;
     private DatePicker datePickerView;
+    private DelayedPumpStartWidgets delayedStartWidgets;
 
-    public DatePickerFragment(int xml) {
+    public DatePickerFragment(int xml, DelayedPumpStartWidgets delayedStartWidgets) {
         style = xml;
+        this.delayedStartWidgets = delayedStartWidgets;
     }
 
     @Override
@@ -67,6 +68,6 @@ public class DatePickerFragment extends DialogFragment
           value for month needs to be incremented*/
         month += 1;
         Log.i("DatePicker", "received date from picker: " + day + "." + month + "." + year);
-        DelayedPumpStartWidgets.getInputDateTv().setText(day + "-" + month + "-" + year);
+        delayedStartWidgets.getInputDateTv().setText(day + "-" + month + "-" + year);
     }
 }
