@@ -19,11 +19,9 @@ import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstant
 public class TerminateDelayedStartBtnListener implements View.OnClickListener {
 
     private FragmentActivity parentFragment;
-    private DelayedPumpStartWidgets delayedStartWidgets;
 
-    public TerminateDelayedStartBtnListener(FragmentActivity parentFragment, DelayedPumpStartWidgets delayedStartWidgets) {
+    public TerminateDelayedStartBtnListener(FragmentActivity parentFragment) {
         this.parentFragment = parentFragment;
-        this.delayedStartWidgets = delayedStartWidgets;
     }
 
     @Override
@@ -38,13 +36,9 @@ public class TerminateDelayedStartBtnListener implements View.OnClickListener {
             Toast.makeText(parentFragment, SUCCESSFUL_MESSAGE_PUBLISH + DELAYED_START_OPERATION_TOPIC, Toast.LENGTH_LONG)
                     .show();
             v.setEnabled(false);
-            delayedStartWidgets.getSubmitDelayedStartBtn().setEnabled(true);
-            PlantManagerActivity.getIrrigationSystemState().setDelayedStartTaskRunning(false);
         } catch (MqttException e) {
-
             Toast.makeText(parentFragment, ERROR_PUBLISH_MESSAGE + DELAYED_START_OPERATION_TOPIC, Toast.LENGTH_LONG)
                     .show();
-            PlantManagerActivity.getIrrigationSystemState().setDelayedStartTaskRunning(true);
             e.printStackTrace();
         }
     }
