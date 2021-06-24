@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
-import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.IrrigationSystemState;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -20,8 +19,6 @@ public class PlantManagerActivity extends AppCompatActivity {
 
     private static BasicMqttBrokerClient mqttClient;
 
-    private static IrrigationSystemState irrigationSystemState;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +27,6 @@ public class PlantManagerActivity extends AppCompatActivity {
         String brokerUrl = parentIntent.getExtras().getString("BrokerUrl");
         List<FirebaseTopicObj> brokerTopics = (List<FirebaseTopicObj>) parentIntent.getSerializableExtra("TopicsList");
         mqttClient = new BasicMqttBrokerClient(brokerUrl, brokerTopics);
-        irrigationSystemState = new IrrigationSystemState();
         setContentView(R.layout.activity_plant_manager);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -45,9 +41,5 @@ public class PlantManagerActivity extends AppCompatActivity {
 
     public static BasicMqttBrokerClient getMqttClient() {
         return mqttClient;
-    }
-
-    public static IrrigationSystemState getIrrigationSystemState() {
-        return irrigationSystemState;
     }
 }
