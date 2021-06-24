@@ -1,7 +1,6 @@
 package com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,10 +77,8 @@ public class PlantIrrigationFragment extends Fragment {
                 .getIrrigationSystemState();
 
         ((AndroidMqttClientCallback) mqttCallback).getCurrentIrrigationSystemState().observe(getViewLifecycleOwner(), irrigationSystemState -> {
-            Log.i("IrrigationSysChange", "CHANGE IN FIELD");
 
             if (!currentIrrigationSystemState.isConnectedToBroker()) {
-                Log.i("WE ARE CONN", "TO BROKER");
                 setWidgetsActiveness(false);
                 return;
             }
@@ -116,7 +113,6 @@ public class PlantIrrigationFragment extends Fragment {
             }
 
             // Possible system state 3 - no task is currently running
-            Log.i("Everything is off", "State");
             setWidgetsActiveness(true);
         });
         return root;
