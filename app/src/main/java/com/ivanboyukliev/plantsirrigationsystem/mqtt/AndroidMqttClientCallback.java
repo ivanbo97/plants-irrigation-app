@@ -24,6 +24,7 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
 
     private MqttClientActions disconnectAction;
     private IrrigationSystemMutableLiveData<IrrigationSystemState> currentIrrigationSystemState;
+    private MutableLiveData<String> moistureValue;
     private IrrigationSystemState irrigationSystemState;
 
     public AndroidMqttClientCallback(MqttClientActions disconnectAction) {
@@ -31,6 +32,7 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
         irrigationSystemState = new IrrigationSystemState();
         currentIrrigationSystemState = new IrrigationSystemMutableLiveData<>();
         currentIrrigationSystemState.setValue(irrigationSystemState);
+        moistureValue = new MutableLiveData<>();
     }
 
     @Override
@@ -62,7 +64,7 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
         } else {
 
             if (topic.equals(MOISTURE_LEVEL_TOPIC)) {
-
+                moistureValue.setValue(receivedMessage);
                 return;
             }
             //For future message like moisture, temperature
@@ -93,6 +95,10 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
 
     public IrrigationSystemState getIrrigationSystemState() {
         return irrigationSystemState;
+    }
+
+    public MutableLiveData<String> getMoistureValue() {
+        return moistureValue;
     }
 
     @Override
