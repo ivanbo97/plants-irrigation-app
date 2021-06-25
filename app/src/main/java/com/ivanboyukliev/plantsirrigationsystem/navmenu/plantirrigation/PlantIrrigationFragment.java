@@ -48,8 +48,8 @@ public class PlantIrrigationFragment extends Fragment {
 
         PlantManagerActivity.getMqttClient().getBrokerConnState().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
+            public void onChanged(Boolean connected) {
+                if (connected) {
                     connectionStateTv.setText("Connected");
                     currentIrrigationSystemState.setConnectedToBroker(true);
                     return;
