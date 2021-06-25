@@ -6,17 +6,159 @@
     android:layout_height="match_parent"
     tools:context=".navmenu.realtimedata.RealtimeDataFragment">
 
-    <TextView
-        android:id="@+id/text_realtime"
+    <RelativeLayout
+        android:id="@+id/plantIrrigationLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="88dp">
+
+        <RelativeLayout
+            android:id="@+id/basicSystemData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+
+            <TextView
+                android:id="@+id/connStatusTitleTvRealtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/delius"
+                android:text="@string/connection_status_title_str" />
+
+            <TextView
+                android:id="@+id/connStatusTvRealtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/connStatusTitleTvRealtime"
+                android:fontFamily="@font/delius"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/runningTaskTvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/connStatusTitleTvRealtime"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/delius"
+                android:text="@string/running_task_tv_title" />
+
+            <TextView
+                android:id="@+id/runningTaskTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/connStatusTvRealtime"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/runningTaskTvTitle" />
+
+            <TextView
+                android:id="@+id/observedPlantTitleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/runningTaskTvTitle"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/delius"
+                android:text="@string/observed_plant_tv_title" />
+
+            <TextView
+                android:id="@+id/observedPlantTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/runningTaskTv"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/observedPlantTitleTv" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/liveDataLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/basicSystemData">
+
+            <TextView
+                android:id="@+id/receivedDataFromBrokerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="@font/delius"
+                android:text="@string/live_data_tv"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/currentTempTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/receivedDataFromBrokerTitle"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_baseline_thermostat_24"
+                android:fontFamily="@font/delius"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/currentMoistureTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/currentTempTv"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_baseline_water_drop_24"
+                android:fontFamily="@font/delius"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/currentSeasonTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/currentMoistureTv"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_baseline_wb_sunny_24"
+                android:fontFamily="@font/delius"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutChart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/basicSystemData"
+            android:layout_marginTop="100dp">
+
+            <TextView
+                android:id="@+id/chartTitleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:fontFamily="@font/delius"
+                android:text="@string/soil_moisture_live_graphic_title" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/moistureChart"
+                android:layout_width="316dp"
+                android:layout_height="178dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="229dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </RelativeLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
