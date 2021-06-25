@@ -30,4 +30,8 @@
     <string name="submit_moister_btn">Submit</string>
     <string name="set_date_btn">Set date</string>
     <string name="set_time_str">Set time</string>
+    <string name="running_task_tv_title">Running Task :</string>
+    <string name="observed_plant_tv_title">Observed Plant :</string>
+    <string name="live_data_tv"><b><i><u>Live Data</u></i></b></string>
+    <string name="soil_moisture_live_graphic_title"><b><i><u>Soil Moisture Live Graphic</u></i></b></string>
 </resources>
