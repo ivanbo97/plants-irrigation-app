@@ -3,6 +3,7 @@ package com.ivanboyukliev.plantsirrigationsystem;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.github.mikephil.charting.data.LineData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
@@ -18,6 +19,7 @@ import java.util.List;
 public class PlantManagerActivity extends AppCompatActivity {
 
     private static BasicMqttBrokerClient mqttClient;
+    private static LineData moistureChartData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class PlantManagerActivity extends AppCompatActivity {
         String brokerUrl = parentIntent.getExtras().getString("BrokerUrl");
         List<FirebaseTopicObj> brokerTopics = (List<FirebaseTopicObj>) parentIntent.getSerializableExtra("TopicsList");
         mqttClient = new BasicMqttBrokerClient(brokerUrl, brokerTopics);
+        mqttClient.initClientData();
+        moistureChartData = new LineData();
         setContentView(R.layout.activity_plant_manager);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -41,5 +45,9 @@ public class PlantManagerActivity extends AppCompatActivity {
 
     public static BasicMqttBrokerClient getMqttClient() {
         return mqttClient;
+    }
+
+    public static LineData getMoistureChartData() {
+        return moistureChartData;
     }
 }
