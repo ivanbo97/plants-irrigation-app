@@ -43,11 +43,14 @@ public class HomeFragment extends Fragment implements MqttCredentialsInputListen
 
     private static PlantApiRequest plantApiRequest;
 
+    public HomeFragment() {
+
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         currentContext = getContext();
-
 
         Intent parentIntent = getActivity().getIntent();
 
@@ -79,7 +82,6 @@ public class HomeFragment extends Fragment implements MqttCredentialsInputListen
 
 
         connectAndSubsBtn.setOnClickListener(v -> {
-            PlantManagerActivity.getMqttClient().initClientData();
             MqttAuthenticationDialog mqttAuthDialog = new MqttAuthenticationDialog(this);
             mqttAuthDialog.show(getActivity().getSupportFragmentManager(), "MQTT Broker Authentication");
 
