@@ -18,12 +18,12 @@ public class DelayedPumpStartWidgets {
 
     private Button setDateBtn;
     private Button setTimeBtn;
-    private  Button terminateDelayedStartBtn;
-    private  Button submitDelayedStartBtn;
+    private Button terminateDelayedStartBtn;
+    private Button submitDelayedStartBtn;
 
-    private  EditText enteredIrrigationDuration;
-    private  TextView inputDateTv;
-    private  TextView inputTimeTv;
+    private EditText enteredIrrigationDuration;
+    private TextView inputDateTv;
+    private TextView inputTimeTv;
 
     private FragmentActivity parentFragment;
 
@@ -42,7 +42,7 @@ public class DelayedPumpStartWidgets {
     private void setWidgetsListeners() {
 
         setDateBtn.setOnClickListener(v -> {
-            DialogFragment dateDialog = new DatePickerFragment(R.layout.date_picker_spinner,this);
+            DialogFragment dateDialog = new DatePickerFragment(R.layout.date_picker_spinner, this);
             dateDialog.show(parentFragment.getSupportFragmentManager(), "DatePicker");
         });
 
@@ -51,7 +51,7 @@ public class DelayedPumpStartWidgets {
             timeDialog.show(parentFragment.getSupportFragmentManager(), "TimePicker");
         });
 
-        SubmitDelayedStartBtnListener delayStartBtnListener = new SubmitDelayedStartBtnListener(parentFragment,this);
+        SubmitDelayedStartBtnListener delayStartBtnListener = new SubmitDelayedStartBtnListener(parentFragment, this);
 
         submitDelayedStartBtn.setOnClickListener(delayStartBtnListener);
 
@@ -66,23 +66,23 @@ public class DelayedPumpStartWidgets {
         enteredIrrigationDuration.setEnabled(activeState);
     }
 
-    public  Button getTerminateDelayedStartBtn() {
+    public Button getTerminateDelayedStartBtn() {
         return terminateDelayedStartBtn;
     }
 
-    public  Button getSubmitDelayedStartBtn() {
+    public Button getSubmitDelayedStartBtn() {
         return submitDelayedStartBtn;
     }
 
-    public  TextView getInputDateTv() {
+    public TextView getInputDateTv() {
         return inputDateTv;
     }
 
-    public  TextView getInputTimeTv() {
+    public TextView getInputTimeTv() {
         return inputTimeTv;
     }
 
-    public  EditText getEnteredIrrigationDuration() {
+    public EditText getEnteredIrrigationDuration() {
         return enteredIrrigationDuration;
     }
 }
