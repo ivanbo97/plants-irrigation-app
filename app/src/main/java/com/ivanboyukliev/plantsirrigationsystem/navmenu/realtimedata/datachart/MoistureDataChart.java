@@ -77,7 +77,6 @@ public class MoistureDataChart implements OnChartValueSelectedListener {
     }
 
     private void modifyLegend() {
-        // l.setPosition(LegendPosition.LEFT_OF_CHART);
         chartLegend.setForm(Legend.LegendForm.LINE);
         chartLegend.setTypeface(Typeface.MONOSPACE);
         chartLegend.setTextColor(Color.rgb(67, 164, 34));
@@ -95,9 +94,7 @@ public class MoistureDataChart implements OnChartValueSelectedListener {
 
         yAxisLeft.setTypeface(Typeface.MONOSPACE);
         yAxisLeft.setTextColor(Color.rgb(67, 164, 34));
-
         yAxisLeft.setDrawGridLines(true);
-
         // disable right Axis
         yAxisRight.setEnabled(false);
     }
@@ -106,9 +103,7 @@ public class MoistureDataChart implements OnChartValueSelectedListener {
         LineDataSet set = new LineDataSet(null, "Data");
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
         set.setColor(Color.rgb(67, 164, 34));
-        //set.setCircleColor(Color.WHITE);
         set.setLineWidth(2f);
-        //set.setCircleRadius(4f);
         set.setFillAlpha(65);
         set.setFillColor(Color.rgb(67, 164, 34));
         set.setHighLightColor(Color.rgb(67, 164, 34));
@@ -141,15 +136,9 @@ public class MoistureDataChart implements OnChartValueSelectedListener {
 
         // limit the number of visible entries
         lineChart.setVisibleXRangeMaximum(10);
-        // mChart.setVisibleYRange(30, AxisDependency.LEFT);
 
         // move to the latest entry
         lineChart.moveViewTo(set.getEntryCount() - 1, data.getYMax(), YAxis.AxisDependency.LEFT);
-
-        // this automatically refreshes the chart (calls invalidate())
-        // mChart.moveViewTo(data.getXValCount()-7, 55f,
-        // AxisDependency.LEFT);
-
     }
 
     public void setLineData(LineData lineData) {
