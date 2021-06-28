@@ -34,4 +34,9 @@
     <string name="observed_plant_tv_title">Observed Plant :</string>
     <string name="live_data_tv"><b><i><u>Live Data</u></i></b></string>
     <string name="soil_moisture_live_graphic_title"><b><i><u>Soil Moisture Live Graphic</u></i></b></string>
+    <string name="plant_irrig_history_titlestr"><b><i><u>History Of Plant\'s Irrigation</u></i></b></string>
+    <string name="date_title_str"><b>Date</b></string>
+    <string name="start_time_titlestr"><b>Start</b></string>
+    <string name="end_time_titlestr"><b>End</b></string>
+    <string name="moisture_irrig_hist_titlestr"><b>Moisture (%)</b></string>
 </resources>
