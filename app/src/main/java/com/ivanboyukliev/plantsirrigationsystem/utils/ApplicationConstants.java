@@ -92,6 +92,7 @@ public final class ApplicationConstants {
     public static final String PLANT_NO_IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png";
 
     public static final String MOISTURE_LEVEL_TOPIC = "moisture";
+    public static final String TEMPERATURE_TOPIC = "temperature";
     public static final String PUMP_STATE_TOPIC = "pumpstate";
     public static final String MANAGE_PUMP_TOPIC = "pump";
     public static final String DELAYED_START_STATE_TOPIC = "auto1";
@@ -120,4 +121,9 @@ public final class ApplicationConstants {
     public static final String EMPTY_MOISTURE_FIELD = "Moisture field is empty! Please enter a value.";
 
     public static final String INCOMPLETE_DATA_DELAYED_START = "Incomplete data for delay pump start!!!";
+
+    public static final String SEASONS[] = {
+            "Winter", "Winter", "Spring", "Spring", "Summer", "Summer",
+            "Summer", "Summer", "Fall", "Fall", "Winter", "Winter"
+    };
 }
