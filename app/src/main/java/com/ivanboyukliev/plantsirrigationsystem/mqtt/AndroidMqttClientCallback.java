@@ -19,13 +19,18 @@ import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstant
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.MAINTAIN_MOISTURE_TASK_STATE_TOPIC;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.MOISTURE_LEVEL_TOPIC;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PUMP_STATE_TOPIC;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TEMPERATURE_TOPIC;
 
 public class AndroidMqttClientCallback implements MqttCallbackExtended {
 
     private MqttClientActions disconnectAction;
     private IrrigationSystemMutableLiveData<IrrigationSystemState> currentIrrigationSystemState;
     private MutableLiveData<String> moistureValue;
+    private MutableLiveData<String> temperatureValue;
+    private MutableLiveData<String> runningTask;
     private IrrigationSystemState irrigationSystemState;
+    private String msgTopic;
+    private String msgContent;
 
     public AndroidMqttClientCallback(MqttClientActions disconnectAction) {
         this.disconnectAction = disconnectAction;
@@ -33,6 +38,8 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
         currentIrrigationSystemState = new IrrigationSystemMutableLiveData<>();
         currentIrrigationSystemState.setValue(irrigationSystemState);
         moistureValue = new MutableLiveData<>();
+        temperatureValue = new MutableLiveData<>();
+        runningTask = new MutableLiveData<>();
     }
 
     @Override
@@ -54,36 +61,46 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         Log.i("DATA FROM BROKER", message.toString());
-
+        msgContent = message.toString();
+        msgTopic = topic;
         String receivedMessage = message.toString();
-        boolean operationState;
-        if (receivedMessage.equals("on")) {
-            operationState = true;
-        } else if (receivedMessage.equals("off")) {
-            operationState = false;
-        } else {
 
-            if (topic.equals(MOISTURE_LEVEL_TOPIC)) {
-                moistureValue.setValue(receivedMessage);
-                return;
-            }
-            //For future message like moisture, temperature
+        if (receivedMessage.equals("on") || receivedMessage.equals("off")) {
+            boolean operationState;
+            runningTask.setValue(msgTopic);
+            operationState = receivedMessage.equals("on") ? true : false;
+            checkTopicAndSetSystemState(operationState);
             return;
         }
 
-        if (topic.equals(PUMP_STATE_TOPIC)) {
-            Log.i("PUMP STATE", message.toString());
+        // Received a message which is not related to pump state
+
+        if (topic.equals(MOISTURE_LEVEL_TOPIC)) {
+            moistureValue.setValue(receivedMessage);
+            return;
+        }
+
+        if (topic.equals(TEMPERATURE_TOPIC)) {
+            temperatureValue.setValue(receivedMessage);
+            return;
+        }
+
+    }
+
+    private void checkTopicAndSetSystemState(boolean operationState) {
+        if (msgTopic.equals(PUMP_STATE_TOPIC)) {
+            Log.i("PUMP STATE", msgContent);
             irrigationSystemState.setPumpTaskRunning(operationState);
             return;
         }
 
-        if (topic.equals(DELAYED_START_STATE_TOPIC)) {
+        if (msgTopic.equals(DELAYED_START_STATE_TOPIC)) {
             irrigationSystemState.setDelayedStartTaskRunning(operationState);
             // delayedIrrigationState.setValue(message.toString());
             return;
         }
 
-        if (topic.equals(MAINTAIN_MOISTURE_TASK_STATE_TOPIC)) {
+        if (msgTopic.equals(MAINTAIN_MOISTURE_TASK_STATE_TOPIC)) {
             irrigationSystemState.setMoistureMaintainTaskRunning(operationState);
             return;
         }
@@ -104,5 +121,13 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
 
+    }
+
+    public MutableLiveData<String> getTemperatureValue() {
+        return temperatureValue;
+    }
+
+    public MutableLiveData<String> getRunningTask() {
+        return runningTask;
     }
 }
