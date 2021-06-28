@@ -1,0 +1,114 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="5dp"
+    android:visibility="visible"
+    card_view:cardCornerRadius="5dp"
+    tools:visibility="visible">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/irrigationLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:srcCompat="@drawable/ic_baseline_shower_24" />
+
+        <TextView
+            android:id="@+id/irrigDateTvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_toRightOf="@id/irrigationLogo"
+            android:fontFamily="@font/delius"
+            android:text="@string/date_title_str"
+
+            />
+
+        <TextView
+            android:id="@+id/startTimeIrrigTvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/irrigDateTvTitle"
+            android:fontFamily="@font/delius"
+            android:text="@string/start_time_titlestr" />
+
+        <TextView
+            android:id="@+id/endTimeIrrigTvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/startTimeIrrigTvTitle"
+            android:fontFamily="@font/delius"
+            android:text="@string/end_time_titlestr" />
+
+        <TextView
+            android:id="@+id/moistureLvlTvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_toRightOf="@id/endTimeIrrigTvTitle"
+            android:fontFamily="@font/delius"
+            android:text="@string/moisture_irrig_hist_titlestr" />
+
+        <TextView
+            android:id="@+id/startIrrigDateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/irrigDateTvTitle"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/delius"
+            android:text="2021-06-28"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/startIrrigTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/startTimeIrrigTvTitle"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/startIrrigDateTv"
+            android:fontFamily="@font/delius"
+            android:text="13:00"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/endIrrigTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/endTimeIrrigTvTitle"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/startIrrigTimeTv"
+            android:fontFamily="@font/delius"
+            android:text="14:00"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/moistureLvLTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/moistureLvlTvTitle"
+            android:layout_marginLeft="56dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/endIrrigTimeTv"
+            android:fontFamily="@font/delius"
+            android:text="100"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
