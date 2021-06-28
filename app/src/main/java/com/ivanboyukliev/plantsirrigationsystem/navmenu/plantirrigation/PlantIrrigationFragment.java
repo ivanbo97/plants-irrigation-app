@@ -112,7 +112,7 @@ public class PlantIrrigationFragment extends Fragment {
                 return;
             }
 
-            // Possible system state 3 - no task is currently running
+            // Possible system state 4 - no task is currently running
             setWidgetsActiveness(true);
         });
         return root;
@@ -133,22 +133,27 @@ public class PlantIrrigationFragment extends Fragment {
             pumpManager.setOnCheckedChangeListener(null);
             pumpManager.setChecked(true);
             pumpManager.setOnCheckedChangeListener(pumpSwitchStateListener);
+            return;
         }
 
         if (currentIrrigationSystemState.isMoistureMaintainTaskRunning()) {
             moistureManagementWidgets.getSubmitMoistureBtn().setEnabled(false);
             moistureManagementWidgets.getTerminateMoistureTaskBtn().setEnabled(true);
+            return;
         }
 
         if (currentIrrigationSystemState.isDelayedStartTaskRunning()) {
             delayedStartWidgetsManager.getSubmitDelayedStartBtn().setEnabled(false);
             delayedStartWidgetsManager.getTerminateDelayedStartBtn().setEnabled(true);
+            return;
         }
 
+        //No task is running
+        setWidgetsActiveness(true);
     }
 
     private void setWidgetsActiveness(boolean active) {
-        RelativeLayout plantIrrigRelativeLayout = getActivity().findViewById(R.id.plantIrrigationLayout);
+        RelativeLayout plantIrrigRelativeLayout = getActivity().findViewById(R.id.plantIrrigationLayoutManager);
         for (int i = 0; i < plantIrrigRelativeLayout.getChildCount(); i++) {
             View view = plantIrrigRelativeLayout.getChildAt(i);
             int viewId = view.getId();
