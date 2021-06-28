@@ -57,4 +57,8 @@ public class IrrigationSystemState extends BaseObservable {
         this.connectedToBroker = connectedToBroker;
         notifyPropertyChanged(BR.connectedToBroker);
     }
+
+    public boolean isAnyTaskRunning(){
+        return pumpTaskRunning || moistureMaintainTaskRunning || delayedStartTaskRunning;
+    }
 }
