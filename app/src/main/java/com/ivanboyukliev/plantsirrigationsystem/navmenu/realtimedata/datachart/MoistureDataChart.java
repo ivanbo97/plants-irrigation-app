@@ -88,7 +88,7 @@ public class MoistureDataChart implements OnChartValueSelectedListener {
         xAxis.setTextColor(Color.rgb(67, 164, 34));
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
-        xAxis.setEnabled(true);
+        xAxis.setEnabled(false);
     }
 
     private void modifyYAxis() {
