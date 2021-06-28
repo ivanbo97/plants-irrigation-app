@@ -17,7 +17,13 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
 import com.ivanboyukliev.plantsirrigationsystem.PlantManagerActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
+import com.ivanboyukliev.plantsirrigationsystem.navmenu.home.HomeFragment;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.realtimedata.datachart.MoistureDataChart;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.SEASONS;
 
 public class RealtimeDataFragment extends Fragment {
 
@@ -28,7 +34,6 @@ public class RealtimeDataFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
 
         realtimeDataViewModel =
                 new ViewModelProvider(this).get(RealtimeDataViewModel.class);
@@ -49,10 +54,18 @@ public class RealtimeDataFragment extends Fragment {
         moistureChart = new MoistureDataChart(lineChart);
         moistureChart.setLineData(moistureData);
 
+        observedPlantTv.setText(HomeFragment.getPlantName());
+
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int currentMonth = calendar.get(Calendar.MONTH);
+
+        currentSeasonTv.setText(" " + SEASONS[currentMonth]);
+
         realtimeDataViewModel.getBrokerConnState().observe(getViewLifecycleOwner(), connected -> {
             if (connected) {
                 connStateTv.setText("Connected");
-
                 return;
             }
             connStateTv.setText("Disconnected");
@@ -70,6 +83,17 @@ public class RealtimeDataFragment extends Fragment {
                     Toast.makeText(getContext(), "Received a corrupted moisture value!", Toast.LENGTH_LONG);
                     e.printStackTrace();
                 }
+            }
+        });
+
+        realtimeDataViewModel.getTemperatureValue().observe(getViewLifecycleOwner(), temperatureValue ->
+                currentTemperatureTv.setText(temperatureValue + " °C"));
+
+        realtimeDataViewModel.getRunningTask().observe(getViewLifecycleOwner(), runningTask -> runningTaskTv.setText(runningTask));
+
+        realtimeDataViewModel.getIrrigationSystemState().observe(getViewLifecycleOwner(), irrigationSystemState -> {
+            if (!irrigationSystemState.isAnyTaskRunning()) {
+                runningTaskTv.setText("");
             }
         });
         return root;
