@@ -21,9 +21,9 @@ public class IrrigationRecordsListener implements ValueEventListener {
             FirebaseIrrigationRecord dataForIrrigationRecyclerView = new FirebaseIrrigationRecord(retrievedDate,
                     retrievedStartTime, retrievedEndTime, retrievedMoistureLvl);
             IrrigationHistoryViewModel.getIrrigationRecords().add(dataForIrrigationRecyclerView);
+            IrrigationHistoryViewModel.getIrrigationRecordsAdapter()
+                    .notifyDataSetChanged();
         }
-        IrrigationHistoryViewModel.getIrrigationRecordsAdapter()
-                .notifyDataSetChanged();
     }
 
     @Override
