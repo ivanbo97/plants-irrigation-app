@@ -31,6 +31,7 @@ public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<Br
     private int brokerNumInList;
     private int plantForDeleteionIdx;
     private Context plantsListContext;
+    private DatabaseReference currentPlantIrrigationRecords;
 
     public BrokerPlantsRecyclerViewListAdapter(List<FirebasePlantObj> brokerPlants, String brokerID, int brokerNumInList) {
         this.brokerPlants = brokerPlants;
@@ -60,6 +61,7 @@ public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<Br
         holder.getDeleteButton().setOnClickListener(v -> {
             plantForDeleteionIdx = position;
             BasicDialogGenerator dialogGenerator = new BasicDialogGenerator(this);
+            currentPlantIrrigationRecords = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/irrigations/" + plantName);
             DatabaseReference currentBrokerPlant = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/plants/" + plantName);
             AlertDialog plantDeletionDialog = dialogGenerator.generateDeleteConfirmation(currentBrokerPlant, plantsListContext);
             plantDeletionDialog.show();
@@ -86,6 +88,7 @@ public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<Br
     @Override
     public void onDeleteConfirmationSent() {
         brokerPlants.remove(plantForDeleteionIdx);
+        currentPlantIrrigationRecords.removeValue();
         notifyDataSetChanged();
     }
 }
