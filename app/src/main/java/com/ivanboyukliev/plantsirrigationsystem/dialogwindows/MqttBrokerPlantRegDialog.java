@@ -5,14 +5,12 @@ import android.app.Dialog;
 
 import android.os.Bundle;
 
-import android.util.Log;
 import android.util.SparseBooleanArray;
 
 import android.view.LayoutInflater;
 import android.view.View;
 
 import android.widget.SearchView;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,12 +27,12 @@ import com.ivanboyukliev.plantsirrigationsystem.firebase.util.FirebaseDataImport
 import com.ivanboyukliev.plantsirrigationsystem.plantapi.PlantSearchListener;
 import com.ivanboyukliev.plantsirrigationsystem.searchedplantsrecyclerview.adapter.PlantsFromApiListAdapter;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.ADD_PLANT_DIALOG_POS_BTN;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.ADD_PLANT_DIALOG_TILE;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PLANT_NO_IMAGE_URL;
 
 public class MqttBrokerPlantRegDialog extends AppCompatDialogFragment {
 
@@ -87,6 +85,14 @@ public class MqttBrokerPlantRegDialog extends AppCompatDialogFragment {
 
                     retrieveCheckedPlants(checkedPlantsIndexes, userSelectedPlants);
                     DatabaseReference plantDB = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerId).child("plants");
+
+                    // When user's desired plant does not exist in API we simply add
+                    // queried plant's name and no image attached to it
+                    if (userSelectedPlants.isEmpty()) {
+                        FirebasePlantObj userPlant = new FirebasePlantObj(searchView.getQuery().toString(), PLANT_NO_IMAGE_URL);
+                        userSelectedPlants.add(userPlant);
+                    }
+
                     FirebaseDataImporter.importPlantsData(plantDB, userSelectedPlants);
 
                     populateBrokerPlantsList(userSelectedPlants);
