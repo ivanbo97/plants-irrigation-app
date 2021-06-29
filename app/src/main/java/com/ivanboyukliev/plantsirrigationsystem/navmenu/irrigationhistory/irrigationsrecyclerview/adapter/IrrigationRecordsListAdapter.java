@@ -31,7 +31,7 @@ public class IrrigationRecordsListAdapter extends RecyclerView.Adapter<Irrigatio
 
     @Override
     public void onBindViewHolder(@NonNull IrrigationRecordViewHolder holder, int position) {
-        FirebaseIrrigationRecord irrigationRecord = irrigationRecords.get(0);
+        FirebaseIrrigationRecord irrigationRecord = irrigationRecords.get(position);
 
         String irrigationDate = irrigationRecord.getDate();
         String irrigationStartTime = irrigationRecord.getStartTime();
