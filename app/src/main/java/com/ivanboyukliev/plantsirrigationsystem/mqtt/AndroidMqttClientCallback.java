@@ -60,7 +60,7 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        Log.i("DATA FROM BROKER", message.toString());
+        Log.i(topic + ": ", message.toString());
         msgContent = message.toString();
         msgTopic = topic;
         String receivedMessage = message.toString();
