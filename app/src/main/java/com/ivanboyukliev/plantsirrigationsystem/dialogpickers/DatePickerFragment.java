@@ -67,7 +67,17 @@ public class DatePickerFragment extends DialogFragment
         /*Months start with index 0, so actual
           value for month needs to be incremented*/
         month += 1;
+        StringBuilder givenMonth = new StringBuilder(String.valueOf(month));
+
         Log.i("DatePicker", "received date from picker: " + day + "." + month + "." + year);
-        delayedStartWidgets.getInputDateTv().setText(day + "-" + month + "-" + year);
+        if (month <= 9) {
+            givenMonth.insert(0, '0');
+        }
+
+        StringBuilder givenDay = new StringBuilder(String.valueOf(day));
+        if(day <=9){
+            givenDay.insert(0,'0');
+        }
+        delayedStartWidgets.getInputDateTv().setText(givenDay + "-" + givenMonth + "-" + year);
     }
 }
