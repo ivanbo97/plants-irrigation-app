@@ -11,4 +11,8 @@ public class FirebaseRetrievedDataConverter {
                 .replace(",", ".")
                 .replace("(", "/");
     }
+
+    public static String extractIdFromPlantName(String plantName) {
+        return plantName.substring(plantName.indexOf('|')+1);
+    }
 }
