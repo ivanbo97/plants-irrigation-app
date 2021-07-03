@@ -62,7 +62,6 @@ public class DatePickerFragment extends DialogFragment
         }
     }
 
-
     public void onDateSet(DatePicker view, int year, int month, int day) {
         /*Months start with index 0, so actual
           value for month needs to be incremented*/
