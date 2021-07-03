@@ -88,6 +88,7 @@ public final class ApplicationConstants {
     public static final String ADD_PLANT_DIALOG_POS_BTN = "Add plants to list";
 
     public static final String PLANT_API_PLANT_SEARCH_URL = "https://api.floracodex.com/v1/plants/search";
+    public static final String PLANT_API_PLANT_DATA_URL = "https://api.floracodex.com/v1/species/";
     public static final String PLANT_API_TOKEN = "BflPxC8X3nAx9bnRAT4F";
     public static final String PLANT_NO_IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png";
 
