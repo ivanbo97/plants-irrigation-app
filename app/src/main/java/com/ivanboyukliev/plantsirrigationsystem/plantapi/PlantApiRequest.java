@@ -14,8 +14,10 @@ import com.ivanboyukliev.plantsirrigationsystem.searchedplantsrecyclerview.model
 
 import java.util.List;
 
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PLANT_API_PLANT_DATA_URL;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PLANT_API_PLANT_SEARCH_URL;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.PLANT_API_TOKEN;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.FirebaseRetrievedDataConverter.extractIdFromPlantName;
 
 public class PlantApiRequest {
 
@@ -46,7 +48,9 @@ public class PlantApiRequest {
 
     public void getSinglePlantData(MutableLiveData<PlantFromApi> plant) {
         SinglePlantDataResponseListener singlePlantDataResponseListener = new SinglePlantDataResponseListener(plant);
-        String url = PLANT_API_PLANT_SEARCH_URL + "?" + "token=" + PLANT_API_TOKEN + "&q=" + plantName;
+        String plantApiId = extractIdFromPlantName(plantName);
+        String url = PLANT_API_PLANT_DATA_URL + plantApiId + "?" + "token=" + PLANT_API_TOKEN;
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, singlePlantDataResponseListener, plantApiErrorListener);
         requestQueue.add(jsonObjectRequest);
     }
