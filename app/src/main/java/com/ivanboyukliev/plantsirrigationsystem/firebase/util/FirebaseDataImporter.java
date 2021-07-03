@@ -23,8 +23,9 @@ public class FirebaseDataImporter {
 
     public static void importPlantsData(DatabaseReference plantsDB, List<FirebasePlantObj> plants) {
         for (FirebasePlantObj plant : plants) {
-            String plantName = plant.getPlantName();
-            plantsDB.child(plantName).setValue(plant.getImageURL());
+            // Using separator between plant's name and plant's api id
+            String plantNameAndId = plant.getPlantName() + "|" + plant.getPlantApiId();
+            plantsDB.child(plantNameAndId).setValue(plant.getImageURL());
         }
     }
 
