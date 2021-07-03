@@ -29,6 +29,7 @@ import com.ivanboyukliev.plantsirrigationsystem.searchedplantsrecyclerview.adapt
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.ADD_PLANT_DIALOG_POS_BTN;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.ADD_PLANT_DIALOG_TILE;
@@ -44,6 +45,8 @@ public class MqttBrokerPlantRegDialog extends AppCompatDialogFragment {
     private List<FirebasePlantObj> retrievedPlants;
     private RecyclerView retrievedPlantsRecycleView;
     private static PlantsFromApiListAdapter retrievedPlantsAdapter;
+
+    Random rand = new Random();
 
     private FragmentActivity dialogFragment;
 
@@ -89,7 +92,8 @@ public class MqttBrokerPlantRegDialog extends AppCompatDialogFragment {
                     // When user's desired plant does not exist in API we simply add
                     // queried plant's name and no image attached to it
                     if (userSelectedPlants.isEmpty()) {
-                        FirebasePlantObj userPlant = new FirebasePlantObj(searchView.getQuery().toString(), PLANT_NO_IMAGE_URL);
+                        int idForApi = rand.nextInt(10000);
+                        FirebasePlantObj userPlant = new FirebasePlantObj(searchView.getQuery().toString(), PLANT_NO_IMAGE_URL,String.valueOf(idForApi));
                         userSelectedPlants.add(userPlant);
                     }
 
