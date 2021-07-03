@@ -51,7 +51,10 @@ public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<Br
     @Override
     public void onBindViewHolder(@NonNull BrokerPlantsViewHolder holder, int position) {
         FirebasePlantObj currentPlant = brokerPlants.get(position);
-        String plantName = currentPlant.getPlantName();
+        String plantApiName = currentPlant.getPlantName();
+        int separatorIdx = plantApiName.indexOf("|");
+        String plantName = plantApiName.substring(0, separatorIdx);
+
         holder.getPlantNameTv().setText(plantName);
 
         Picasso.get().load(currentPlant.getImageURL())
@@ -72,7 +75,7 @@ public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<Br
             FirebaseBrokerObj currentBroker = HomeActivity.getMqttBrokersList().get(brokerNumInList);
             String brokerName = currentBroker.getBrokerName();
             String brokerUrl = currentBroker.getBrokerIp() + ":" + currentBroker.getBrokerPort();
-            intent.putExtra("PlantName", plantName);
+            intent.putExtra("PlantName", plantApiName);
             intent.putExtra("BrokerName", brokerName);
             intent.putExtra("BrokerUrl", brokerUrl);
             intent.putExtra("TopicsList", (Serializable) currentBroker.getTopics());
