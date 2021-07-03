@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.android.volley.Response;
 import com.ivanboyukliev.plantsirrigationsystem.searchedplantsrecyclerview.model.PlantFromApi;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,39 +24,25 @@ public class SinglePlantDataResponseListener implements Response.Listener<JSONOb
     @Override
     public void onResponse(JSONObject response) {
         try {
-            JSONArray jsonArray = response.getJSONArray("data");
-            if (jsonArray.length() == 0) {
-                Log.d("ARRAY SIZE: ", "Size is 0");
-                return;
-            }
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                String plantScientificName = jsonObject.getString("scientific_name");
-                if (plantScientificName.compareTo("null") == 0)
-                    continue;
+            String plantScientificName = response.getString("scientific_name");
 
-                String plantCommonName = jsonObject.getString("common_name");
-                if (plantCommonName.compareTo("null") == 0)
-                    continue;
+            String plantCommonName = response.getString("common_name");
 
-                String plantFamily = jsonObject.getString("family");
-                if (plantFamily.compareTo("null") == 0)
-                    continue;
+            String plantFamily = response.getString("family");
 
-                String plantImageUrl;
-                try {
-                    plantImageUrl = jsonObject.getString("image_url");
-                } catch (JSONException jsonException) {
-                    plantImageUrl = PLANT_NO_IMAGE_URL;
-                }
+            String plantImageUrl;
 
-                PlantFromApi plantFromApi = new PlantFromApi(plantCommonName, plantImageUrl, plantScientificName, plantFamily);
-
-                plantFromApiDataObj.setValue(plantFromApi);
+            try {
+                plantImageUrl = response.getString("image_url");
+            } catch (JSONException jsonException) {
+                plantImageUrl = PLANT_NO_IMAGE_URL;
             }
 
-            Log.i("RETRIEVED DATA:", jsonArray.toString());
+            PlantFromApi plantFromApi = new PlantFromApi(plantCommonName, plantImageUrl, plantScientificName, plantFamily);
+            plantFromApiDataObj.setValue(plantFromApi);
+            Log.i("RETRIEVED DATA:", response.toString());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
