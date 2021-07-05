@@ -64,10 +64,11 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
         msgContent = message.toString();
         msgTopic = topic;
         String receivedMessage = message.toString();
-
+        if (receivedMessage.equals("on")) {
+            runningTask.setValue(msgTopic);
+        }
         if (receivedMessage.equals("on") || receivedMessage.equals("off")) {
             boolean operationState;
-            runningTask.setValue(msgTopic);
             operationState = receivedMessage.equals("on") ? true : false;
             checkTopicAndSetSystemState(operationState);
             return;
