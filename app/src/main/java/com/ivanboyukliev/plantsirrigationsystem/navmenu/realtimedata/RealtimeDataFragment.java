@@ -23,6 +23,8 @@ import com.ivanboyukliev.plantsirrigationsystem.navmenu.realtimedata.datachart.M
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.MAINTAIN_MOISTURE_TASK_STATE_TOPIC;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.DELAYED_START_STATE_TOPIC;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.SEASONS;
 
 public class RealtimeDataFragment extends Fragment {
@@ -92,7 +94,14 @@ public class RealtimeDataFragment extends Fragment {
         realtimeDataViewModel.getTemperatureValue().observe(getViewLifecycleOwner(), temperatureValue ->
                 currentTemperatureTv.setText(temperatureValue + " °C"));
 
-        realtimeDataViewModel.getRunningTask().observe(getViewLifecycleOwner(), runningTask -> runningTaskTv.setText(runningTask));
+        realtimeDataViewModel.getRunningTask().observe(getViewLifecycleOwner(), runningTask -> {
+            if (runningTask.equals(MAINTAIN_MOISTURE_TASK_STATE_TOPIC) || runningTask.equals(DELAYED_START_STATE_TOPIC)) {
+                runningTaskTv.setText(runningTask);
+                return;
+            }
+            // Only pump running without any specific mode
+            runningTaskTv.setText("Pumpstate");
+        });
 
         realtimeDataViewModel.getIrrigationSystemState().observe(getViewLifecycleOwner(), irrigationSystemState -> {
             if (!irrigationSystemState.isAnyTaskRunning()) {
