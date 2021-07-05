@@ -26,6 +26,7 @@ public class FirebaseDataImporter {
             // Using separator between plant's name and plant's api id
             String plantNameAndId = plant.getPlantName() + "|" + plant.getPlantApiId();
             plantsDB.child(plantNameAndId).setValue(plant.getImageURL());
+            plant.setPlantName(plantNameAndId);
         }
     }
 
