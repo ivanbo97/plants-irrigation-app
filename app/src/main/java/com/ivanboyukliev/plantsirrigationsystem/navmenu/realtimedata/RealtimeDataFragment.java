@@ -54,7 +54,10 @@ public class RealtimeDataFragment extends Fragment {
         moistureChart = new MoistureDataChart(lineChart);
         moistureChart.setLineData(moistureData);
 
-        observedPlantTv.setText(HomeFragment.getPlantName());
+        String plantApiIdAndName = HomeFragment.getPlantName();
+        int separatorIdx = plantApiIdAndName.indexOf("|");
+        String plantName = plantApiIdAndName.substring(0, separatorIdx);
+        observedPlantTv.setText(plantName);
 
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
