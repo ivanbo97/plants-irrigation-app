@@ -27,7 +27,8 @@ public class PlantManagerActivity extends AppCompatActivity {
         Intent parentIntent = getIntent();
         String brokerUrl = parentIntent.getExtras().getString("BrokerUrl");
         List<FirebaseTopicObj> brokerTopics = (List<FirebaseTopicObj>) parentIntent.getSerializableExtra("TopicsList");
-        mqttClient = new BasicMqttBrokerClient(brokerUrl, brokerTopics);
+        String currentIrrigatedPlant = getIntent().getExtras().getString("PlantName");
+        mqttClient = new BasicMqttBrokerClient(brokerUrl, brokerTopics,currentIrrigatedPlant);
         mqttClient.initClientData();
         moistureChartData = new LineData();
         setContentView(R.layout.activity_plant_manager);
