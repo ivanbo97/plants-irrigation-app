@@ -64,8 +64,8 @@ public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<Br
         holder.getDeleteButton().setOnClickListener(v -> {
             plantForDeleteionIdx = position;
             BasicDialogGenerator dialogGenerator = new BasicDialogGenerator(this);
-            currentPlantIrrigationRecords = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/irrigations/" + plantName);
-            DatabaseReference currentBrokerPlant = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/plants/" + plantName);
+            currentPlantIrrigationRecords = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/irrigations/" + plantApiName);
+            DatabaseReference currentBrokerPlant = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/plants/" + plantApiName);
             AlertDialog plantDeletionDialog = dialogGenerator.generateDeleteConfirmation(currentBrokerPlant, plantsListContext);
             plantDeletionDialog.show();
         });
