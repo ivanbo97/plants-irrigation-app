@@ -35,12 +35,13 @@ public class BasicMqttBrokerClient implements MqttClientActions {
     private MqttCallbackExtended mqttCallback;
     private List<FirebaseTopicObj> topics;
     private MutableLiveData<Boolean> brokerConnState;
-
-    public BasicMqttBrokerClient(String brokerUri, List<FirebaseTopicObj> brokerTopics) {
+    private String irrigatedPlant;
+    public BasicMqttBrokerClient(String brokerUri, List<FirebaseTopicObj> brokerTopics,String currentPlant) {
         this.brokerUri = brokerUri;
         this.topics = brokerTopics;
         brokerConnState = new MutableLiveData<>();
         brokerConnState.setValue(false);
+        this.irrigatedPlant = currentPlant;
     }
 
     @Override
@@ -108,7 +109,6 @@ public class BasicMqttBrokerClient implements MqttClientActions {
         }
     }
 
-
     public String getBrokerUri() {
         return brokerUri;
     }
@@ -135,5 +135,9 @@ public class BasicMqttBrokerClient implements MqttClientActions {
 
     public MqttAndroidClient getMqttAndroidClient() {
         return mqttAndroidClient;
+    }
+
+    public String getIrrigatedPlant() {
+        return irrigatedPlant;
     }
 }
