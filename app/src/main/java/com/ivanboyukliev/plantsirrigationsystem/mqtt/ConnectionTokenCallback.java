@@ -2,16 +2,22 @@ package com.ivanboyukliev.plantsirrigationsystem.mqtt;
 
 import android.util.Log;
 
+import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.model.BasicMqttBrokerClient;
 import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.home.HomeFragment;
 import com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants;
+import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputConverter;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.AUTHORIZATION_ERROR;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.BROKER_CONNECTION_ERROR_MSG;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.CURRENT_BROKER_URL_TOPIC;
+import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.IRRIGATED_PLANT_TOPIC;
 
 public class ConnectionTokenCallback implements IMqttActionListener {
 
@@ -27,6 +33,7 @@ public class ConnectionTokenCallback implements IMqttActionListener {
     public void onSuccess(IMqttToken asyncActionToken) {
         Log.i("BROKER INFO", "Connection success!!");
         clientActions.subscribeToTopics();
+        publishCurrentPlant();
     }
 
     @Override
@@ -42,5 +49,20 @@ public class ConnectionTokenCallback implements IMqttActionListener {
             HomeFragment.showBrokerMessage(BROKER_CONNECTION_ERROR_MSG);
         }
         exception.printStackTrace();
+    }
+
+    private void publishCurrentPlant() {
+        String currentPlantName = ((BasicMqttBrokerClient) clientActions).getIrrigatedPlant();
+        String standardURI = ((BasicMqttBrokerClient) clientActions).getBrokerUri();
+
+        MqttMessage plantNameMsg = new MqttMessage(currentPlantName.getBytes());
+        MqttMessage brokerUrlMsg = new MqttMessage(UserInputConverter.convertServerURIToFirebaseRules(standardURI)
+                .getBytes());
+        try {
+            mqttAndroidClient.publish(CURRENT_BROKER_URL_TOPIC, brokerUrlMsg);
+            mqttAndroidClient.publish(IRRIGATED_PLANT_TOPIC, plantNameMsg);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
     }
 }
