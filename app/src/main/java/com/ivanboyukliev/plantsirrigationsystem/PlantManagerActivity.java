@@ -25,7 +25,6 @@ public class PlantManagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent parentIntent = getIntent();
-        String brokerName = parentIntent.getExtras().getString("BrokerName");
         String brokerUrl = parentIntent.getExtras().getString("BrokerUrl");
         List<FirebaseTopicObj> brokerTopics = (List<FirebaseTopicObj>) parentIntent.getSerializableExtra("TopicsList");
         mqttClient = new BasicMqttBrokerClient(brokerUrl, brokerTopics);
