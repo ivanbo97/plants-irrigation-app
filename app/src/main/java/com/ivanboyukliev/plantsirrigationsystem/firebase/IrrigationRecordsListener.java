@@ -16,7 +16,7 @@ public class IrrigationRecordsListener implements ValueEventListener {
             String retrievedDate = irrigationRecord.child("/date").getValue(String.class);
             String retrievedStartTime = irrigationRecord.child("/startTime").getValue(String.class);
             String retrievedEndTime = irrigationRecord.child("/endTime").getValue(String.class);
-            String retrievedMoistureLvl = String.valueOf(irrigationRecord.child("/moistureLvl").getValue(Long.class));
+            String retrievedMoistureLvl = irrigationRecord.child("/moistureLvl").getValue(String.class);
 
             FirebaseIrrigationRecord dataForIrrigationRecyclerView = new FirebaseIrrigationRecord(retrievedDate,
                     retrievedStartTime, retrievedEndTime, retrievedMoistureLvl);
