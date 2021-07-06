@@ -67,6 +67,8 @@ public final class ApplicationConstants {
     public static final String TOPICS_SUBS_ERROR = "You have to be connected to MQTT broker in ordered to subscribe!";
     public static final String NO_TOPICS_ERROR = "There aren't any specified topics for subscription.";
     public static final String TOPICS_SUBS_SUCCESS = "Successful subscription to given topics!";
+    public static final String IRRIGATED_PLANT_TOPIC = "irrigatedPlant";
+    public static final String CURRENT_BROKER_URL_TOPIC = "brokerUrl";
 
     public static final String CREDENTIALS_DIALOG_TITLE = "Enter Credentials";
 
