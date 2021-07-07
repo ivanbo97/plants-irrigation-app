@@ -91,7 +91,6 @@ public class MqttBrokerTopicRegDialog extends AppCompatDialogFragment {
                 dialog.dismiss();
             });
         });
-
     }
 
     private void populateDialogWidgets() {
