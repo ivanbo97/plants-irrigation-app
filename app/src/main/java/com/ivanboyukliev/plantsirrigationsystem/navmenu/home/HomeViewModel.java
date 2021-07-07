@@ -9,7 +9,6 @@ import com.ivanboyukliev.plantsirrigationsystem.searchedplantsrecyclerview.model
 public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<PlantFromApi> currentPlant;
-
     private MutableLiveData<String> plantFamily;
 
     public HomeViewModel() {
