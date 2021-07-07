@@ -40,55 +40,28 @@ public class MqttBrokerViewHolder extends RecyclerView.ViewHolder {
         return brokerNameTv;
     }
 
-    public void setBrokerNameTv(TextView brokerNameTv) {
-        this.brokerNameTv = brokerNameTv;
-    }
-
     public EditText getBrokerIpTv() {
         return brokerIpTv;
-    }
-
-    public void setBrokerIpTv(EditText brokerIpTv) {
-        this.brokerIpTv = brokerIpTv;
     }
 
     public FloatingActionButton getDeleteBrokerButton() {
         return deleteBrokerButton;
     }
 
-    public void setDeleteBrokerButton(FloatingActionButton deleteBrokerButton) {
-        this.deleteBrokerButton = deleteBrokerButton;
-    }
-
     public TextView getShowTopicsTv() {
         return showTopicsTv;
-    }
-
-    public void setShowTopicsTv(TextView showTopicsTv) {
-        this.showTopicsTv = showTopicsTv;
     }
 
     public TextView getShowPlantsTv() {
         return showPlantsTv;
     }
 
-    public void setShowPlantsTv(TextView showPlantsTv) {
-        this.showPlantsTv = showPlantsTv;
-    }
-
     public ImageButton getEditBrokerDataBtn() {
         return editBrokerDataBtn;
-    }
-
-    public void setEditBrokerDataBtn(ImageButton editBrokerDataBtn) {
-        this.editBrokerDataBtn = editBrokerDataBtn;
     }
 
     public Button getSaveChangesBtn() {
         return saveChangesBtn;
     }
 
-    public void setSaveChangesBtn(Button saveChangesBtn) {
-        this.saveChangesBtn = saveChangesBtn;
-    }
 }
