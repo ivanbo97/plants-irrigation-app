@@ -23,7 +23,6 @@ import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstant
 
 public class MaintainMoistureBtnListener implements View.OnClickListener {
 
-
     private Fragment parentFragment;
     private MoistureManagementWidgets moistureTaskWidgets;
 
