@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateWidgetObjects() {
-
         userEmail = findViewById(R.id.emailInputEditTextMainActivity);
         userPassword = findViewById(R.id.passwordInputEditTextMainActivity);
         signUpBtn = findViewById(R.id.signUpButton);

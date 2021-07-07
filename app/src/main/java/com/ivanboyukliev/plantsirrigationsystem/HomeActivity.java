@@ -123,7 +123,6 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         toast.show();
     }
 
-
     public static FragmentManager getHomeActivityFragmentManager() {
         return homeActivityFragmentManager;
     }

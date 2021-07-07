@@ -27,7 +27,6 @@ public final class ApplicationConstants {
 
     public static final String BROKER_TOPICS_SUBS_SUCCESS = "Connection to broker and topic subscription successful!";
 
-
     public static final String AUTHORIZATION_ERROR = "Not authorized to connect";
 
     public static final String BROKER_CONN_ERR = "Unable to connect to server";

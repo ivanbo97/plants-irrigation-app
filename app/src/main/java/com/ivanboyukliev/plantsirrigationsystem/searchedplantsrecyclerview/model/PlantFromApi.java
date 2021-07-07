@@ -7,7 +7,6 @@ public class PlantFromApi {
     private String scientificName;
     private String family;
 
-
     public PlantFromApi (){
 
     }

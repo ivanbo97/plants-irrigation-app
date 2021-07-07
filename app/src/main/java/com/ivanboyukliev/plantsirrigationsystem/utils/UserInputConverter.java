@@ -8,10 +8,7 @@ public class UserInputConverter {
                 .replace("/", "(");
     }
 
-
     public static String convertBrokerTopicToFirebaseRules(String topicName) {
         return topicName.replace("/", "(");
     }
-
-
 }
