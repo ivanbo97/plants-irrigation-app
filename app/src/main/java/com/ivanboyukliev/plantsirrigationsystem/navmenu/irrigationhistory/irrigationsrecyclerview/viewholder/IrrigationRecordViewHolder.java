@@ -27,31 +27,16 @@ public class IrrigationRecordViewHolder extends RecyclerView.ViewHolder {
         return irrigationDateTv;
     }
 
-    public void setIrrigationDateTv(TextView irrigationDateTv) {
-        this.irrigationDateTv = irrigationDateTv;
-    }
-
     public TextView getStartTimeTv() {
         return startTimeTv;
-    }
-
-    public void setStartTimeTv(TextView startTimeTv) {
-        this.startTimeTv = startTimeTv;
     }
 
     public TextView getEndTimeTv() {
         return endTimeTv;
     }
 
-    public void setEndTimeTv(TextView endTimeTv) {
-        this.endTimeTv = endTimeTv;
-    }
-
     public TextView getMoistureLvlTv() {
         return moistureLvlTv;
     }
 
-    public void setMoistureLvlTv(TextView moistureLvlTv) {
-        this.moistureLvlTv = moistureLvlTv;
-    }
 }
