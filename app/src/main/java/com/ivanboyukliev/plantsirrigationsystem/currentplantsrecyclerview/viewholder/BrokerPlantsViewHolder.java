@@ -29,23 +29,11 @@ public class BrokerPlantsViewHolder extends RecyclerView.ViewHolder {
         return plantNameTv;
     }
 
-    public void setPlantNameTv(TextView plantNameTv) {
-        this.plantNameTv = plantNameTv;
-    }
-
     public ImageView getPlantImage() {
         return plantImage;
     }
 
-    public void setPlantImage(ImageView plantImage) {
-        this.plantImage = plantImage;
-    }
-
     public ImageButton getDeleteButton() {
         return deleteButton;
-    }
-
-    public void setDeleteButton(FloatingActionButton deleteButton) {
-        this.deleteButton = deleteButton;
     }
 }
