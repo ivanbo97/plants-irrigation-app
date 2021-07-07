@@ -24,9 +24,7 @@ public class IrrigationHistoryViewModel extends ViewModel {
     public IrrigationHistoryViewModel() {
 
         irrigationRecords = new ArrayList<>();
-
         irrigationRecordsAdapter = new IrrigationRecordsListAdapter(irrigationRecords);
-
 
         String standardBrokerUrl = PlantManagerActivity.getMqttClient().getBrokerUri();
         String firebaseBrokerUrl = UserInputConverter.convertServerURIToFirebaseRules(standardBrokerUrl);
