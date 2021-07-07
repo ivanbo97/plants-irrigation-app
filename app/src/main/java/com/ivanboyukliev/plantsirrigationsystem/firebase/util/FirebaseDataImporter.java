@@ -63,8 +63,6 @@ public class FirebaseDataImporter {
                     .setValue(Integer.valueOf(firstTopic.getQoS()));
             FirebaseDataImporter.importTopicsData(newlyAddedBroker.child("topics"), brokerForBinding.getTopics());
         }
-
-
         String newBrokerIp;
         String newBrokerPort;
         try {
