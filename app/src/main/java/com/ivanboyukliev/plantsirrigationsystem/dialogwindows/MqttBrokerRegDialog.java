@@ -31,7 +31,6 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
     private EditText brokerPortWidget;
     private BrokerDataInputListener dialogListener;
 
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
