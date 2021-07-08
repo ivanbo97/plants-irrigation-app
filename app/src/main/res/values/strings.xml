@@ -39,4 +39,5 @@
     <string name="start_time_titlestr"><b>Start</b></string>
     <string name="end_time_titlestr"><b>End</b></string>
     <string name="moisture_irrig_hist_titlestr"><b>Moisture (%)</b></string>
+    <string name="tips_tv_str"><u>Tips for watering this plant</u></string>
 </resources>
