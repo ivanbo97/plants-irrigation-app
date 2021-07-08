@@ -19,7 +19,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
+
 import com.google.firebase.database.FirebaseDatabase;
 import com.ivanboyukliev.plantsirrigationsystem.PlantManagerActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
@@ -27,7 +27,6 @@ import com.ivanboyukliev.plantsirrigationsystem.navmenu.home.HomeFragment;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.realtimedata.datachart.MoistureDataChart;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.realtimedata.utils.LiveDataChecker;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.realtimedata.utils.TempRange;
-import com.ivanboyukliev.plantsirrigationsystem.navmenu.realtimedata.utils.TempRangeDataListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,7 +89,7 @@ public class RealtimeDataFragment extends Fragment {
 
         currentSeasonTv.setText(" " + SEASONS[currentMonth]);
 
-        LiveDataChecker liveDataChecker = new LiveDataChecker(currentTipsTv, currentSeasonTv, currentTemperatureTv, observedPlantTv, this);
+        LiveDataChecker liveDataChecker = new LiveDataChecker(currentSeasonTv, currentTemperatureTv, observedPlantTv, this);
 
         ScheduledExecutorService executor =
                 Executors.newSingleThreadScheduledExecutor();
