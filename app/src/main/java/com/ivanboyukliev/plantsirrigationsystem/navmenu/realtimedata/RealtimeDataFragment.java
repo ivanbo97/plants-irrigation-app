@@ -109,10 +109,11 @@ public class RealtimeDataFragment extends Fragment {
             @Override
             public void onChanged(String moistureValue) {
                 try {
-                    moistureChart.addEntry(Float.valueOf(moistureValue));
+                    moistureChart.addEntry(Float.parseFloat(moistureValue));
                     currentMoistureTv.setText(moistureValue + " %");
                 } catch (NumberFormatException e) {
-                    Toast.makeText(getContext(), "Received a corrupted moisture value!", Toast.LENGTH_LONG);
+                    Toast.makeText(getContext(), "Received a corrupted moisture value!", Toast.LENGTH_LONG)
+                    .show();
                     e.printStackTrace();
                 }
             }
