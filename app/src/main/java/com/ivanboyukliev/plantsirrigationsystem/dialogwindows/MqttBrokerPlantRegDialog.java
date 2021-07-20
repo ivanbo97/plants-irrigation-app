@@ -87,7 +87,7 @@ public class MqttBrokerPlantRegDialog extends AppCompatDialogFragment {
                     List<FirebasePlantObj> userSelectedPlants = new ArrayList<>();
 
                     retrieveCheckedPlants(checkedPlantsIndexes, userSelectedPlants);
-                    DatabaseReference plantDB = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerId).child("plants");
+                    DatabaseReference plantDB = HomeActivity.getDatabaseAuthUserBrokers().child(brokerId).child("plants");
 
                     // When user's desired plant does not exist in API we simply add
                     // queried plant's name and no image attached to it

@@ -38,13 +38,13 @@ public class FirebaseDataImporter {
         }
         String currentBrokerUrl = brokerForBinding.getBrokerIp() + ":" + brokerForBinding.getBrokerPort();
         String currentBrokerUrlFirebaseStandard = UserInputConverter.convertServerURIToFirebaseRules(currentBrokerUrl);
-        HomeActivity.getmDatabaseAuthUserBrokers().child(currentBrokerUrlFirebaseStandard).setValue(null);
+        HomeActivity.getDatabaseAuthUserBrokers().child(currentBrokerUrlFirebaseStandard).setValue(null);
 
         String urlToFirebaseStandards = UserInputConverter.convertServerURIToFirebaseRules(newServerUrl);
-        HomeActivity.getmDatabaseAuthUserBrokers().child(urlToFirebaseStandards)
+        HomeActivity.getDatabaseAuthUserBrokers().child(urlToFirebaseStandards)
                 .child("brkName").setValue(brokerForBinding.getBrokerName());
 
-        DatabaseReference newlyAddedBroker = HomeActivity.getmDatabaseAuthUserBrokers().child(urlToFirebaseStandards);
+        DatabaseReference newlyAddedBroker = HomeActivity.getDatabaseAuthUserBrokers().child(urlToFirebaseStandards);
         if (brokerForBinding.getPlants().size() > 0) {
             //first we create the node 'plants' and then add all plants to it
             FirebasePlantObj firstPlant = brokerForBinding.getPlants().get(0);

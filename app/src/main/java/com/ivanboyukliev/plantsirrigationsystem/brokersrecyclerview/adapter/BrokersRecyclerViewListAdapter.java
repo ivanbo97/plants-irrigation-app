@@ -48,7 +48,7 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
         holder.getBrokerNameTv().setText(brokerForBinding.getBrokerName());
         brokerUrlTv.setText(brokerForBinding.getBrokerIp() + ":" + brokerForBinding.getBrokerPort());
         holder.getDeleteBrokerButton().setOnClickListener(v -> {
-            DatabaseReference currentBroker = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerForBinding.getBrokerID());
+            DatabaseReference currentBroker = HomeActivity.getDatabaseAuthUserBrokers().child(brokerForBinding.getBrokerID());
             currentBroker.removeValue();
             mqttBrokers.remove(position);
             notifyDataSetChanged();

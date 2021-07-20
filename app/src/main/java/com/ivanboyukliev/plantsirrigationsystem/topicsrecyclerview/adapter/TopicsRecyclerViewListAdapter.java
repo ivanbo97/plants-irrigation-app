@@ -53,7 +53,7 @@ public class TopicsRecyclerViewListAdapter extends RecyclerView.Adapter<TopicVie
         String qosTopicContent = "QoS level : " + String.valueOf(currentTopic.getQoS());
         holder.getTopicQoSTv().setText(qosTopicContent);
         holder.getDeleteTopicBtn().setOnClickListener(v -> {
-            DatabaseReference currentTopicDB = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/topics/" + firebaseTopicID);
+            DatabaseReference currentTopicDB = HomeActivity.getDatabaseAuthUserBrokers().child(brokerID + "/topics/" + firebaseTopicID);
             itemForDeletionIdx = position;
             BasicDialogGenerator dialogGenerator = new BasicDialogGenerator(this);
             AlertDialog deleteDialog = dialogGenerator.generateDeleteConfirmation(currentTopicDB, showTopicsDialogContext);

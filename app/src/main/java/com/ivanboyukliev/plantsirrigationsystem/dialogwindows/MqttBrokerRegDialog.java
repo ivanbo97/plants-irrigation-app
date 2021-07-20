@@ -66,7 +66,7 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
             newBroker.setBrokerPort(brokerPort);
             HomeActivity.getMqttBrokersList().add(newBroker);
             dialogListener.onBrokerDataSending();
-            DatabaseReference databaseUserBrokers = HomeActivity.getmDatabaseAuthUserBrokers();
+            DatabaseReference databaseUserBrokers = HomeActivity.getDatabaseAuthUserBrokers();
             String newStandartBrokerId = brokerIp + ":" + brokerPort;
             String firebaseBrokerId = UserInputConverter.convertServerURIToFirebaseRules(newStandartBrokerId);
             databaseUserBrokers.child(firebaseBrokerId).child("brkName").setValue(brokerName);

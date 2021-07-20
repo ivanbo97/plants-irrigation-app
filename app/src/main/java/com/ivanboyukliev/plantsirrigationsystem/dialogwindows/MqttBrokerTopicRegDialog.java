@@ -23,7 +23,6 @@ import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputValidator;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.INCORRECT_PORT_MESSAGE;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.INCORRECT_QOS_MESSAGE;
 import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPIC_REG_DIALOG_TITLE;
-import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstants.TOPIC_REG_ERROR;
 
 public class MqttBrokerTopicRegDialog extends AppCompatDialogFragment {
 
@@ -73,7 +72,7 @@ public class MqttBrokerTopicRegDialog extends AppCompatDialogFragment {
                 return;
             }
             FirebaseTopicObj newTopicObj = new FirebaseTopicObj(topicName, Integer.valueOf(topicQoSStr));
-            DatabaseReference databaseBrokerTopics = HomeActivity.getmDatabaseAuthUserBrokers().child(brokerID + "/topics");
+            DatabaseReference databaseBrokerTopics = HomeActivity.getDatabaseAuthUserBrokers().child(brokerID + "/topics");
 
             String topicID = UserInputConverter.convertBrokerTopicToFirebaseRules(topicName);
 
