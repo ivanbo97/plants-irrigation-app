@@ -17,7 +17,7 @@ import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.currentplantsrecyclerview.viewholder.BrokerPlantsViewHolder;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.DeleteConfirmationListener;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.util.BasicDialogGenerator;
-import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBroker;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebasePlantObj;
 import com.squareup.picasso.Picasso;
 
@@ -72,7 +72,7 @@ public class BrokerPlantsRecyclerViewListAdapter extends RecyclerView.Adapter<Br
 
         holder.getPlantNameTv().setOnClickListener(v -> {
             Intent intent = new Intent(plantsListContext, PlantManagerActivity.class);
-            FirebaseBrokerObj currentBroker = HomeActivity.getMqttBrokersList().get(brokerNumInList);
+            FirebaseBroker currentBroker = HomeActivity.getMqttBrokersList().get(brokerNumInList);
             String brokerName = currentBroker.getBrokerName();
             String brokerUrl = currentBroker.getBrokerIp() + ":" + currentBroker.getBrokerPort();
             intent.putExtra("PlantName", plantApiName);

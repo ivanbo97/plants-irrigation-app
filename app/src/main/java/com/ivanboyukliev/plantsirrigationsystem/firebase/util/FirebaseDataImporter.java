@@ -4,7 +4,7 @@ import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
-import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBroker;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebasePlantObj;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputConverter;
@@ -30,7 +30,7 @@ public class FirebaseDataImporter {
         }
     }
 
-    public static void updateBrokerData(FirebaseBrokerObj brokerForBinding, EditText brokerUrlTv) {
+    public static void updateBrokerData(FirebaseBroker brokerForBinding, EditText brokerUrlTv) {
         String newServerUrl = brokerUrlTv.getText().toString();
         if (newServerUrl.isEmpty()) {
             HomeActivity.showBrokerMessage("Empty input for server URI");

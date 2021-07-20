@@ -18,16 +18,16 @@ import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.viewholder.MqttBrokerViewHolder;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowPlantsDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerShowTopicsDialog;
-import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBroker;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.util.FirebaseDataImporter;
 
 import java.util.List;
 
 public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBrokerViewHolder> {
 
-    private List<FirebaseBrokerObj> mqttBrokers;
+    private List<FirebaseBroker> mqttBrokers;
 
-    public BrokersRecyclerViewListAdapter(List<FirebaseBrokerObj> mqttBrokers) {
+    public BrokersRecyclerViewListAdapter(List<FirebaseBroker> mqttBrokers) {
         this.mqttBrokers = mqttBrokers;
     }
 
@@ -42,7 +42,7 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MqttBrokerViewHolder holder, int position) {
-        FirebaseBrokerObj brokerForBinding = mqttBrokers.get(position);
+        FirebaseBroker brokerForBinding = mqttBrokers.get(position);
         EditText brokerUrlTv = holder.getBrokerIpTv();
         Button saveChangesBtn = holder.getSaveChangesBtn();
         holder.getBrokerNameTv().setText(brokerForBinding.getBrokerName());
@@ -80,7 +80,7 @@ public class BrokersRecyclerViewListAdapter extends RecyclerView.Adapter<MqttBro
         return mqttBrokers.size();
     }
 
-    public List<FirebaseBrokerObj> getMqttBrokers() {
+    public List<FirebaseBroker> getMqttBrokers() {
         return mqttBrokers;
     }
 }

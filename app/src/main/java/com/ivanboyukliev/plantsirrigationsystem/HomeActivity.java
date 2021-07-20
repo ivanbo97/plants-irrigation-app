@@ -25,7 +25,7 @@ import com.ivanboyukliev.plantsirrigationsystem.brokersrecyclerview.adapter.Brok
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.MqttBrokerRegDialog;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.BrokerDataInputListener;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.BrokerDataChangeListener;
-import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBroker;
 import com.ivanboyukliev.plantsirrigationsystem.utils.AndroidUIManager;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
     private RecyclerView brokersListRecyclerView;
     private static BrokersRecyclerViewListAdapter brokersAdapter;
     private static AndroidUIManager uiManager;
-    private static List<FirebaseBrokerObj> mqttBrokers;
+    private static List<FirebaseBroker> mqttBrokers;
     private static Context homeActivityContext;
     private static FragmentManager homeActivityFragmentManager;
 
@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements BrokerDataInputLi
         return brokersAdapter;
     }
 
-    public static List<FirebaseBrokerObj> getMqttBrokersList() {
+    public static List<FirebaseBroker> getMqttBrokersList() {
         return mqttBrokers;
     }
 

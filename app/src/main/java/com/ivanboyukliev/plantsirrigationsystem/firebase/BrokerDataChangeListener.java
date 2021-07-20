@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
-import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBroker;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.util.FirebaseDataExtractor;
 import com.ivanboyukliev.plantsirrigationsystem.utils.FirebaseRetrievedDataConverter;
 
@@ -17,7 +17,7 @@ public class BrokerDataChangeListener implements ValueEventListener {
     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
         for (DataSnapshot broker : snapshot.getChildren()) {
-            FirebaseBrokerObj mqttBroker = new FirebaseBrokerObj();
+            FirebaseBroker mqttBroker = new FirebaseBroker();
             mqttBroker.setBrokerID(broker.getKey());
 
             String brokerName = broker.child("/brkName").getValue(String.class);

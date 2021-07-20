@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
-import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBroker;
 import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseTopicObj;
 import com.ivanboyukliev.plantsirrigationsystem.topicsrecyclerview.adapter.TopicsRecyclerViewListAdapter;
 
@@ -53,7 +53,7 @@ public class MqttBrokerShowTopicsDialog extends AppCompatDialogFragment {
                 LinearLayoutManager.VERTICAL, false);
         topicsListRecyclerView.setLayoutManager(verticalLayoutManager);
 
-        FirebaseBrokerObj currentMqttBroker = HomeActivity.getMqttBrokersList().get(brokerNumber);
+        FirebaseBroker currentMqttBroker = HomeActivity.getMqttBrokersList().get(brokerNumber);
         currentBrokerTopics = currentMqttBroker.getTopics();
         String brokerID = currentMqttBroker.getBrokerID();
         topicsAdapter = new TopicsRecyclerViewListAdapter(currentBrokerTopics, brokerID, brokerNumber);

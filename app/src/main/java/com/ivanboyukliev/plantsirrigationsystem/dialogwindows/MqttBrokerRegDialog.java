@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.ivanboyukliev.plantsirrigationsystem.HomeActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
 import com.ivanboyukliev.plantsirrigationsystem.dialogwindows.api.BrokerDataInputListener;
-import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBrokerObj;
+import com.ivanboyukliev.plantsirrigationsystem.firebase.model.FirebaseBroker;
 import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputConverter;
 import com.ivanboyukliev.plantsirrigationsystem.utils.UserInputValidator;
 
@@ -54,7 +54,7 @@ public class MqttBrokerRegDialog extends AppCompatDialogFragment {
         final AlertDialog dialog = (AlertDialog) getDialog();
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
             String brokerPort = brokerPortWidget.getText().toString();
-            FirebaseBrokerObj newBroker = new FirebaseBrokerObj();
+            FirebaseBroker newBroker = new FirebaseBroker();
             String brokerName = brokerNameWidget.getText().toString();
             newBroker.setBrokerName(brokerName);
             String brokerIp = brokerIpWidget.getText().toString();

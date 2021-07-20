@@ -3,7 +3,7 @@ package com.ivanboyukliev.plantsirrigationsystem.firebase.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirebaseBrokerObj {
+public class FirebaseBroker {
 
     private String brokerName;
     private String brokerIp;
@@ -12,12 +12,12 @@ public class FirebaseBrokerObj {
     private List<FirebaseTopicObj> topics;
     private List<FirebasePlantObj> plants;
 
-    public FirebaseBrokerObj() {
+    public FirebaseBroker() {
         topics = new ArrayList<>();
         plants = new ArrayList<>();
     }
 
-    public FirebaseBrokerObj(String brokerName, String brokerIp, String brokerPort, String brokerID) {
+    public FirebaseBroker(String brokerName, String brokerIp, String brokerPort, String brokerID) {
         this.brokerName = brokerName;
         this.brokerIp = brokerIp;
         this.brokerPort = brokerPort;
