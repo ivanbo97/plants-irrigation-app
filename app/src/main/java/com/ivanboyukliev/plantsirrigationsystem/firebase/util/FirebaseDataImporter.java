@@ -51,7 +51,7 @@ public class FirebaseDataImporter {
             newlyAddedBroker.child("plants")
                     .child(firstPlant.getPlantName())
                     .setValue(firstPlant.getImageURL());
-            FirebaseDataImporter.importPlantsData(newlyAddedBroker.child("plants"), brokerForBinding.getPlants());
+            updatePlantsData(newlyAddedBroker.child("plants"), brokerForBinding.getPlants());
         }
         if (brokerForBinding.getTopics().size() > 0) {
             //first we create the node 'topics' and then add all topics to it
@@ -60,8 +60,8 @@ public class FirebaseDataImporter {
 
             newlyAddedBroker.child("topics")
                     .child(UserInputConverter.convertBrokerTopicToFirebaseRules(firstTopicName))
-                    .setValue(Integer.valueOf(firstTopic.getQoS()));
-            FirebaseDataImporter.importTopicsData(newlyAddedBroker.child("topics"), brokerForBinding.getTopics());
+                    .setValue(firstTopic.getQoS());
+            importTopicsData(newlyAddedBroker.child("topics"), brokerForBinding.getTopics());
         }
         String newBrokerIp;
         String newBrokerPort;
@@ -79,5 +79,14 @@ public class FirebaseDataImporter {
         brokerForBinding.setBrokerIp(newBrokerIp);
         brokerForBinding.setBrokerPort(newBrokerPort);
         brokerForBinding.setBrokerID(urlToFirebaseStandards);
+    }
+
+    private static void updatePlantsData(DatabaseReference plantsDB, List<FirebasePlantObj> plants) {
+        for (FirebasePlantObj plant : plants) {
+            // Using separator between plant's name and plant's api id
+            String plantNameAndId = plant.getPlantName();
+            plantsDB.child(plantNameAndId).setValue(plant.getImageURL());
+            plant.setPlantName(plantNameAndId);
+        }
     }
 }
