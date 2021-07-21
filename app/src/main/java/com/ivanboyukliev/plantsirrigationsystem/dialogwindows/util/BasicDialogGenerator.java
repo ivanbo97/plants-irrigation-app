@@ -21,7 +21,7 @@ public class BasicDialogGenerator {
     }
 
     public AlertDialog generateDeleteConfirmation(DatabaseReference itemForDeletion, Context parentContext) {
-        AlertDialog quittingDialogBox = new AlertDialog.Builder(parentContext)
+        AlertDialog deleteDialogBox = new AlertDialog.Builder(parentContext)
                 .setTitle(DEL_ITEM_DIALOG_TITLE)
                 .setMessage(DELETE_TOPIC_DIALOG_TITLE)
                 .setIcon(R.drawable.ic_baseline_delete_forever_24)
@@ -37,6 +37,6 @@ public class BasicDialogGenerator {
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .create();
-        return quittingDialogBox;
+        return deleteDialogBox;
     }
 }
