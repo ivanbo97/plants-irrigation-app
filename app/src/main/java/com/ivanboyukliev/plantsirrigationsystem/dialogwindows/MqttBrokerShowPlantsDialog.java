@@ -63,9 +63,6 @@ public class MqttBrokerShowPlantsDialog extends AppCompatDialogFragment {
                 .setTitle(PLANTS_LIST_TITLE)
                 .setNegativeButton(PLANT_ADD_BTN_TXT, (dialog, which) -> {
                     openPlantRegisterDialog(getParentFragmentManager());
-                })
-                .setPositiveButton(PLANT_INFO, (dialog, which) -> {
-                    return;
                 });
         topicsAdapter.notifyDataSetChanged();
         return dialogBuilder.create();
