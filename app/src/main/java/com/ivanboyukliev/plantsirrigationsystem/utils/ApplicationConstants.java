@@ -76,7 +76,7 @@ public final class ApplicationConstants {
 
     public static final String BROKER_CONNECTION_REMINDER = "Please, connect to broker first!";
 
-    public static final String PLANTS_LIST_TITLE = "List of plants related to broker";
+    public static final String PLANTS_LIST_TITLE = "List of plants related to broker. Tap on plant's name for more..";
     public static final String PLANT_ADD_BTN_TXT = "Add new plant";
     public static final String PLANT_REG_ERROR = "Connection to Broker is lost! Cannot add new plant!";
     public static final String PLANT_INFO = "Tap on plant's name for more..";
