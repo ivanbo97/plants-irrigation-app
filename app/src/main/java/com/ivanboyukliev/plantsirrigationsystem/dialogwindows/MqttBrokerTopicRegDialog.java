@@ -71,7 +71,7 @@ public class MqttBrokerTopicRegDialog extends AppCompatDialogFragment {
                 e.printStackTrace();
                 return;
             }
-            FirebaseTopicObj newTopicObj = new FirebaseTopicObj(topicName, Integer.valueOf(topicQoSStr));
+            FirebaseTopicObj newTopicObj = new FirebaseTopicObj(topicName, Integer.parseInt(topicQoSStr));
             DatabaseReference databaseBrokerTopics = HomeActivity.getDatabaseAuthUserBrokers().child(brokerID + "/topics");
 
             String topicID = UserInputConverter.convertBrokerTopicToFirebaseRules(topicName);
