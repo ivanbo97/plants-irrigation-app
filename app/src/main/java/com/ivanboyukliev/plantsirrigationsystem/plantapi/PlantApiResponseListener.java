@@ -32,9 +32,9 @@ public class PlantApiResponseListener implements Response.Listener<JSONObject> {
             }
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String plantNameAndId = jsonObject.getString("common_name");
+                String plantName = jsonObject.getString("common_name");
                 String plantId = jsonObject.getString("id");
-                if (plantNameAndId.compareTo("null") == 0)
+                if (plantName.compareTo("null") == 0)
                     continue;
                 String plantImageUrl;
                 try {
@@ -42,7 +42,7 @@ public class PlantApiResponseListener implements Response.Listener<JSONObject> {
                 } catch (JSONException jsonException) {
                     plantImageUrl = PLANT_NO_IMAGE_URL;
                 }
-                plants.add(new FirebasePlantObj(plantNameAndId, plantImageUrl,plantId));
+                plants.add(new FirebasePlantObj(plantName, plantImageUrl,plantId));
             }
 
             MqttBrokerPlantRegDialog.getRetrievedPlantsAdapter().notifyDataSetChanged();
