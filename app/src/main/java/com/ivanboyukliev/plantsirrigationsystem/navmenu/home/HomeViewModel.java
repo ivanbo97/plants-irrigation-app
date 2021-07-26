@@ -9,7 +9,6 @@ import com.ivanboyukliev.plantsirrigationsystem.searchedplantsrecyclerview.model
 public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<PlantFromApi> currentPlant;
-    private MutableLiveData<String> plantFamily;
 
     public HomeViewModel() {
         currentPlant = new MutableLiveData<>();
@@ -18,14 +17,6 @@ public class HomeViewModel extends ViewModel {
 
     public MutableLiveData<PlantFromApi> getPlantScientificName() {
         return currentPlant;
-    }
-
-    public MutableLiveData<String> getPlantFamily() {
-        return plantFamily;
-    }
-
-    public void setPlantFamily(MutableLiveData<String> plantFamily) {
-        this.plantFamily = plantFamily;
     }
 
     public MutableLiveData<PlantFromApi> getCurrentPlant() {
