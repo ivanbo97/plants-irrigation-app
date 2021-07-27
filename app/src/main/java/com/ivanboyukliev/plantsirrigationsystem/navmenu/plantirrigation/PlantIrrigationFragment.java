@@ -26,7 +26,6 @@ import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 
 public class PlantIrrigationFragment extends Fragment {
 
-    private PlantIrrigationViewModel plantIrrigationViewModel;
     private Switch pumpManager;
     private DelayedPumpStartWidgets delayedStartWidgetsManager;
     private MoistureManagementWidgets moistureManagementWidgets;
@@ -37,8 +36,6 @@ public class PlantIrrigationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        plantIrrigationViewModel =
-                new ViewModelProvider(this).get(PlantIrrigationViewModel.class);
         View root = inflater.inflate(R.layout.fragment_irrigation, container, false);
 
         final TextView connectionStateTv = root.findViewById(R.id.connStatusTv);
