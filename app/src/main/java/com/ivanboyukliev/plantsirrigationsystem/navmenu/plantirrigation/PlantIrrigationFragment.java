@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.ivanboyukliev.plantsirrigationsystem.PlantManagerActivity;
 import com.ivanboyukliev.plantsirrigationsystem.R;
@@ -22,7 +20,6 @@ import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.Mo
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.widgetslisteners.PumpSwitchStateListener;
 
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
-
 
 public class PlantIrrigationFragment extends Fragment {
 
