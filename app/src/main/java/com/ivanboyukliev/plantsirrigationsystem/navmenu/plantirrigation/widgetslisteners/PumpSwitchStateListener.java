@@ -32,7 +32,7 @@ public class PumpSwitchStateListener implements CompoundButton.OnCheckedChangeLi
             MqttMessage turnPumpOnMsg = new MqttMessage();
             turnPumpOnMsg.setPayload(PUMP_ACTIVE_FLAG.getBytes());
             turnPumpOnMsg.setQos(2);
-            publishMqttMessage(turnPumpOnMsg);
+            publishMqttPumpMessage(turnPumpOnMsg);
             return;
         }
 
@@ -40,10 +40,10 @@ public class PumpSwitchStateListener implements CompoundButton.OnCheckedChangeLi
         turnPumpOffMsg.setPayload(PUMP_INACTIVE_FLAG.getBytes());
         turnPumpOffMsg.setQos(2);
 
-        publishMqttMessage(turnPumpOffMsg);
+        publishMqttPumpMessage(turnPumpOffMsg);
     }
 
-    private void publishMqttMessage (MqttMessage mqttMessage){
+    private void publishMqttPumpMessage(MqttMessage mqttMessage){
         try {
             PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(MANAGE_PUMP_TOPIC, mqttMessage);
             Toast.makeText(fragmentContext.getContext(), SUCCESSFUL_MESSAGE_PUBLISH + MANAGE_PUMP_TOPIC, Toast.LENGTH_LONG).show();
