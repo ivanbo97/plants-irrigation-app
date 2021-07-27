@@ -32,13 +32,7 @@ public class PumpSwitchStateListener implements CompoundButton.OnCheckedChangeLi
             MqttMessage turnPumpOnMsg = new MqttMessage();
             turnPumpOnMsg.setPayload(PUMP_ACTIVE_FLAG.getBytes());
             turnPumpOnMsg.setQos(2);
-            try {
-                PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(MANAGE_PUMP_TOPIC, turnPumpOnMsg);
-                Toast.makeText(fragmentContext.getContext(), SUCCESSFUL_MESSAGE_PUBLISH + MANAGE_PUMP_TOPIC, Toast.LENGTH_LONG).show();
-            } catch (MqttException e) {
-                Toast.makeText(fragmentContext.getContext(), ERROR_PUBLISH_MESSAGE + MANAGE_PUMP_TOPIC, Toast.LENGTH_LONG);
-                e.printStackTrace();
-            }
+            publishMqttMessage(turnPumpOnMsg);
             return;
         }
 
@@ -46,8 +40,12 @@ public class PumpSwitchStateListener implements CompoundButton.OnCheckedChangeLi
         turnPumpOffMsg.setPayload(PUMP_INACTIVE_FLAG.getBytes());
         turnPumpOffMsg.setQos(2);
 
+        publishMqttMessage(turnPumpOffMsg);
+    }
+
+    private void publishMqttMessage (MqttMessage mqttMessage){
         try {
-            PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(MANAGE_PUMP_TOPIC, turnPumpOffMsg);
+            PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(MANAGE_PUMP_TOPIC, mqttMessage);
             Toast.makeText(fragmentContext.getContext(), SUCCESSFUL_MESSAGE_PUBLISH + MANAGE_PUMP_TOPIC, Toast.LENGTH_LONG).show();
         } catch (MqttException e) {
             Toast.makeText(fragmentContext.getContext(), ERROR_PUBLISH_MESSAGE + MANAGE_PUMP_TOPIC, Toast.LENGTH_LONG);
