@@ -154,7 +154,7 @@ public class PlantIrrigationFragment extends Fragment {
         for (int i = 0; i < plantIrrigRelativeLayout.getChildCount(); i++) {
             View view = plantIrrigRelativeLayout.getChildAt(i);
             int viewId = view.getId();
-            if (viewId == R.id.terminateMoistureTaskBtn || viewId == R.id.terminateDelayedStartBtn) {
+            if (viewId == R.id.terminateMoistureTaskBtn || viewId == R.id.terminateDelayedStartBtn || viewId == R.id.connStatusTitleTv || viewId == R.id.connStatusTv) {
                 continue;
             }
             view.setEnabled(active);
