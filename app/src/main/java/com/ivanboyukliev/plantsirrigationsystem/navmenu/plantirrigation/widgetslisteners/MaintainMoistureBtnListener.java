@@ -11,6 +11,7 @@ import com.ivanboyukliev.plantsirrigationsystem.mqtt.AndroidMqttClientCallback;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.PlantIrrigationFragment;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.MoistureManagementWidgets;
 
+import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -51,8 +52,9 @@ public class MaintainMoistureBtnListener implements View.OnClickListener {
         moistureValue.setQos(2);
 
         try {
-            PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(ACTIVATE_MAINTAIN_MOISTURE_TOPIC, initMoistureTask);
-            PlantManagerActivity.getMqttClient().getMqttAndroidClient().publish(MAINTAIN_MOISTURE_VALUE_TOPIC, moistureValue);
+            MqttAndroidClient mqttAndroidClient = PlantManagerActivity.getMqttClient().getMqttAndroidClient();
+            mqttAndroidClient.publish(ACTIVATE_MAINTAIN_MOISTURE_TOPIC, initMoistureTask);
+            mqttAndroidClient.publish(MAINTAIN_MOISTURE_VALUE_TOPIC, moistureValue);
 
             Toast.makeText(parentFragment.getContext(), SUCCESSFUL_MESSAGE_PUBLISH + ACTIVATE_MAINTAIN_MOISTURE_TOPIC +
                     "," + MAINTAIN_MOISTURE_VALUE_TOPIC, Toast.LENGTH_LONG).show();
