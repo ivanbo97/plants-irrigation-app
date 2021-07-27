@@ -31,7 +31,7 @@ public class MoistureManagementWidgets {
         MaintainMoistureBtnListener maintainMoistureBtnListener = new MaintainMoistureBtnListener((PlantIrrigationFragment) parentFragment, this);
         submitMoistureBtn.setOnClickListener(maintainMoistureBtnListener);
 
-        MaintainMoistureTaskInterruptListener interruptMoistureTaskListener = new MaintainMoistureTaskInterruptListener((PlantIrrigationFragment) parentFragment, this);
+        MaintainMoistureTaskInterruptListener interruptMoistureTaskListener = new MaintainMoistureTaskInterruptListener((PlantIrrigationFragment) parentFragment);
         terminateMoistureTaskBtn.setOnClickListener(interruptMoistureTaskListener);
     }
 

@@ -20,11 +20,9 @@ import static com.ivanboyukliev.plantsirrigationsystem.utils.ApplicationConstant
 public class MaintainMoistureTaskInterruptListener implements View.OnClickListener {
 
     private Fragment parentFragment;
-    private MoistureManagementWidgets moistureTaskWidgets;
 
-    public MaintainMoistureTaskInterruptListener(PlantIrrigationFragment parentFragment, MoistureManagementWidgets moistureTaskWidgets) {
+    public MaintainMoistureTaskInterruptListener(PlantIrrigationFragment parentFragment) {
         this.parentFragment = parentFragment;
-        this.moistureTaskWidgets = moistureTaskWidgets;
     }
 
     @Override
