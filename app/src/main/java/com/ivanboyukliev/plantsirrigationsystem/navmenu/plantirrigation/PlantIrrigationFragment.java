@@ -46,19 +46,16 @@ public class PlantIrrigationFragment extends Fragment {
         delayedStartWidgetsManager = new DelayedPumpStartWidgets(root, getActivity());
         moistureManagementWidgets = new MoistureManagementWidgets(root, this);
 
-        PlantManagerActivity.getMqttClient().getBrokerConnState().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean connected) {
-                if (connected) {
-                    connectionStateTv.setText("Connected");
-                    currentIrrigationSystemState.setConnectedToBroker(true);
-                    return;
-                }
-                connectionStateTv.setText("Disconnected");
-                if (currentIrrigationSystemState == null)
-                    return;
-                currentIrrigationSystemState.setConnectedToBroker(false);
+        PlantManagerActivity.getMqttClient().getBrokerConnState().observe(getViewLifecycleOwner(), connected -> {
+            if (connected) {
+                connectionStateTv.setText("Connected");
+                currentIrrigationSystemState.setConnectedToBroker(true);
+                return;
             }
+            connectionStateTv.setText("Disconnected");
+            if (currentIrrigationSystemState == null)
+                return;
+            currentIrrigationSystemState.setConnectedToBroker(false);
         });
 
         pumpManager = root.findViewById(R.id.pumpSwitch);
