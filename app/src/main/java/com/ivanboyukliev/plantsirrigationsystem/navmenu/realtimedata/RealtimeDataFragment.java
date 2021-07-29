@@ -162,32 +162,11 @@ public class RealtimeDataFragment extends Fragment {
     public void onTemperatureRangesExtracted() {
         int currentTemperature = Integer.parseInt(currentTemperatureTv.getText().toString());
         for (TempRange range : tempRanges) {
-
             int minRange = range.getMinTemperature();
             int maxRange = range.getMaxTemperature();
             System.out.println("MinRange" + minRange);
             if (currentTemperature >= minRange && currentTemperature <= maxRange) {
-                String tempRange = minRange + "-" + maxRange;
-
-                String plantName = observedPlantTv.getText().toString();
-                Log.i(plantName, "PLANTNAME");
-                String currentSeason = currentSeasonTv.getText().toString().trim();
-                Log.i(currentSeason, "INFO");
-                FirebaseDatabase.getInstance(DB_URL)
-                        .getReference("growingHints/" +
-                                plantName + '/' + currentSeason + '/' +
-                                "tempRange/" + tempRange).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (!task.isSuccessful()) {
-                            Log.e("firebase", "Error getting data", task.getException());
-                            return;
-                        }
-
-                        String retrievedTip = task.getResult().getValue(String.class);
-                        currentTipsTv.setText(retrievedTip);
-                    }
-                });
+                currentTipsTv.setText(range.getHint());
             }
         }
     }
