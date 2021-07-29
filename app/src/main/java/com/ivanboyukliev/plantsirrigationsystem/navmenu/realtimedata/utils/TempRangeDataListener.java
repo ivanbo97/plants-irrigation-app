@@ -1,5 +1,7 @@
 package com.ivanboyukliev.plantsirrigationsystem.navmenu.realtimedata.utils;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +24,8 @@ public class TempRangeDataListener implements ValueEventListener {
             String[] tempIntervals = tempRange.getKey().split("-");
             int minTemperature = Integer.parseInt(tempIntervals[0]);
             int maxTemperature = Integer.parseInt(tempIntervals[1]);
-            realtimeDataFragment.getTempRanges().add(new TempRange(minTemperature, maxTemperature));
+            String hint = tempRange.getValue(String.class);
+            realtimeDataFragment.getTempRanges().add(new TempRange(minTemperature, maxTemperature,hint));
         }
         realtimeDataFragment.onTemperatureRangesExtracted();
     }
