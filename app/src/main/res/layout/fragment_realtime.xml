@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
 
-
             <TextView
                 android:id="@+id/connStatusTitleTvRealtime"
                 android:layout_width="wrap_content"
@@ -137,9 +136,7 @@
                 android:fontFamily="@font/delius"
                 android:textStyle="bold" />
 
-
         </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/relativeLayoutChart"
