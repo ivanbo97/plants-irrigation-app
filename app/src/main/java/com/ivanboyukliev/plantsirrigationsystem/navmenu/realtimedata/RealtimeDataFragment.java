@@ -46,7 +46,7 @@ public class RealtimeDataFragment extends Fragment {
     private RealtimeDataViewModel realtimeDataViewModel;
     private LineChart lineChart;
     private LineData moistureData;
-    private MoistureDataChart moistureChart;
+    private static MoistureDataChart moistureChart;
     private List<TempRange> tempRanges;
     private TextView currentTipsTv;
     private TextView currentTemperatureTv;
@@ -109,7 +109,6 @@ public class RealtimeDataFragment extends Fragment {
             @Override
             public void onChanged(String moistureValue) {
                 try {
-                    moistureChart.addEntry(Float.parseFloat(moistureValue));
                     currentMoistureTv.setText(moistureValue + " %");
                 } catch (NumberFormatException e) {
                     Toast.makeText(getContext(), "Received a corrupted moisture value!", Toast.LENGTH_LONG)
@@ -169,5 +168,9 @@ public class RealtimeDataFragment extends Fragment {
                 currentTipsTv.setText(range.getHint());
             }
         }
+    }
+
+    public static MoistureDataChart getMoistureChart() {
+        return moistureChart;
     }
 }
