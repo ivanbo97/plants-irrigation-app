@@ -10,6 +10,7 @@ import com.ivanboyukliev.plantsirrigationsystem.mqtt.api.MqttClientActions;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.home.HomeFragment;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.IrrigationSystemMutableLiveData;
 import com.ivanboyukliev.plantsirrigationsystem.navmenu.plantirrigation.utils.IrrigationSystemState;
+import com.ivanboyukliev.plantsirrigationsystem.navmenu.realtimedata.RealtimeDataFragment;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
@@ -77,6 +78,7 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
         // Received a message which is not related to pump state
 
         if (topic.equals(MOISTURE_LEVEL_TOPIC)) {
+            RealtimeDataFragment.getMoistureChart().addEntry(Float.parseFloat(receivedMessage));
             moistureValue.setValue(receivedMessage);
             return;
         }
