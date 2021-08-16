@@ -99,7 +99,6 @@ public class AndroidMqttClientCallback implements MqttCallbackExtended {
 
         if (msgTopic.equals(DELAYED_START_STATE_TOPIC)) {
             irrigationSystemState.setDelayedStartTaskRunning(operationState);
-            // delayedIrrigationState.setValue(message.toString());
             return;
         }
 
