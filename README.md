@@ -10,6 +10,8 @@ The purpose of this Android application is to provide a common way for monitorin
 #### Home Activity (list of brokers)
 ![HomeActivityPic](https://i.ibb.co/KVy9jSP/Hnet-com-image.jpg)
 
+#### Plants related to specific broker
+![PlantsListPic](https://i.ibb.co/mXXbTp8/Plants-List-Scr-Shot.jpg)
 
 <h3 align="left">Tech Stack:</h3>
 <p align="left"> <a href="https://developer.android.com" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> <a href="https://firebase.google.com/" target="_blank"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="40" height="40"/> </a> 
