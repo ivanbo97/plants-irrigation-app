@@ -14,19 +14,19 @@ The purpose of this Android application is to provide a common way for monitorin
 ## Screenshots of Activties
 #### Home Activity (list of brokers)
 ![HomeActivityPic](https://i.ibb.co/KVy9jSP/Hnet-com-image.jpg)
-
+<br>
 ### Plants related to specific broker
 ![PlantsListPic](https://i.ibb.co/mXXbTp8/Plants-List-Scr-Shot.jpg)
-
+<br>
 ### Subscription topics related to MQTT broker
 ![TopicsListPic](https://i.ibb.co/98cvBMz/Topics-List-Scr-Shot.jpg)
-
+<br>
 ### Interface for managing irrigation regimes
 ![IrrigationManagementBoard](https://i.ibb.co/b1ryLWg/Management-Board-Prt-Scr.jpg)
-
+<br>
 ### Screen for monitoring real-time data
 ![RealtimeDataPic](https://i.ibb.co/1qDFQZ6/Realtime-Data-Scrn-Shot-2.jpg)
-
+<br>
 ### Screen for showing irrigation archive
 ![IrrigationArchivePci](https://i.ibb.co/qDQshHZ/Irrigation-Archive-Scrn-Shot.jpg)
 
