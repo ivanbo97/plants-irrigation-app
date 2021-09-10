@@ -6,7 +6,9 @@ The purpose of this Android application is to provide a common way for monitorin
 
 ![System Overviw Pic](https://i.ibb.co/WnYxNSV/Irrigation-Syst-Overview.png)
 
-
+## Screenshots of Activties
+#### Home Activity (list of brokers)
+![HomeActivityPic](https://i.ibb.co/KVy9jSP/Hnet-com-image.jpg)
 
 
 <h3 align="left">Tech Stack:</h3>
