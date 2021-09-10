@@ -126,6 +126,6 @@ public final class ApplicationConstants {
 
     public static final String SEASONS[] = {
             "Winter", "Winter", "Spring", "Spring", "Summer", "Summer",
-            "Summer", "Summer", "Fall", "Fall", "Winter", "Winter"
+            "Summer", "Summer", "Autumn", "Autumn", "Winter", "Winter"
     };
 }
